@@ -1,4 +1,6 @@
 //-----------------------------------------------------------------------------
+// James Li
+// gli38
 // HelloUser.java
 // Prints greeting to stdout, then prints out some environment information.
 //-----------------------------------------------------------------------------
