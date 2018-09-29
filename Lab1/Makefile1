@@ -1,4 +1,10 @@
+# ------------------------------------------------------------------------------
+# James Li
+# gli38
+# Makefile1
 # A simple Makefile
+# ------------------------------------------------------------------------------
+
 HelloUser: HelloUser.class
 	echo Main-class: HelloUser > Manifest
 	jar cvfm HelloUser.jar Manifest HelloUser.class
