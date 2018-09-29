@@ -5,9 +5,15 @@
 # All files submitted are listed below
 # ------------------------------------------------------------------------------
 
-HelloUser.java
-HelloUser2.java
-Makefile1
-Makefile2
-Makefile3
-README
+f1: HelloUser.java
+f2: HelloUser2.java
+f3: Makefile1
+f4: Makefile2
+f5: Makefile3
+f6: README
+c1: make -f Makefile1
+e1: HelloUser.jar
+c2: make -f Makefile2
+e2: HelloUser.jar
+c3: make -f Makefile3
+e3: Hello.jar
