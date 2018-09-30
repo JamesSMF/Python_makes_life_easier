@@ -1,9 +1,9 @@
-# ------------------------------------------------------------------------------
 # James Li
 # gli38
 # README
-# All files submitted are listed below
-# ------------------------------------------------------------------------------
+# Spec file for Lab1 of CMPS12B-01, Fall 2018
+#
+##################-
 
 f1: HelloUser.java
 f2: HelloUser2.java
