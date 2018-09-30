@@ -1,0 +1,12 @@
+# James Li
+# gli38
+# README
+# Spec file for Lab2 of CMPS12B-01, Fall 2018
+#
+##################-
+
+f1: FileReverse.java
+f2: Makefile
+f3: README
+c1: make
+e1: FileReverse.jar
