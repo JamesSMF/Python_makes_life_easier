@@ -1,3 +1,8 @@
+// James Li
+// gli38
+// FileReverse.java
+// This file reverses all the texts in the input file and writes it into an output file
+
 import java.io.*;
 import java.util.Scanner;
 
