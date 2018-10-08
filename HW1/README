@@ -6,9 +6,14 @@
 
 f1: Makefile
 f2: README
+
 c1: make
 e1: NQueens.jar
 p1: java -jar NQueens.jar
 t1: test-input.txt
 o1: out.txt
 i1: test-output.txt
+
+############
+
+This program finishes handling datas in more-input.txt within 110 seconds.
