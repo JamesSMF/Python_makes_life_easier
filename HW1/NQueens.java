@@ -1,3 +1,8 @@
+// James Li
+// gli38
+// NQueens.java
+// This program prints solutions for N-Queens problem.
+
 import java.util.Scanner;
 import java.io.*;
 
@@ -114,6 +119,3 @@ class NQueens{
 
    static boolean isEmpty() { return nElems==0; }
 }
-
-
-
