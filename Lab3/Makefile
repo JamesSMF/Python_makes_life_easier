@@ -1,8 +1,8 @@
-FileReverse : FileReverse.o
-	gcc -o FileReverse FileReverse.o
+fileReverse : fileReverse.o
+	gcc -o fileReverse fileReverse.o
 
-FileReverse.o : FileReverse.c
-	gcc -c -std=c99 -Wall FileReverse.c
+fileReverse.o : fileReverse.c
+	gcc -c -std=c99 -Wall fileReverse.c
 
 clean :
-	rm -f FileReverse FileReverse.o
+	rm -f fileReverse fileReverse.o
