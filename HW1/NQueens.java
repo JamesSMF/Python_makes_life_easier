@@ -22,7 +22,7 @@ class NQueens{
    static int nextElem = 0;     // the index of the next used slot
 
    public static void main(String[] args) throws IOException{
-      theQueue = new int[120];
+      theQueue = new int[128];
       nElems = 0;
       front = 0;
       rear = -1;
