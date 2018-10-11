@@ -43,6 +43,8 @@ swap the pivot and the successor
 reverse the portion of the array to the right of where the pivot was found 
 return
 
+
+
 What my code does:
 for instance: 1234
 
