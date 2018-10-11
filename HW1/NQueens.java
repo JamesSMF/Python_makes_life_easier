@@ -17,7 +17,7 @@ class NQueens{
    static int xcoord;
    static int ycoord;
    static boolean noSol;   // check if has solution
-   static int[] result = new int[180];    // the result array
+   static int[] result = new int[256];    // the result array
    static int nextEmpty = 0;    // the index of next empty slot in result
    static int nextElem = 0;     // the index of the next used slot
 
