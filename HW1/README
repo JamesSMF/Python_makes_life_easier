@@ -17,3 +17,10 @@ i1: test-output.txt
 ############
 
 This program finishes handling datas in more-input.txt within 110 seconds.
+
+###########
+
+Note: I got the idea of permutation from one of my assignments in CS12A by Prof. Tantalo.
+
+HOWEVER, this recursive permutation method was coded by myself.
+(Prof. Tantalo did not teach us to use a recursive method for permutation.)
