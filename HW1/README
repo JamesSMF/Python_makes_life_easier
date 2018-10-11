@@ -63,6 +63,7 @@ print: 1424
 print: 1423
 ...
 
+(Only when the rotate size hits 2 does the program prints out the result)
 
 Rotate: Take the first element out, shift all others left by 1 slot, and put the first element at the right end.
 if I rotate "123" the output will be "231".
