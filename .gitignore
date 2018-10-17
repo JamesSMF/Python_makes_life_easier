@@ -1,6 +1,5 @@
 # Java ignores
 *.class
-*.log
 *.jar
 *.war
 *.ear
