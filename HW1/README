@@ -67,21 +67,3 @@ print: 1423
 
 Rotate: Take the first element out, shift all others left by 1 slot, and put the first element at the right end.
 if I rotate "123" the output will be "231".
-
-############################
-
-Shortcomings of my program:
-My program uses some "brutal force". 
-
-1. I used sc.nextLine() and trimmed the input. However, I failed the test for many times. Then I uses 
-my "brutal force" method: declare a queue for a sufficient length to take all the input. Each time it 
-enters into the while loop, it pops three datas from the input queue.
-
-2. Then I found that my print method lies within my recursive call, which causes a problem that I am
-unable to print the result into the output file. Then another "brutal force" approach comes: I store
-all the output numbers in another large queue and print the queue out in my main function.
-
-Although my program "seems" complied and ran perferctly, the underlying code is brutal. Perhaps I might lose
-some points letting graders know this shortcoming of my program, but I think I have to admit that. This
-program does have some imperfections.
-

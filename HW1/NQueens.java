@@ -22,6 +22,11 @@ class NQueens{
    static int nextElem = 0;     // the index of the next used slot
 
    public static void main(String[] args) throws IOException{
+      if(args.length != 2){
+        System.out.println("Usage: java -jar NQueens.jar <input file><output file>.");
+        System.exit(1);
+      }
+       
       theQueue = new int[128];
       nElems = 0;
       front = 0;
