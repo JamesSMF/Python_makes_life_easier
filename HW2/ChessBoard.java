@@ -56,25 +56,20 @@ class LinkedList{
    public char find(int col, int row){
       Link current = first;
       Coordinate key = new Coordinate('z', col, row);
-      while(current.data.equals(key)){
+      while(!current.data.equals(key)){
          if(current.next==null) return 'z';     // did not find
          current = current.next;
       }
       return current.data.type;
    }
 
-   public boolean queenAttacks(char ch, int c, int r){    // checks for queen attacks
-      Coordinate theQueen;
+   public boolean bishopAttack(char ch, int c, int r){
+      Coordinate theBishop = new Coordinate(ch, c, r);
       Link current = first;
-      int copyC = c, copyR = r;
-      while(c < 7 && r < 7){
-         c++;
-         r++;
-         theQueen = new Coordinate(ch,c,r);
-         if(!current.data.equals(theQueen)){
-            if(current.next == null) return false;
-            current = current.next;
-         }else{
+      while(current.next != null){
+         if(current.data.type==ch) current = current.next;
+         if(current.data.c - theBishop.c == current.data.r - theBishop.r ||
+            current.data.c - theBishop.c == theBishop.r - current.data.r){
             switch(ch){
                case 'Q':
                   if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
@@ -88,90 +83,9 @@ class LinkedList{
                      return true;
                   break;
             }  // end switch
-         }
+         }  // end if
+         current = current.next;
       }  // end while
-
-      c = copyC;
-      r = copyR;
-
-      while(c < 7 && r > 1){
-         c++;
-         r--;
-         theQueen = new Coordinate(ch,c,r);
-         if(!current.data.equals(theQueen)){
-            if(current.next == null) return false;
-            current = current.next;
-         }else{
-            switch(ch){
-               case 'Q':
-                  if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
-                     || current.data.type == 'b' || current.data.type == 'n')
-                     return true;
-                  break;
-
-               case 'q':
-                  if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
-                     || current.data.type == 'B' || current.data.type == 'N')
-                     return true;
-                  break;
-            }  // end switch
-         }
-      }  // end while
-
-      c = copyC;
-      r = copyR;
-
-      while(c > 1 && r > 1){
-         c--;
-         r--;
-         theQueen = new Coordinate(ch,c,r);
-         if(!current.data.equals(theQueen)){
-            if(current.next == null) return false;
-            current = current.next;
-         }else{
-            switch(ch){
-               case 'Q':
-                  if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
-                     || current.data.type == 'b' || current.data.type == 'n')
-                     return true;
-                  break;
-
-               case 'q':
-                  if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
-                     || current.data.type == 'B' || current.data.type == 'N')
-                     return true;
-                  break;
-            }  // end switch
-         }
-      }  // end while
-
-      c = copyC;
-      r = copyR;
-
-      while(c > 1 && r < 7){
-         c--;
-         r++;
-         theQueen = new Coordinate(ch,c,r);
-         if(!current.data.equals(theQueen)){
-            if(current.next == null) return false;
-            current = current.next;
-         }else{
-            switch(ch){
-               case 'Q':
-                  if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
-                     || current.data.type == 'b' || current.data.type == 'n')
-                     return true;
-                  break;
-
-               case 'q':
-                  if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
-                     || current.data.type == 'B' || current.data.type == 'N')
-                     return true;
-                  break;
-            }  // end switch
-         }
-      }  // end while
-
       return false;
    }
 }
@@ -212,7 +126,8 @@ class ChessBoard{
             current = target.next;
             while(! target.data.equals(current.data)){
                if(current.next==null){           // current hits the end
-                  if(target.next.next==null){
+                  if(target.next==current){
+                     System.out.println("Motherfucker");
                      isValid = true;     // target hits the end
                      break;
                   }else{
@@ -226,24 +141,27 @@ class ChessBoard{
 
          if(!isValid){    // checks for validity
             out.println("Invalid");
+            out.flush();
             continue;
          }
 
-         System.out.println(chess.find(ccc, rrr));
          if(chess.find(ccc, rrr)=='z'){   // checks for existence of the chess
             out.println("-");
+            out.flush();
             continue;
          }
 
          char targetChess = chess.find(ccc, rrr);
 
          out.print(targetChess + " ");
+         out.flush();
 
          switch(targetChess){
             case 'Q':
             case 'q':
-               if(chess.queenAttacks(targetChess,ccc,rrr) == true) out.println("y");
+               if(chess.bishopAttack(targetChess,ccc,rrr) == true) out.println("y");
                else out.println("n");
+               out.flush();
                break;
          }
       }   // end while (proceed to the next line of input)
