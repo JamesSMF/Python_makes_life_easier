@@ -1,34 +1,46 @@
 Oct. 18th:
 
-Got the general stucture done. Code are like a mess. Frequently got NullPointerException.
-
-------------------------
+Got the general stucture done. Codes are in a mess. Frequently got NullPointerException.
+---------------------------------
 
 Added if-else statement, and the exception was killed.
 
 Start testing on bishop attacking.
 
-The program passed the test for checking validity
+The program passed the test for checking validity.
 
-Right now the main problem is the method "find" in class LinkedList
+Right now the main problem is the method find() in class LinkedList.
+--------------------------------
 
----------------------------
-
-"find" problem solved. But still got nothing printed in out file.
-
----------------------------
+find() problem solved. But still got nothing printed in out file.
+---------------------------------
 
 out.flush() was added, and output problem has been solved.
 
 The new problem lies in bishopAttack().
-
----------------------------
+----------------------------------
 
 bishopAttack() fixed.
 
 But there seem to be some new problems on checking validity.
-
+          
 Input check: pass
 Link current test: pass
-
+         
 The problem seems to be if(target.next.next == null)
+
+Tired and sleepy, I'll fix it tomorrow. 
+      
+
+
+Oct. 19th:
+    
+Everything fucked up.
+-----------------------------------
+
+The problems was that I kept inserting links but forgot to delete at the end of the while loop.
+-----------------------------------
+
+I can't use any word to express my excitement at this moment. My bishop testing succeeded!!!!!!
+Viva la java!
+-----------------------------------

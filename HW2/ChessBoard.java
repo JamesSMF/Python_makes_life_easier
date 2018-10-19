@@ -53,6 +53,10 @@ class LinkedList{
       return current;
    }
 
+   public void delete(){        // override
+      first = null;
+   }
+
    public char find(int col, int row){
       Link current = first;
       Coordinate key = new Coordinate('z', col, row);
@@ -71,13 +75,13 @@ class LinkedList{
          if(current.data.c - theBishop.c == current.data.r - theBishop.r ||
             current.data.c - theBishop.c == theBishop.r - current.data.r){
             switch(ch){
-               case 'Q':
+               case 'B':
                   if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
                      || current.data.type == 'b' || current.data.type == 'n')
                      return true;
                   break;
 
-               case 'q':
+               case 'b':
                   if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
                      || current.data.type == 'B' || current.data.type == 'N')
                      return true;
@@ -127,7 +131,6 @@ class ChessBoard{
             while(! target.data.equals(current.data)){
                if(current.next==null){           // current hits the end
                   if(target.next==current){
-                     System.out.println("Motherfucker");
                      isValid = true;     // target hits the end
                      break;
                   }else{
@@ -142,12 +145,14 @@ class ChessBoard{
          if(!isValid){    // checks for validity
             out.println("Invalid");
             out.flush();
+            chess.delete();
             continue;
          }
 
          if(chess.find(ccc, rrr)=='z'){   // checks for existence of the chess
             out.println("-");
             out.flush();
+            chess.delete();
             continue;
          }
 
@@ -157,19 +162,17 @@ class ChessBoard{
          out.flush();
 
          switch(targetChess){
-            case 'Q':
-            case 'q':
+            case 'B':
+            case 'b':
                if(chess.bishopAttack(targetChess,ccc,rrr) == true) out.println("y");
                else out.println("n");
                out.flush();
                break;
-         }
+         }  // end switch
+         chess.delete();
       }   // end while (proceed to the next line of input)
    }  // end main
 }  // end class
-
-
-
 
 
 
