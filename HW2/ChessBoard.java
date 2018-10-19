@@ -53,19 +53,6 @@ class LinkedList{
       return current;
    }
 
-   public boolean isValid(){      // check if two chesses take up the same square
-      Link target = first, current = first;
-      while(! target.data.equals(current.data)){
-         if(current.next==null){           // current hits the end
-            if(target.next==null) return true;     // target hits the end
-            target = target.next;
-            current = target;
-         }
-         current = current.next;
-      }
-      return false;
-   }
-
    public char find(int col, int row){
       Link current = first;
       Coordinate key = new Coordinate('z', col, row);
@@ -190,6 +177,8 @@ class LinkedList{
 }
 
 class ChessBoard{
+   static LinkedList chess = new LinkedList();   // the most important thing in this prog.
+
    public static void main(String[] args) throws IOException{
       if(args.length != 2){
          System.out.println("Usage: java -jar ChessPiece.jar <input file><output file>.");
@@ -198,8 +187,8 @@ class ChessBoard{
 
       Scanner sc = new Scanner(new File(args[0]));
       PrintWriter out = new PrintWriter(new FileWriter(args[1]));
-      
-      LinkedList chess = new LinkedList();   // the most important thing in this prog.
+
+      Link target, current;
 
       while(sc.hasNextLine()){
          String nextLine = sc.nextLine();   // store the whole line
@@ -214,13 +203,33 @@ class ChessBoard{
          int ccc = Character.getNumericValue(nextLine.charAt(0)) - 1;
          int rrr = Character.getNumericValue(nextLine.charAt(2)) - 1;
 
-         System.out.println(chess.isValid());
+         boolean isValid = false;
 
-         if(!chess.isValid()){    // checks for validity
+         target = chess.first;
+         if(target.next == null)
+            isValid = true;
+         else{
+            current = target.next;
+            while(! target.data.equals(current.data)){
+               if(current.next==null){           // current hits the end
+                  if(target.next.next==null){
+                     isValid = true;     // target hits the end
+                     break;
+                  }else{
+                     target = target.next;
+                     current = target;
+                  }
+               }
+               current = current.next;
+            }
+         }
+
+         if(!isValid){    // checks for validity
             out.println("Invalid");
             continue;
          }
 
+         System.out.println(chess.find(ccc, rrr));
          if(chess.find(ccc, rrr)=='z'){   // checks for existence of the chess
             out.println("-");
             continue;
