@@ -33,3 +33,7 @@ The linked list is the main body of this program.
 
 I also constructed a method called pawnAttack(), which tests for pawn attacks. I am 80% sure that it
 works.
+
+#################
+
+DebugLog is a log which I kept through out my debugging process. It helped me a lot.
