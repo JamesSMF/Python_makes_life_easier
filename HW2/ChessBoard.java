@@ -440,6 +440,13 @@ class ChessBoard{
                out.flush();
                break;
 
+            case 'N':
+            case 'n':
+               if(chess.knightAttack(targetChess,ccc,rrr)) out.println("y");
+               else out.println("n");
+               out.flush();
+               break;
+
             case 'P':
             case 'p':
                if(chess.pawnAttack(targetChess,ccc,rrr)) out.println("y");
