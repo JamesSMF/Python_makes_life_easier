@@ -374,7 +374,11 @@ class ChessBoard{
          boolean isValid = false;
 
          target = chess.first;
-         if(target.next == null)
+         if(chess.isEmpty()){
+            out.println("-");
+            out.flush();
+            continue;
+         }else if(target.next == null)
             isValid = true;
          else{
             current = target.next;
