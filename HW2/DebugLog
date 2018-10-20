@@ -32,7 +32,6 @@ The problem seems to be if(target.next.next == null)
 Tired and sleepy, I'll fix it tomorrow. 
       
 
-
 Oct. 19th:
     
 Everything fucked up.
@@ -41,6 +40,37 @@ Everything fucked up.
 The problems was that I kept inserting links but forgot to delete at the end of the while loop.
 -----------------------------------
 
-I can't use any word to express my excitement at this moment. My bishop testing succeeded!!!!!!
+Solved. I can't use any word to express my excitement at this moment. My bishop testing succeeded!!!!!!
 Viva la java!
 -----------------------------------
+
+New bug in rookAttack() method. NullPointerException again, so weird.
+-----------------------------------
+
+Used brutal force methods to solve the problem.
+Queens, bishops, and rooks work.
+
+The next step is king, pawn, and knight.
+
+(The king can move to and kill chesses at all directions)
+-----------------------------------
+
+Queens, bishops, kings, and rooks work.
+-----------------------------------
+
+All the things done. Start final testing.
+
+Some problems pertaining to queen attacks occur.
+-----------------------------------
+
+The problem is that if I use current.next.next, when the input only has two data, it skips the current one.
+If the last one is the target chess, then I am fucked up.
+-----------------------------------
+
+Holy shit! It worked! Holy shit! I know my code is messy and shitty-looking, but whatever, it compiled and
+ran! Who cares what the fuck it looks like?
+
+
+
+
+

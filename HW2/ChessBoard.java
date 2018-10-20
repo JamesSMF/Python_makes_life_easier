@@ -90,6 +90,256 @@ class LinkedList{
          }  // end if
          current = current.next;
       }  // end while
+      if(current.data.c - theBishop.c == current.data.r - theBishop.r ||
+         current.data.c - theBishop.c == theBishop.r - current.data.r){
+         switch(ch){
+            case 'B':
+               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                  || current.data.type == 'b' || current.data.type == 'n')
+                  return true;
+               break;
+
+            case 'b':
+               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                  || current.data.type == 'B' || current.data.type == 'N')
+                  return true;
+               break;
+         }  // end switch
+      }  // end if
+      return false;
+   }
+
+   public boolean rookAttack(char ch, int c, int r){
+      Coordinate theRook = new Coordinate(ch, c, r);
+      Link current = first;
+      while(current.next.next != null){
+         if(current.data.type==ch) current = current.next;
+         if(current.data.c == theRook.c || current.data.r == theRook.r){
+            switch(ch){
+               case 'R':
+                  if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                     || current.data.type == 'b' || current.data.type == 'n')
+                     return true;
+                  break;
+
+               case 'r':
+                  if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                     || current.data.type == 'B' || current.data.type == 'N')
+                     return true;
+                  break;             
+            }  // end switch
+         }  // end if
+         current = current.next;
+      }  // end while
+      if(current.data.c == theRook.c || current.data.r == theRook.r){    // 2rd to the end
+         switch(ch){
+            case 'R':
+               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                  || current.data.type == 'b' || current.data.type == 'n')
+                  return true;
+               break;
+
+            case 'r':
+               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                  || current.data.type == 'B' || current.data.type == 'N')
+                  return true;
+               break;             
+         }  // end switch
+      }
+      current = current.next;       // the last one
+      if(current.data.type==ch) return false;
+      if(current.data.c == theRook.c || current.data.r == theRook.r){
+         switch(ch){
+            case 'R':
+               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                  || current.data.type == 'b' || current.data.type == 'n')
+                  return true;
+               break;
+
+            case 'r':
+               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                  || current.data.type == 'B' || current.data.type == 'N')
+                  return true;
+               break;             
+         }  // end switch
+      }
+      return false;
+   }
+
+   public boolean queenAttack(char ch, int c, int r){
+      switch(ch){
+         case 'Q':
+            return (rookAttack('R', c, r) || bishopAttack('B', c, r));
+         case 'q':
+            return (rookAttack('r', c, r) || bishopAttack('b', c, r));
+      }
+      return false;
+   }
+
+   public boolean kingAttack(char ch, int c, int r){
+      Coordinate theKing = new Coordinate(ch, c, r);
+      Link current = first;
+      while(current.next.next != null){
+         if(current.data.type==ch) current = current.next;
+         if(current.data.c == theKing.c && (current.data.r - theKing.r == 1  ||
+            theKing.r - current.data.r == 1) || current.data.r == theKing.r &&
+            (current.data.c - theKing.c == 1 || theKing.c - current.data.c ==1)
+            || ((theKing.c - current.data.c == 1 || current.data.c - theKing.c == 1)
+            && (theKing.r - current.data.r == 1 || current.data.r - theKing.r == 1))){
+            switch(ch){
+               case 'K':
+                  if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                     || current.data.type == 'b' || current.data.type == 'n')
+                     return true;
+                  break;
+
+               case 'k':
+                  if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                     || current.data.type == 'B' || current.data.type == 'N')
+                     return true;
+                  break;             
+            }  // end switch
+         }  // end if
+         current = current.next;
+      }  // end while
+      if(current.data.c == theKing.c && (current.data.r - theKing.r == 1  ||
+         theKing.r - current.data.r == 1) || current.data.r == theKing.r &&
+         (current.data.c - theKing.c == 1 || theKing.c - current.data.c ==1)
+         || ((theKing.c - current.data.c == 1 || current.data.c - theKing.c == 1)
+         && (theKing.r - current.data.r == 1 || current.data.r - theKing.r == 1))){
+         switch(ch){
+            case 'K':
+               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                  || current.data.type == 'b' || current.data.type == 'n')
+                  return true;
+               break;
+
+            case 'k':
+               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                  || current.data.type == 'B' || current.data.type == 'N')
+                  return true;
+               break;             
+         }  // end switch
+      }  // end if
+      current = current.next;
+      if(current.data.type==ch) return false;
+      if(current.data.c == theKing.c && (current.data.r - theKing.r == 1  ||
+         theKing.r - current.data.r == 1) || current.data.r == theKing.r &&
+         (current.data.c - theKing.c == 1 || theKing.c - current.data.c ==1)
+         || ((theKing.c - current.data.c == 1 || current.data.c - theKing.c == 1)
+         && (theKing.r - current.data.r == 1 || current.data.r - theKing.r == 1))){
+         switch(ch){
+            case 'K':
+               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                  || current.data.type == 'b' || current.data.type == 'n')
+                  return true;
+               break;
+
+            case 'k':
+               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                  || current.data.type == 'B' || current.data.type == 'N')
+                  return true;
+               break;             
+         }  // end switch
+      }  // end if
+      return false;
+   }
+
+   public boolean knightAttack(char ch, int c, int r){
+      Coordinate theKnight = new Coordinate(ch, c, r);
+      Link current = first;
+      while(current.next.next != null){
+         if(current.data.type==ch) current = current.next;
+         if(((current.data.c - theKnight.c == 2 || current.data.c - theKnight.c == -2) &&
+            (current.data.r - theKnight.r == 1 || theKnight.r - current.data.r == 1)) ||
+            ((current.data.r - theKnight.r == 2 || current.data.r - theKnight.r == -2) &&
+            (current.data.c - theKnight.c == 1 || theKnight.c - current.data.c ==1))){
+            switch(ch){
+               case 'N':
+                  if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                     || current.data.type == 'b' || current.data.type == 'n')
+                     return true;
+                  break;
+
+               case 'n':
+                  if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                     || current.data.type == 'B' || current.data.type == 'N')
+                     return true;
+                  break;             
+            }  // end switch           
+         }  // end if
+         current = current.next;
+      }  // end while
+      if(((current.data.c - theKnight.c == 2 || current.data.c - theKnight.c == -2) &&
+         (current.data.r - theKnight.r == 1 || theKnight.r - current.data.r == 1)) ||
+         ((current.data.r - theKnight.r == 2 || current.data.r - theKnight.r == -2) &&
+         (current.data.c - theKnight.c == 1 || theKnight.c - current.data.c ==1))){
+         switch(ch){
+            case 'N':
+               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                  || current.data.type == 'b' || current.data.type == 'n')
+                  return true;
+               break;
+
+            case 'n':
+               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                  || current.data.type == 'B' || current.data.type == 'N')
+                  return true;
+               break;             
+         }  // end switch           
+      }  // end if
+      current = current.next;
+      if(current.data.type==ch) return false;
+      if(((current.data.c - theKnight.c == 2 || current.data.c - theKnight.c == -2) &&
+         (current.data.r - theKnight.r == 1 || theKnight.r - current.data.r == 1)) ||
+         ((current.data.r - theKnight.r == 2 || current.data.r - theKnight.r == -2) &&
+         (current.data.c - theKnight.c == 1 || theKnight.c - current.data.c ==1))){
+         switch(ch){
+            case 'N':
+               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
+                  || current.data.type == 'b' || current.data.type == 'n')
+                  return true;
+               break;
+
+            case 'n':
+               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
+                  || current.data.type == 'B' || current.data.type == 'N')
+                  return true;
+               break;             
+         }  // end switch           
+      }  // end if
+      return false;
+   }
+
+   public boolean pawnAttack(char ch, int c, int r){
+      Coordinate thePawn = new Coordinate(ch, c, r);
+      Link current = first;
+      while(current.next != null){
+         if(current.data.type==ch) current = current.next;
+         switch(ch){
+            case 'P':
+               if((thePawn.r - current.data.r == 1 && (thePawn.c - current.data.c == 1 ||
+                  current.data.c - thePawn.c == 1)) && current.data.type > 95)
+                  return true;
+               break;
+
+            case 'p':
+               if((current.data.r - thePawn.r == 1 && (thePawn.c - current.data.c == 1 ||
+                  current.data.c - thePawn.c == 1)) && current.data.type < 95)
+                  return true;
+               break;
+         }  // end switch
+         current = current.next;
+      }  // end while
+
+      if(current.data.type == ch) return false;
+      else if((thePawn.r - current.data.r == 1 && (thePawn.c - current.data.c == 1 ||
+      current.data.c - thePawn.c == 1)) && current.data.type > 95){
+         if(ch == 'P') return true;
+      }else if((current.data.r - thePawn.r == 1 && (thePawn.c - current.data.c == 1 ||
+      current.data.c - thePawn.c == 1)) && current.data.type < 95){
+         if(ch == 'p') return true;
+      }  // end if-else
       return false;
    }
 }
@@ -99,7 +349,7 @@ class ChessBoard{
 
    public static void main(String[] args) throws IOException{
       if(args.length != 2){
-         System.out.println("Usage: java -jar ChessPiece.jar <input file><output file>.");
+         System.out.println("Usage: java -jar ChessBoard.jar <input file><output file>.");
          System.exit(1);
       }
 
@@ -164,10 +414,38 @@ class ChessBoard{
          switch(targetChess){
             case 'B':
             case 'b':
-               if(chess.bishopAttack(targetChess,ccc,rrr) == true) out.println("y");
+               if(chess.bishopAttack(targetChess,ccc,rrr)) out.println("y");
                else out.println("n");
                out.flush();
                break;
+
+            case 'Q':
+            case 'q':
+               if(chess.queenAttack(targetChess,ccc,rrr)) out.println("y");
+               else out.println("n");
+               out.flush();
+               break;
+
+            case 'R':
+            case 'r':
+               if(chess.rookAttack(targetChess,ccc,rrr)) out.println("y");
+               else out.println("n");
+               out.flush();
+               break;
+
+            case 'K':
+            case 'k':
+               if(chess.kingAttack(targetChess,ccc,rrr)) out.println("y");
+               else out.println("n");
+               out.flush();
+               break;
+
+            case 'P':
+            case 'p':
+               if(chess.pawnAttack(targetChess,ccc,rrr)) out.println("y");
+               else out.println("n");
+               out.flush();
+               break;              
          }  // end switch
          chess.delete();
       }   // end while (proceed to the next line of input)
