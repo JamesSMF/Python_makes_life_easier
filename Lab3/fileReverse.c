@@ -2,13 +2,8 @@
 #include<stdlib.h>
 #include<string.h>
 
-<<<<<<< HEAD
-char* stringReverse(char* str){
-    char c, *front, *back;
-=======
 char *stringReverse(char *str){ /* A char pointer refered to a strng */
     char temp, *front, *back;
->>>>>>> fc98af7f863d17956937645922265196c59288fb
 
    /* Make sure *str != '\0' and str is not null. */
    if(!str || !*str)

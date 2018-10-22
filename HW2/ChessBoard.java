@@ -71,7 +71,10 @@ class LinkedList{
       Coordinate theBishop = new Coordinate(ch, c, r);
       Link current = first;
       while(current.next != null){
-         if(current.data.type==ch) current = current.next;
+         if(current.data.type==ch){
+            current = current.next;
+            continue;
+         }
          if(current.data.c - theBishop.c == current.data.r - theBishop.r ||
             current.data.c - theBishop.c == theBishop.r - current.data.r){
             switch(ch){
@@ -90,6 +93,8 @@ class LinkedList{
          }  // end if
          current = current.next;
       }  // end while
+
+      if(current.data.type==ch) return false;
       if(current.data.c - theBishop.c == current.data.r - theBishop.r ||
          current.data.c - theBishop.c == theBishop.r - current.data.r){
          switch(ch){
@@ -112,8 +117,11 @@ class LinkedList{
    public boolean rookAttack(char ch, int c, int r){
       Coordinate theRook = new Coordinate(ch, c, r);
       Link current = first;
-      while(current.next.next != null){
-         if(current.data.type==ch) current = current.next;
+      while(current.next != null){
+         if(current.data.type==ch){
+            current = current.next;
+            continue;
+         }
          if(current.data.c == theRook.c || current.data.r == theRook.r){
             switch(ch){
                case 'R':
@@ -131,22 +139,7 @@ class LinkedList{
          }  // end if
          current = current.next;
       }  // end while
-      if(current.data.c == theRook.c || current.data.r == theRook.r){    // 2rd to the end
-         switch(ch){
-            case 'R':
-               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
-                  || current.data.type == 'b' || current.data.type == 'n')
-                  return true;
-               break;
 
-            case 'r':
-               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
-                  || current.data.type == 'B' || current.data.type == 'N')
-                  return true;
-               break;             
-         }  // end switch
-      }
-      current = current.next;       // the last one
       if(current.data.type==ch) return false;
       if(current.data.c == theRook.c || current.data.r == theRook.r){
          switch(ch){
@@ -179,8 +172,11 @@ class LinkedList{
    public boolean kingAttack(char ch, int c, int r){
       Coordinate theKing = new Coordinate(ch, c, r);
       Link current = first;
-      while(current.next.next != null){
-         if(current.data.type==ch) current = current.next;
+      while(current.next != null){
+         if(current.data.type==ch){
+            current = current.next;
+            continue;
+         }
          if(current.data.c == theKing.c && (current.data.r - theKing.r == 1  ||
             theKing.r - current.data.r == 1) || current.data.r == theKing.r &&
             (current.data.c - theKing.c == 1 || theKing.c - current.data.c ==1)
@@ -202,26 +198,7 @@ class LinkedList{
          }  // end if
          current = current.next;
       }  // end while
-      if(current.data.c == theKing.c && (current.data.r - theKing.r == 1  ||
-         theKing.r - current.data.r == 1) || current.data.r == theKing.r &&
-         (current.data.c - theKing.c == 1 || theKing.c - current.data.c ==1)
-         || ((theKing.c - current.data.c == 1 || current.data.c - theKing.c == 1)
-         && (theKing.r - current.data.r == 1 || current.data.r - theKing.r == 1))){
-         switch(ch){
-            case 'K':
-               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
-                  || current.data.type == 'b' || current.data.type == 'n')
-                  return true;
-               break;
 
-            case 'k':
-               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
-                  || current.data.type == 'B' || current.data.type == 'N')
-                  return true;
-               break;             
-         }  // end switch
-      }  // end if
-      current = current.next;
       if(current.data.type==ch) return false;
       if(current.data.c == theKing.c && (current.data.r - theKing.r == 1  ||
          theKing.r - current.data.r == 1) || current.data.r == theKing.r &&
@@ -249,7 +226,10 @@ class LinkedList{
       Coordinate theKnight = new Coordinate(ch, c, r);
       Link current = first;
       while(current.next.next != null){
-         if(current.data.type==ch) current = current.next;
+         if(current.data.type==ch){
+            current = current.next;
+            continue;
+         }
          if(((current.data.c - theKnight.c == 2 || current.data.c - theKnight.c == -2) &&
             (current.data.r - theKnight.r == 1 || theKnight.r - current.data.r == 1)) ||
             ((current.data.r - theKnight.r == 2 || current.data.r - theKnight.r == -2) &&
@@ -270,25 +250,7 @@ class LinkedList{
          }  // end if
          current = current.next;
       }  // end while
-      if(((current.data.c - theKnight.c == 2 || current.data.c - theKnight.c == -2) &&
-         (current.data.r - theKnight.r == 1 || theKnight.r - current.data.r == 1)) ||
-         ((current.data.r - theKnight.r == 2 || current.data.r - theKnight.r == -2) &&
-         (current.data.c - theKnight.c == 1 || theKnight.c - current.data.c ==1))){
-         switch(ch){
-            case 'N':
-               if(current.data.type == 'k' || current.data.type == 'q' || current.data.type == 'r'
-                  || current.data.type == 'b' || current.data.type == 'n')
-                  return true;
-               break;
 
-            case 'n':
-               if(current.data.type == 'K' || current.data.type == 'Q' || current.data.type == 'R'
-                  || current.data.type == 'B' || current.data.type == 'N')
-                  return true;
-               break;             
-         }  // end switch           
-      }  // end if
-      current = current.next;
       if(current.data.type==ch) return false;
       if(((current.data.c - theKnight.c == 2 || current.data.c - theKnight.c == -2) &&
          (current.data.r - theKnight.r == 1 || theKnight.r - current.data.r == 1)) ||
@@ -314,8 +276,11 @@ class LinkedList{
    public boolean pawnAttack(char ch, int c, int r){
       Coordinate thePawn = new Coordinate(ch, c, r);
       Link current = first;
-      while(current.next != null){
-         if(current.data.type==ch) current = current.next;
+      while(current.next.next != null){
+         if(current.data.type==ch){
+            current = current.next;
+            continue;
+         }
          switch(ch){
             case 'P':
                if((thePawn.r - current.data.r == 1 && (thePawn.c - current.data.c == 1 ||
