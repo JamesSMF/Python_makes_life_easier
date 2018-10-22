@@ -23,5 +23,3 @@ This program reverses texts as the java program in Lab2 did.
 Reference:
 C documentation
 StackOverflow (looked up some concepts about pointers)
-
-strlen() was learned from stackOverflow.
