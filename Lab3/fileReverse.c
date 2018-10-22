@@ -3,7 +3,7 @@
 #include<string.h>
 
 char *stringReverse(char *str){ /* A char pointer refered to a strng */
-    char c, *front, *back;
+    char temp, *front, *back;
 
    /* Make sure *str != '\0' and str is not null. */
    if(!str || !*str)
@@ -11,9 +11,9 @@ char *stringReverse(char *str){ /* A char pointer refered to a strng */
 
    /* Swap the front and the back   (namely reverse) */
    for(front=str,back=str+strlen(str)-1;front < back;front++,back--){
-      c=*front;
-      *front=*back;
-      *back=c;
+      temp = *front;
+      *front = *back;
+      *back = temp;
    }
     return str;
 }
