@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-char *stringReverse(char *str){
+char* stringReverse(char* str){
     char c, *front, *back;
 
    /* Make sure *str != '\0' and str is not null. */
