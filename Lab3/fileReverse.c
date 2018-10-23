@@ -11,7 +11,7 @@ char *stringReverse(char *str){ /* A char pointer refered to a strng */
 
    /* Swap the front and the back   (namely reverse) */
    for(front=str,back=str+strlen(str)-1;front < back;front++,back--){
-      temp = *front;
+      temp = *front;        /* Here * is used for dereference */
       *front = *back;
       *back = temp;
    }
