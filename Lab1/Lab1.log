@@ -1,33 +1,17 @@
-Checker has failed. Below is the log of the checker
+Checker passed. Start with 4.0 points.
+=================================
+Makefile1 works
+Passed 
+Score is now 6.0
 =============================================
-echo Main-class: HelloUser > Manifest
-jar cvfm HelloUser.jar Manifest HelloUser.class
-added manifest
-adding: HelloUser.class(in = 1577) (out= 854)(deflated 45%)
-rm Manifest
-make: Nothing to be done for `all'.
-javac -Xlint 
-File HelloUser.java found
-File HelloUser2.java found
-File Makefile1 found
-File Makefile2 found
-File Makefile3 found
-File README found
-======================================
-All files are present in folder. Good!
-======================================
-make -f Makefile1: ran successfully
-HelloUser.jar was created
-make -f Makefile2: ran successfully
-HelloUser.jar was created
-make -f Makefile3: ran successfully
-Error: Executable Hello.jar is not created by running command make -f Makefile3
-FAIL
-==================================================
-Final score:
-0
-
-=========================== 
-Your homework was turned in late. Multiplying your score by 0.9 
-Updated final score 
-0
+Makefile2 works
+Passed 
+Score is now 8.0
+=============================================
+Makefile3 and Hello.jar work
+Passed 
+Score is now 10.0
+=============================================
+Solution has passed all tests. The ordeal is over, you can take a breath now.
+Final score
+10
