@@ -1,3 +1,10 @@
+/* James Li
+   gli38
+   charType.c
+   This program counts and prints out alphabetic, numeric, whitspace, and punctuation
+   chars from each line of input
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
