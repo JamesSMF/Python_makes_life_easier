@@ -5,7 +5,7 @@
 int main(int argc, char* argv[]){
    FILE* in;  /* file handle for input */
    FILE* out; /* file handle for output */
-   char ch = getc(in);
+   char ch;
 
    /* check command line for correct number of arguments */
    if( argc != 3 ){
@@ -28,13 +28,15 @@ int main(int argc, char* argv[]){
    }
 
    int alpha = 0;
-   char al[25];
+   char al[256];
    int num = 0;
-   char numeric[25];
+   char numeric[256];
    int punc = 0;
-   char punctuation[25];
+   char punctuation[256];
    int white = 0;
-   char wh[25];
+   char wh[256];
+
+   int lineNum = 1;
 
    while(ch != EOF){
       if(ch != '\n'){    /* not newline */
@@ -49,22 +51,39 @@ int main(int argc, char* argv[]){
             punctuation[punc ++] = ch;
          }         /* end if-else */
       }else{           /* If newline */
-         fprintf(out, "%d alphabetic characters: ", alpha);
+         fprintf(out, "line %d contains:\n", lineNum++);
+
+         if(alpha==1)
+            fprintf(out, "%d alphabetic character: ", alpha);
+         else
+            fprintf(out, "%d alphabetic characters: ", alpha);
          for(int i=0; i<alpha; i++){
             fprintf(out, "%c", al[i]);
          }
          fprintf(out, "\n");
-         fprintf(out, "%d numeric characters: ", num);
+
+         if(num==1)
+            fprintf(out, "%d numeric character: ", num);
+         else
+            fprintf(out, "%d numeric characters: ", num);
          for(int i=0; i<num; i++){
             fprintf(out, "%c", numeric[i]);
          }
          fprintf(out, "\n");
-         fprintf(out, "%d punctuation characters: ", punc);
+
+         if(punc==1)
+            fprintf(out, "%d punctuation character: ", punc);
+         else
+            fprintf(out, "%d punctuation characters: ", punc);
          for(int i=0; i<punc; i++){
             fprintf(out, "%c", punctuation[i]);
          }
          fprintf(out, "\n");
-         fprintf(out, "%d whitespace characters:", white);
+
+         if(white==0)
+            fprintf(out, "%d whitespace character: ", white+1);
+         else
+            fprintf(out, "%d whitespace characters: ", white+1);
          for(int i=0; i<white; i++){
             fprintf(out, "%c", wh[i]);
          }
@@ -75,6 +94,8 @@ int main(int argc, char* argv[]){
          num = 0;
          punc = 0;
          white = 0;
+
+         fprintf(out, "\n");
       }
       ch = getc(in);     /* get the next char */
    }

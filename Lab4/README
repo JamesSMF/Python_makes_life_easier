@@ -1,0 +1,16 @@
+// James Li
+// gli38
+// CMPS12B-Lab4
+// This program counts the number of alphabetic, numeric, whitespace, and punctuation chars from
+// each line of the input file.
+
+f1: charType.c
+f2: Makefile
+f3: README
+
+c1: make
+e1: charType
+p1: ./charType
+t1: in.txt
+o1: out.txt
+i1: in-correct.txt
