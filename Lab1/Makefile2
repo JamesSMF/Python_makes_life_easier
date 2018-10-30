@@ -5,7 +5,7 @@
 # A Makefile with macros
 #------------------------------------------------------------------------------
 
-VASRC    = HelloUser.java 
+JAVASRC    = HelloUser.java 
 SOURCES    = README Makefile $(JAVASRC)
 MAINCLASS  = HelloUser
 CLASSES    = HelloUser.class
