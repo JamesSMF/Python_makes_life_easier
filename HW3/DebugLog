@@ -1,0 +1,22 @@
+Nov. 2ed:
+The basic procedure for move functions are:
+1. check if the chess can reach the specific square
+2. check blocks on its way
+3. check if there is any chess at the destination square
+   if theSameColor:
+      CannotGoThere
+   else:
+      the chess on that square is dead
+4. move the chess to that square
+
+--------------------------------------------
+
+I should override the method insert() to accept both coordinate and Link.
+
+--------------------------------------------
+
+The bishopMove function always return true. The problem is not inside the function, but lies in the input array.
+Problem solved. The problem was I did not use charAt().
+
+--------------------------------------------
+
