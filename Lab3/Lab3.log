@@ -1,0 +1,21 @@
+Checker passed. Start with 4.0 points.
+=================================
+Simple test passes
+Passed Lab2-tests/simple.txt
+Score is now 5.0
+=============================================
+Lorem Ipsum test passes
+Passed Lab2-tests/lorem.txt
+Score is now 6.0
+=============================================
+Alphanumeric test passes
+Passed Lab2-tests/alphanumeric.txt
+Score is now 8.0
+=============================================
+Symbol test passes
+Passed Lab2-tests/symbol.txt
+Score is now 10.0
+=============================================
+Solution has passed all tests. The ordeal is over, you can take a breath now.
+Final score
+10
