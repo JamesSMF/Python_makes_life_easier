@@ -1,0 +1,24 @@
+line 1 contains:
+12 alphabetic characters: abchuryhqxbv
+3 numeric characters: 638
+8 punctuation characters: -)(*&!~`
+5 whitespace characters:     
+
+line 2 contains:
+6 alphabetic characters: JKLmnb
+3 numeric characters: 345
+13 punctuation characters: *()#$$%~!@?><
+2 whitespace characters:  
+
+line 3 contains:
+10 alphabetic characters: afsteyYDNC
+2 numeric characters: 64
+1 punctuation character: &
+6 whitespace characters:      
+
+line 4 contains:
+9 alphabetic characters: hfdjstreL
+1 numeric character: 9
+8 punctuation characters: *&^^%$":
+1 whitespace character: 
+
