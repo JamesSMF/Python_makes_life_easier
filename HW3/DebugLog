@@ -1,4 +1,3 @@
-Nov. 2ed:
 The basic procedure for move functions are:
 1. check if the chess can reach the specific square
 2. check blocks on its way
@@ -20,3 +19,15 @@ Problem solved. The problem was I did not use charAt().
 
 --------------------------------------------
 
+Bishop is good for now (might fail on some test cases, but generally good). Now work on revising other functions. The general struture can be borrowed from bishopMove().
+
+--------------------------------------------
+
+Fuck NullPointerException.
+Now I'm trying to count link numbers at certain points to test if insertFirst() and delete() work fine.
+
+Problem fixed. I should have broken the loop after inserting.
+
+--------------------------------------------
+
+The new conundrum is queenMove(). Even if I input the char 'R', the underlying algorithm still takes 'Q' as its input.
