@@ -1,5 +1,0 @@
-git pull origin master
-rm *.class
-git add -A .
-git commit -m *
-git push origin HEAD:master
