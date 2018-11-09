@@ -104,6 +104,18 @@ class LinkedList{
       return current.data.type;
    }
 
+   public Coordinate find(char chess){    // override to find coord of a certain chess
+      Link current = first;
+      Coordinate key = new Coordinate(chess, -1, -1);
+      while(current.data.type != chess){
+         if(current.next == null) return key;      // c == -1, r == -1
+         current = current.next;
+      }
+      key.c = current.data.c;
+      key.r = current.data.r;
+      return key;
+   }
+
    public boolean bishopMove(char ch, int c, int r, int targetcol, int targetrow){
       if(Math.abs(c-targetcol) != Math.abs(r-targetrow)) return false;   // can't go there
       Coordinate theBishop = new Coordinate(ch, c, r);
@@ -192,18 +204,19 @@ class LinkedList{
             continue;
          }
 
-         if(
-            (current.data.c == theRook.c || theRook.r == current.data.r) 
+         if(targetrow - theRook.r != 0 &&
+            (current.data.c == theRook.c) 
             &&
-               (
-               (Math.abs(current.data.c - theRook.c) < Math.abs(targetcol - theRook.c))
-               ||
-               (Math.abs(current.data.r - theRook.r) < Math.abs(targetrow - theRook.r))
-               )
+            Math.abs(current.data.r - theRook.r) > Math.abs(targetrow - theRook.r)
             )
-         {                    // check for blocks on the way
+         {                    // check for the last one
             return false;
-         }  // end if
+         }else if(targetcol - theRook.c != 0 &&     
+         theRook.r == current.data.r &&
+         Math.abs(current.data.c - theRook.c) > Math.abs(targetcol - theRook.c))
+         {
+            return false;
+         }
          current = current.next;
       }  // end while
 
@@ -219,18 +232,16 @@ class LinkedList{
          destination.data = target;
       }
 
-      System.out.println(current.data.c + " " + current.data.r);
-      System.out.println(theRook.c + " " + theRook.r);
-      if(!isRook &&
+      if(!isRook && targetrow - theRook.r != 0 &&
          (current.data.c == theRook.c) 
          &&
-         Math.abs(current.data.r - theRook.r) < Math.abs(targetrow - theRook.r)
+         Math.abs(current.data.r - theRook.r) > Math.abs(targetrow - theRook.r)
          )
       {                    // check for the last one
          return false;
-      }else if(!isRook && 
+      }else if(!isRook && targetcol - theRook.c != 0 &&   
       theRook.r == current.data.r &&
-      Math.abs(current.data.c - theRook.c) < Math.abs(targetcol - theRook.c))
+      Math.abs(current.data.c - theRook.c) > Math.abs(targetcol - theRook.c))
       {
          return false;
       }
@@ -433,6 +444,9 @@ class ChessMoves{
          int[] startPos = new int[2];
          int[] endPos = new int[2];
 
+         char ShangYiLun = 'w';
+         char ZheYiLun = 'k';
+
          for(int move=colonPosition+1; move<lineLen; move += 8){
             startPos[0] = Character.getNumericValue(nextLine.charAt(move+1)) - 1;
             startPos[1] = Character.getNumericValue(nextLine.charAt(move+3)) - 1;
@@ -522,9 +536,168 @@ class ChessMoves{
             chess.delete(startPos[0], startPos[1]);
             chess.insertFirst(chessType, endPos[0], endPos[1]);
 
-            chess.displayList();
-            System.out.println();
-         }  // end for
+                  /* ----------------------- */
+                  /* check for king's safety */
+                  /* ----------------------- */
+
+            boolean KingIsDead = false;
+            Coordinate pM = new Coordinate('z', -1, -1);    // pM: potential motherfucker
+
+            if(chessType < 95){     // upper case
+               if(ShangYiLun != 'w' && ShangYiLun != 'K'){  // check for alternatity
+                  fuckUp = true;
+                  out.print(startPos[0]+1 + " ");
+                  out.print(startPos[1]+1 + " ");
+                  out.print(endPos[0]+1 + " ");
+                  out.println(endPos[1]+1 + " illegal");
+                  out.flush();
+                  break;
+               }
+               ShangYiLun = 'k';
+               ZheYiLun = 'K';
+
+               Coordinate currentKing = chess.find(ZheYiLun);   // get the coord of king
+               Link tempChess = chess.first;
+
+               while(tempChess != null){
+                  if(tempChess.data.type > 95){   // lower case
+                     switch(tempChess.data.type){
+                        case 'b':
+                           pM = chess.find('b');
+                           if(chess.bishopMove('b', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'r':
+                           pM = chess.find('r');
+                           if(chess.rookMove('r', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'q':
+                           pM = chess.find('q');
+                           if(chess.queenMove('q', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'k':
+                           pM = chess.find('k');
+                           if(chess.kingMove('k', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'n':
+                           pM = chess.find('n');
+                           if(chess.knightMove('n', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'p':
+                           pM = chess.find('p');
+                           if(chess.pawnMove('p', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+                     }  // end switch
+
+                     if(KingIsDead) break;  // game over, your opponent wins
+                  }  // end if (lower case)
+                  tempChess = tempChess.next;
+               }  // end while (traverse to find lower case chesses)
+            }else{                   // lower case
+               if(ShangYiLun != 'w' && ShangYiLun != 'k'){  // check for alternatity
+                  fuckUp = true;
+                  out.print(startPos[0]+1 + " ");
+                  out.print(startPos[1]+1 + " ");
+                  out.print(endPos[0]+1 + " ");
+                  out.println(endPos[1]+1 + " illegal");
+                  out.flush();
+                  break;
+               }
+               ShangYiLun = 'K';
+               ZheYiLun = 'k';
+
+               Coordinate currentKing = chess.find(ZheYiLun);   // get the coord of king
+               Link tempChess = chess.first;
+
+               while(tempChess != null){
+                  if(tempChess.data.type < 95){   // upper case
+                     switch(tempChess.data.type){
+                        case 'B':
+                           pM = chess.find('B');
+                           if(chess.bishopMove('B', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'R':
+                           pM = chess.find('R');
+                           if(chess.rookMove('R', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'Q':
+                           pM = chess.find('Q');
+                           if(chess.queenMove('Q', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'K':
+                           pM = chess.find('K');
+                           if(chess.kingMove('K', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'N':
+                           pM = chess.find('N');
+                           if(chess.knightMove('N', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+
+                        case 'P':
+                           pM = chess.find('P');
+                           if(chess.pawnMove('P', pM.c, pM.r, currentKing.c, currentKing.r)){
+                              fuckUp = true;        // this move is suicide
+                              KingIsDead = true;    // King is dead
+                           }
+                           break;
+                     }  // end switch
+
+                     if(KingIsDead) break;  // game over, your opponent wins
+                  }  // end if
+                  tempChess = tempChess.next;
+               }  // end while (traverse to find upper case chesses)
+            }  // end if-else (for King's safety check)
+
+            if(KingIsDead){      // game over
+               out.print(startPos[0]+1 + " ");
+               out.print(startPos[1]+1 + " ");
+               out.print(endPos[0]+1 + " ");
+               out.println(endPos[1]+1 + " illegal");
+               out.flush();
+               break;   // break the for loop and goes to next line of input
+            }  // end if
+         }  // end for loop on line 449
 
          if(!fuckUp){
             out.println("legal");
@@ -532,7 +705,7 @@ class ChessMoves{
          }
 
          chess.delete();
-      }   // end while (proceed to the next line of input)
+      }   // end while loop on line 417 (proceed to the next line of input)
 
       sc.close();
       out.close();

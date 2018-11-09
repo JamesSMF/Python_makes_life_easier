@@ -40,6 +40,10 @@ knightMove() and pawnMove() might be a little bit challenging. But they are afte
 
 --------------------------------------------
 
-Test for simple-input.txt all passed. Now work on the check check.
+Test for simple-input.txt all passed. Now work on king's safety check.
 1. After each move, find the current position of the king
 2. If any opposite color chess can attack this motherfucKING, print out "illegal".
+
+--------------------------------------------
+
+Now I am pretty sure that the problem is within rookAttack().
