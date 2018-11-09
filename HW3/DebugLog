@@ -47,3 +47,10 @@ Test for simple-input.txt all passed. Now work on king's safety check.
 --------------------------------------------
 
 Now I am pretty sure that the problem is within rookAttack().
+
+--------------------------------------------
+
+Fixed rookAttack() and added a line to reset gua_le at the end of every loop round.
+Now the program works for simple-input.txt and basic-input.txt.
+
+Still got StringIndexOutOfBoundException when running on more-input.txt.

@@ -204,16 +204,17 @@ class LinkedList{
             continue;
          }
 
-         if(targetrow - theRook.r != 0 &&
-            (current.data.c == theRook.c) 
+         if(targetcol == theRook.c &&           // goes up and down
+            (current.data.c == theRook.c)       // block chess is on the same col
             &&
-            Math.abs(current.data.r - theRook.r) > Math.abs(targetrow - theRook.r)
+            (current.data.r - theRook.r) * (targetrow - current.data.r) > 0
             )
          {                    // check for the last one
             return false;
-         }else if(targetcol - theRook.c != 0 &&     
-         theRook.r == current.data.r &&
-         Math.abs(current.data.c - theRook.c) > Math.abs(targetcol - theRook.c))
+         }else if(targetrow == theRook.r &&     // goes left and right
+            theRook.r == current.data.r &&
+            (current.data.c - theRook.c) * (targetcol - current.data.c) > 0
+         )
          {
             return false;
          }
@@ -232,16 +233,17 @@ class LinkedList{
          destination.data = target;
       }
 
-      if(!isRook && targetrow - theRook.r != 0 &&
-         (current.data.c == theRook.c) 
+      if(!isRook && targetcol == theRook.c &&           // goes up and down
+         (current.data.c == theRook.c)       // block chess is on the same col
          &&
-         Math.abs(current.data.r - theRook.r) > Math.abs(targetrow - theRook.r)
+         (current.data.r - theRook.r) * (targetrow - current.data.r) > 0
          )
       {                    // check for the last one
          return false;
-      }else if(!isRook && targetcol - theRook.c != 0 &&   
-      theRook.r == current.data.r &&
-      Math.abs(current.data.c - theRook.c) > Math.abs(targetcol - theRook.c))
+      }else if(isRook && targetrow == theRook.r &&     // goes left and right
+         theRook.r == current.data.r &&
+         (current.data.c - theRook.c) * (targetcol - current.data.c) > 0
+      )
       {
          return false;
       }
@@ -697,7 +699,9 @@ class ChessMoves{
                out.flush();
                break;   // break the for loop and goes to next line of input
             }  // end if
-         }  // end for loop on line 449
+
+            chess.gua_le = null;
+         }  // end for loop on line 452
 
          if(!fuckUp){
             out.println("legal");
@@ -705,7 +709,7 @@ class ChessMoves{
          }
 
          chess.delete();
-      }   // end while loop on line 417 (proceed to the next line of input)
+      }   // end while loop on line 420 (proceed to the next line of input)
 
       sc.close();
       out.close();
