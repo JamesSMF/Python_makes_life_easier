@@ -408,7 +408,7 @@ class ChessMoves{
 
    public static void main(String[] args) throws IOException{
       if(args.length != 2){
-         System.out.println("Usage: java -jar ChessBoard.jar <input file><output file>.");
+         System.out.println("Usage: java -jar ChessMoves.jar <input file><output file>.");
          System.exit(1);
       }
 
