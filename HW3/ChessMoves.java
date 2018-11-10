@@ -727,7 +727,7 @@ class ChessMoves{
             }  // end if
 
             chess.gua_le = null;
-         }  // end for loop on line 457
+         }  // end for loop on line 468
 
          if(!fuckUp){
             out.println("legal");
@@ -735,7 +735,7 @@ class ChessMoves{
          }
 
          chess.delete();
-      }   // end while loop on line 420 (proceed to the next line of input)
+      }   // end while loop on line 422 (proceed to the next line of input)
 
       sc.close();
       out.close();
