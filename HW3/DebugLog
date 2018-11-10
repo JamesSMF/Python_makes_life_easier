@@ -54,3 +54,7 @@ Fixed rookAttack() and added a line to reset gua_le at the end of every loop rou
 Now the program works for simple-input.txt and basic-input.txt.
 
 Still got StringIndexOutOfBoundException when running on more-input.txt.
+
+--------------------------------------------
+
+The function for pawn should be revised. Pawn can move forward and attack diagonally. So add some check in moving.

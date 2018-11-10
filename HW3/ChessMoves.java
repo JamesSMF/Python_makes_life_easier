@@ -136,12 +136,7 @@ class LinkedList{
          if(
             (current.data.c - theBishop.c == current.data.r - theBishop.r ||
             current.data.c - theBishop.c == theBishop.r - current.data.r) 
-            &&
-               (
-               ((current.data.c > targetcol) && (current.data.r < theBishop.r) 
-               ||
-               (current.data.c < targetcol) && (current.data.r > theBishop.r))
-               )
+            && ((r - current.data.r) * (current.data.r - targetrow) > 0)
             )
          {                    // check for blocks on the way
             return false;
@@ -160,15 +155,11 @@ class LinkedList{
          target.r = targetrow;
          destination.data = target;
       }
+
       if(!isBishop  &&
          (current.data.c - theBishop.c == current.data.r - theBishop.r ||
          current.data.c - theBishop.c == theBishop.r - current.data.r) 
-         &&
-            (
-            ((current.data.c > targetcol) && (current.data.r < theBishop.r) 
-            ||
-            (current.data.c < targetcol) && (current.data.r > theBishop.r))
-            )
+         && ((r - current.data.r) * (current.data.r - targetrow) > 0)
          )
       {            // check for the last one
          return false;
@@ -354,34 +345,45 @@ class LinkedList{
    public boolean pawnMove(char ch, int c, int r, int targetcol, int targetrow){
       switch(ch){
          case 'P':
-            if(!(r - targetrow == 1 && Math.abs(c - targetcol) == 1))
+            if(!(r - targetrow == 1 && (Math.abs(c - targetcol) == 1 || c == targetcol)))
                return false;              // can't go there
             break;
 
          case 'p':
-            if(!(targetrow - r == 1 && Math.abs(c - targetcol) == 1))
+            if(!(targetrow - r == 1 && (Math.abs(c - targetcol) == 1 || c == targetcol)))
                return false;              // can't go there
             break; 
       }  // end switch
+
+      /* To this point, the move fits the rule of pawn moves */
 
       Coordinate thePawn = new Coordinate(ch, c, r);
       Link current = first;
       Coordinate target = new Coordinate('z', 0, 0);
       Link destination = new Link(target);
 
-      /* No blocks on Pawn's way is possible, so we only need to find the destination chess */
       while(current.next != null){
-         if(current.data.c == targetcol && current.data.r == targetrow){
+         if(current.data.c == targetcol && current.data.r == targetrow && c != targetcol){
             target.type = current.data.type;
             target.c = targetcol;
             target.r = targetrow;
             destination.data = target;
          }
 
+         switch(ch){
+            case 'P':
+               if(r - current.data.r == 1 && c == targetcol) return false;
+               break;
+
+            case 'p':
+               if(current.data.r - r == 1 && c == targetcol) return false;
+               break;
+         }
+
          current = current.next;
       }  // end while
 
-      if(current.data.c == targetcol && current.data.r == targetrow){
+      if(current.data.c == targetcol && current.data.r == targetrow && c != targetcol){
          target.type = current.data.type;
          target.c = targetcol;
          target.r = targetrow;
@@ -464,6 +466,16 @@ class ChessMoves{
          }
 
          for(int move=colonPosition+1; move<lineLen; move += 8){
+
+         /* --------------------------------------------------------------------------- */
+         /* if there is an extra space at the end of the input line, it will fuck up my */
+         /* program. So this if statement is used to check whether the stupid user (aka */
+         /* motherfucker) is inputting an extra space. If yes, fuck him! Fuck!                                                  */
+
+            if(nextLine.charAt(lineLen - 1) == ' ') break;
+
+         /* --------------------------------------------------------------------------- */
+
             startPos[0] = Character.getNumericValue(nextLine.charAt(move+1)) - 1;
             startPos[1] = Character.getNumericValue(nextLine.charAt(move+3)) - 1;
             endPos[0] = Character.getNumericValue(nextLine.charAt(move+5)) - 1;
@@ -715,7 +727,7 @@ class ChessMoves{
             }  // end if
 
             chess.gua_le = null;
-         }  // end for loop on line 452
+         }  // end for loop on line 457
 
          if(!fuckUp){
             out.println("legal");
