@@ -1,5 +1,5 @@
 git pull origin master
 rm *.class
-git add -A .
-git commit -m *
+git add ChessMoves.java update
+git commit -m ChessMoves.java update
 git push origin HEAD:master
