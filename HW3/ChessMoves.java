@@ -454,10 +454,11 @@ class ChessMoves{
 
          if(firstMove < 95){            // First move is uppercase
             fuckUp = true;
-            out.print(startPos[0]+1 + " ");
-            out.print(startPos[1]+1 + " ");
-            out.print(endPos[0]+1 + " ");
-            out.println(endPos[1]+1 + " illegal");
+            out.print(Character.getNumericValue(nextLine.charAt(colonPosition+2)) + " ");
+            out.print(Character.getNumericValue(nextLine.charAt(colonPosition+4)) + " ");
+            out.print(Character.getNumericValue(nextLine.charAt(colonPosition+6)) + " ");
+            out.println(Character.getNumericValue(nextLine.charAt(colonPosition+8)) + " illegal");
+            chess.delete();
             out.flush();
             continue;     // continue to the next line of input
          }
