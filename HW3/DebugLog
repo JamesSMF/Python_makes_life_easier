@@ -31,3 +31,26 @@ Problem fixed. I should have broken the loop after inserting.
 --------------------------------------------
 
 The new conundrum is queenMove(). Even if I input the char 'R', the underlying algorithm still takes 'Q' as its input.
+
+Problem fixed. Changed the comparison of chars to the comparison of actual rows and cols.
+
+--------------------------------------------
+
+knightMove() and pawnMove() might be a little bit challenging. But they are after all similar shit.
+
+--------------------------------------------
+
+Test for simple-input.txt all passed. Now work on king's safety check.
+1. After each move, find the current position of the king
+2. If any opposite color chess can attack this motherfucKING, print out "illegal".
+
+--------------------------------------------
+
+Now I am pretty sure that the problem is within rookAttack().
+
+--------------------------------------------
+
+Fixed rookAttack() and added a line to reset gua_le at the end of every loop round.
+Now the program works for simple-input.txt and basic-input.txt.
+
+Still got StringIndexOutOfBoundException when running on more-input.txt.
