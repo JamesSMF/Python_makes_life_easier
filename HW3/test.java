@@ -401,7 +401,7 @@ class LinkedList{
    }
 }
 
-class ChessMoves{
+class test{
    static LinkedList chess = new LinkedList();   // the most important thing in this prog.
 
    public static void main(String[] args) throws IOException{
@@ -448,19 +448,6 @@ class ChessMoves{
 
          char ShangYiLun = 'w';
          char ZheYiLun = 'k';
-
-         char firstMove = chess.find(Character.getNumericValue(nextLine.charAt(colonPosition+2))-1, 
-            Character.getNumericValue(nextLine.charAt(colonPosition+4))-1);
-
-         if(firstMove < 95){            // First move is uppercase
-            fuckUp = true;
-            out.print(startPos[0]+1 + " ");
-            out.print(startPos[1]+1 + " ");
-            out.print(endPos[0]+1 + " ");
-            out.println(endPos[1]+1 + " illegal");
-            out.flush();
-            continue;     // continue to the next line of input
-         }
 
          for(int move=colonPosition+1; move<lineLen; move += 8){
             startPos[0] = Character.getNumericValue(nextLine.charAt(move+1)) - 1;
@@ -728,6 +715,7 @@ class ChessMoves{
       out.close();
    }  // end main
 }  // end class
+
 
 
 
