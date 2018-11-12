@@ -1,6 +1,7 @@
 git pull origin HEAD:master
-rm *.class
-rm *.jar
+make
+rm *.class *.jar
 git add -A .
 git commit -m *
 git push origin HEAD:master
+make
