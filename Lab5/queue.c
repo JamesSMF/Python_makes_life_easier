@@ -53,20 +53,22 @@ void freeList(LinkedList* toBeFree){     // destructor
 
 void insert(int number, LinkedList S){    // Insert from the last
    Link new_link = *newLink(number);
-   if(S.first == NULL) S.first = &new_link;
+   if(S.first == NULL){
+      printf("NM$L\n");
+      S.first = &new_link;
+      printf("%d\n", S.first -> data);
+   }
    else S.last -> next = &new_link;
    S.last = &new_link;
+   printf("%d\n", S.first -> data);
 }
 
 void printLinkedList(FILE* out, LinkedList S){
-   printf("check 1\n");
    Link* cursor = S.first;         // error line
-   while((*cursor).next != NULL){
-      printf("check 2\n");
+   while(cursor != NULL){
       fprintf(out, "%d ", (*cursor).data);
       cursor = cursor -> next;
    }
-   fprintf(out, "%d\n", cursor);    // print the last one
 }
 
 Link find(int number, LinkedList S){
@@ -132,23 +134,23 @@ int main(int argc, char* argv[]){
             break;
 
          case 'p':       // if it is 'p'
-            printf("check 3\n");
+            numberArray[0] = 'z';
             printLinkedList(out, *theQueue);
             break;
 
          case '\n':       // if it is a new line
             actualVal = atoi(numberArray);    // parse the string into actual number
             insert(actualVal, *theQueue);     // insert into the queue
-            fprintf(out, "enqueued %d\n", actualVal);   // print enqueue message
+            if(numberArray[0] != 'z')         // if there is some number to be pushed in
+               fprintf(out, "enqueued %d\n", actualVal);   // print enqueue message
             memset(numberArray, '\0', sizeof(numberArray));    // set the number array to null
             i = 0;                            // set to 0 to accept new input
             break;
 
          default:      // for white spaces or other chars, just pass to the next char
             break;
-
       }
-   }
+   }   // end while
 
 
 
