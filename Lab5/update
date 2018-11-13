@@ -1,0 +1,6 @@
+git pull origin HEAD:master
+rm a.out
+git add -A .
+git commit -m *
+git push origin HEAD:master
+gcc *.c
