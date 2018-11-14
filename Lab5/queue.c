@@ -5,7 +5,8 @@
 
 /* ------------------------------------------ */
 /* Link                                       */
-/* Generate a link with an int value.         */
+/* Generate a link with an int value and a    */
+/* pointer to the next link                   */
 
 typedef struct Link{
    int data;
@@ -19,79 +20,62 @@ Link* newLink(int dataitem){          // constructor
    return theLink;              // return the Link
 }
 
-/* ------------------------------------------ */
-/* First Last List                            */
-/* Basically a linked list, used for          */
-/* implementation of queue.                   */
+/*
+ * void insert(int number, Link* first, Link* last){    // Insert from the last
+ *    Link* new_link = newLink(number);                 // create a new link
+ *       printf("%d\n", new_link == NULL);
+ *          printf("%d\n", first == NULL);
+ *             if(first == NULL){             // if empty
+ *                   printf("check 2\n");
+ *                         first = new_link;           // set first to the new link
+ *                            }
+ *                               else last -> next = new_link;
+ *                                  printf("check 3\n");
+ *                                     last = new_link;
+ *                                     }
+ *                                     */
 
-typedef struct LinkedList{
-   Link* first;
-   Link* last;
-} LinkedList;
+void freeList(Link* first){     // destructor
+   Link* toBeFree;
 
-LinkedList* newList(void){        // constructor
-   LinkedList* AList = (LinkedList*)malloc(2*sizeof(Link));
-   AList -> first = NULL;
-   AList -> last = NULL;
-   return AList;
-}
-
-void freeList(LinkedList* toBeFree){     // destructor
-   if(toBeFree -> first != NULL){        // the list is non-empty
-      Link* current = toBeFree -> first;
-      Link* temp = toBeFree -> first;
-      while(current != NULL){      // while there are still some links left
-         temp = current -> next;   // After freeing, next would no longer exist. So temp stores next.
-         free(current);            // free the link
-         current = NULL;
-         current = temp;           // go to the next unfreed link
-      }
-      free(toBeFree);              // free the list
-      toBeFree = NULL;
+   while(toBeFree != NULL){      // while there are still some links left
+      toBeFree = first -> next;   // After freeing, next would no longer exist. So temp stores next.
+      first = toBeFree;           // go to the next unfreed link
+      free(toBeFree);             // free the link
    }
 }
 
-void insert(int number, LinkedList S){    // Insert from the last
-   Link new_link = *newLink(number);
-   if(S.first == NULL){
-      printf("NM$L\n");
-      S.first = &new_link;
-      printf("%d\n", S.first -> data);
-   }
-   else S.last -> next = &new_link;
-   S.last = &new_link;
-   printf("%d\n", S.first -> data);
-}
-
-void printLinkedList(FILE* out, LinkedList S){
-   Link* cursor = S.first;         // error line
-   while(cursor != NULL){
-      fprintf(out, "%d ", (*cursor).data);
+void printLinkedList(FILE* out, Link* first){
+   Link* cursor = first;
+   while(cursor != NULL && cursor -> data != '\0'){
+      fprintf(out, "%d ", cursor -> data);
       cursor = cursor -> next;
    }
+   fprintf(out, "\n");
 }
 
-Link find(int number, LinkedList S){
-   Link null = *newLink(-2.718281829);
-   Link current = *(S.first);
-   while(current.data != number){
-      if(current.next == NULL) return null;
-      current = *current.next;
-   }
-   return current;
-}
+int delete(Link* first, Link* last){       // delete the first
+   int temp = -10000;    // just in case, set it to -10000 instead of -1
+   Link* tempLink = NULL;  // a null link used to store the new "first" link temporarily
 
-int delete(LinkedList S){       // delete the first
-   int temp = S.first -> data;      // store the value to be deleted
-   if(S.first -> next != NULL) S.last = NULL;       // check for empty
-   S.first = S.first -> next;
+   if(first == NULL) return temp;    // return -10000
+
+   tempLink = first -> next;       // store the next link
+   temp = first -> data;           // store the data to be deleted
+   if(tempLink == NULL) last = NULL;       // check for empty
+   free(first);                      // free the current first pointer
+   first = tempLink;                 // shift first to the next
+   printf("%d\n", first -> data);
+   printf("%d\n", first -> next -> data);
+
    return temp;
 }
 
 int main(int argc, char* argv[]){
    FILE* out;      // output file
    FILE* in;       // input file
-   LinkedList* theQueue = newList();     // declare an empty list
+   Link* head = NULL;     // the head of the list
+   Link* tail = NULL;     // the tail of the list
 
    /* check command line for correct number of arguments */
    if( argc != 3 ){
@@ -135,67 +119,59 @@ int main(int argc, char* argv[]){
 
          case 'p':       // if it is 'p'
             numberArray[0] = 'z';
-            printLinkedList(out, *theQueue);
+            printLinkedList(out, head);
+            break;
+
+         case 'd':
+            ;
+            int deletedNum = -10000; // just in case, set it to -10000 instead of -1
+            Link* tempLink = NULL;  // a null link used to store the new "first" link temporarily
+            numberArray[0] = 'z';
+
+            printf("%d %d\n", head == NULL, tail == NULL);
+            if(head == NULL || tail == NULL){
+               fprintf(out, "empty\n");
+               break;
+            }
+            printf("motherfucker\n");
+
+            tempLink = head -> next;       // store the next link
+            deletedNum = head -> data;           // store the data to be deleted
+            if(tempLink == NULL) tail = NULL;       // check for empty
+            free(head);                      // free the current first pointer
+            head = tempLink;                 // shift first to the next
+
+            fprintf(out, "%d\n", deletedNum);
             break;
 
          case '\n':       // if it is a new line
-            actualVal = atoi(numberArray);    // parse the string into actual number
-            insert(actualVal, *theQueue);     // insert into the queue
-            if(numberArray[0] != 'z')         // if there is some number to be pushed in
+            if(numberArray[0] != 'z'){         // if there is some number to be pushed in
+               actualVal = atoi(numberArray);    // parse the string into actual number
+
+            /* This is the insertion method. To avoid segfault, I wrote it directly here */
+               Link* new_link = newLink(actualVal);                 // create a new link
+               if(head == NULL){             // if empty
+                  head = new_link;           // set first to the new link
+               }
+               else tail -> next = new_link;
+               tail = new_link;
+            /* To this point, the link has been inserted into the list.                  */
+
                fprintf(out, "enqueued %d\n", actualVal);   // print enqueue message
+            }
             memset(numberArray, '\0', sizeof(numberArray));    // set the number array to null
             i = 0;                            // set to 0 to accept new input
             break;
 
          default:      // for white spaces or other chars, just pass to the next char
+            memset(numberArray, '\0', sizeof(numberArray));    // set the number array to null
+            i = 0;
+            numberArray[0] = 'z';
             break;
       }
    }   // end while
-
-
-
-
-
-
-/*
- *
- *    char line[32];              // the input would not be too long, so 32 might be enough
- *       while(fgets(line, 32, in) != NULL){       // get the input from next line
- *             char userInput = getc(in);        // initialize the user input char
- *                   printf("%c\n", userInput);
- *                         char theNumber[16];              // parse the number into string first
- *                               int insertNum = 0;           // initialize the number to be inserted
- *
- *                                     switch(userInput){
- *                                              case 'e':
- *                                                          getc(in);
- *                                                                      int i = 0;       // index for theNumber
- *                                                                                  char ch;
- *                                                                                              while(ch != '\n'){    // until the line hits the end
- *                                                                                                             ch = getc(in);            // goes to the next digit of the number
- *                                                                                                                            theNumber[i++] = ch;    // store one digit into the array
- *                                                                                                                                        }
- *                                                                                                                                                    insertNum = atoi(theNumber);      // parse the string into an int
- *                                                                                                                                                                insert(insertNum, *theQueue);      // insert the number into the queue
- *                                                                                                                                                                            fprintf(out, "enqueued %d\n", insertNum);
- *                                                                                                                                                                                        break;
- *
- *                                                                                                                                                                                                 case 'd':
- *                                                                                                                                                                                                             ;     // declarition is not a statement, so this empty statement is necessary
- *                                                                                                                                                                                                                         int deleted;
- *                                                                                                                                                                                                                                     deleted = delete(*theQueue);    // store the value deleted
- *                                                                                                                                                                                                                                                 fprintf(out, "%d\n", deleted);     // print in out in out file
- *                                                                                                                                                                                                                                                             break;
- *
- *                                                                                                                                                                                                                                                                      case 'p':
- *                                                                                                                                                                                                                                                                                  printLinkedList(out, *theQueue);
- *                                                                                                                                                                                                                                                                                              break;
- *
- *                                                                                                                                                                                                                                                                                                       default:              // other invalid chars or \n char
- *                                                                                                                                                                                                                                                                                                                   break;             // do nothing and goes to the next one
- *                                                                                                                                                                                                                                                                                                                         }
- *                                                                                                                                                                                                                                                                                                                            }      */
-   freeList(theQueue);
+   if(head != NULL)
+      freeList(head);
 
    fclose(in);
    fclose(out);
