@@ -3,4 +3,4 @@ rm a.out *.o
 git add -A .
 git commit -m *
 git push origin HEAD:master
-gcc queue.c queueClient.c
+make
