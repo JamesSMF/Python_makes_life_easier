@@ -1,10 +1,10 @@
-queue : queue.o
-	gcc -o queue queue.o queueClient.c
+queueClient : queueClient.o
+	gcc -o queueClient queueClient.o
 
-queue.o : queue.c
-	gcc -c -std=c99 -Wall queue.c queueClient.c
+queueClient.o : queueClient.c
+	gcc -c -std=c99 -Wall queueClient.c
 
 clean :
-	rm -f queue queue.o queueClient
+	rm -f queueClient queueClient.o
 check :
-	valgrind --leak-check=full queue in out
+	valgrind --leak-check=full queueClient in out
