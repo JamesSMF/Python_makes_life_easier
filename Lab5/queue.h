@@ -12,7 +12,7 @@
 
 /* Link                     */
 /* Exported reference type  */
-typedef struct Link* Link;
+typedef struct LinkObj* Link;
 
 /* constructor for node */
 Link* newLink(int dataitem);

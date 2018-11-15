@@ -1,5 +1,5 @@
 git pull origin HEAD:master
-rm a.out
+rm a.out *.o
 git add -A .
 git commit -m *
 git push origin HEAD:master
