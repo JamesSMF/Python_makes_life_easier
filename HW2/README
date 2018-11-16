@@ -1,0 +1,39 @@
+# James Li
+# gli38
+# HW2
+# README file for HW2
+
+
+################
+
+All files:
+
+ChessBoard.class
+Coordinate.class  
+LinkedList.class  
+more-input.txt   
+test-input.txt
+ChessBoard.jar    
+DebugLog          
+Makefile          
+more-output.txt  
+test-output.txt
+ChessBoard.java   
+Link.class        
+in                
+out
+README
+
+
+###############
+
+This program did not use inheritence. (Hope I would not be doced points for that)
+
+The linked list is the main body of this program.
+
+I also constructed a method called pawnAttack(), which tests for pawn attacks. I am 80% sure that it
+works.
+
+#################
+
+DebugLog is a log which I kept through out my debugging process. It helped me a lot.

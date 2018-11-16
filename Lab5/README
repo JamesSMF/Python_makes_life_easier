@@ -1,0 +1,11 @@
+// gli38
+// James Li
+// Lab5
+// This program is a C-inplementation of a linked queue.
+
+files:
+queue.c
+queue.h
+queueClient.c
+README
+Makefile
