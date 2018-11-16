@@ -17,7 +17,7 @@ class NQueens{
    static int xcoord;
    static int ycoord;
    static boolean noSol;   // check if has solution
-   static int[] result = new int[400];    // the result array
+   static int[] result = new int[10000];    // the result array
    static int nextEmpty = 0;    // the index of next empty slot in result
    static int nextElem = 0;     // the index of the next used slot
 
@@ -27,7 +27,7 @@ class NQueens{
         System.exit(1);
       }
        
-      theQueue = new int[200];
+      theQueue = new int[3000];
       nElems = 0;
       front = 0;
       rear = -1;
@@ -110,14 +110,14 @@ class NQueens{
    }
 
    static void push(int j){      // push one int into the queue
-      if(rear == 199) rear = -1;
+      if(rear == 2999) rear = -1;
       theQueue[++rear] = j;
       nElems++;
    }
 
    static int pop(){     // truncanate an elem out
       int temp = theQueue[front++];
-      if(front==200) front = 0;
+      if(front==3000) front = 0;
       nElems--;
       return temp;
    }
