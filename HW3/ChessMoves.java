@@ -345,12 +345,20 @@ class LinkedList{
    public boolean pawnMove(char ch, int c, int r, int targetcol, int targetrow){
       switch(ch){
          case 'P':
-            if(!(r - targetrow == 1 && (Math.abs(c - targetcol) == 1 || c == targetcol)))
+            /* first move can move two steps  */
+            if(r == 1 && !((Math.abs(c - targetcol) == 1 && r - targetrow == 1) || (c == targetcol && r - targetrow <= 2)))
+               return false;
+            /* else, check for normal moves */
+            else if(r!=1 && !(r - targetrow == 1 && (Math.abs(c - targetcol) == 1 || c == targetcol)))
                return false;              // can't go there
             break;
 
          case 'p':
-            if(!(targetrow - r == 1 && (Math.abs(c - targetcol) == 1 || c == targetcol)))
+            /* first move can move two steps  */
+            if(r == 5 && !((Math.abs(c - targetcol) == 1 && targetrow - r == 1) || (c == targetcol && targetrow - r <= 2)))
+               return false;
+            /* else, check for normal moves */
+            else if(r!=5 && !(targetrow - r == 1 && (Math.abs(c - targetcol) == 1 || c == targetcol)))
                return false;              // can't go there
             break; 
       }  // end switch
@@ -370,9 +378,25 @@ class LinkedList{
             destination.data = target;
          }
 
+         if(current.data.c==c && current.data.r==r){   // curremt chess is this pawn
+            current = current.next;
+            continue;
+         }
+
+         /* check for the first move of pawns */
+         if(r == 1 && ch == 'P')
+            if(r - current.data.r == 2 && c == targetcol){
+               return false;
+            }
+         else if(r == 5 && ch == 'p')
+            if(current.data.r - r == 2 && c == targetcol) return false;
+
+         /* check for other normal moves */
          switch(ch){
             case 'P':
-               if(r - current.data.r == 1 && c == targetcol) return false;
+               if(r - current.data.r == 1 && c == targetcol){
+                  return false;
+               }
                break;
 
             case 'p':
@@ -383,12 +407,30 @@ class LinkedList{
          current = current.next;
       }  // end while
 
+      boolean isPawn = false;
+
+      if(current.data.c==c && current.data.r==r)
+         isPawn = true;
+
       if(current.data.c == targetcol && current.data.r == targetrow && c != targetcol){
          target.type = current.data.type;
          target.c = targetcol;
          target.r = targetrow;
          destination.data = target;
       }
+
+      /* check for blocks for the last chess */
+      if(!isPawn && (r == 1 && ch == 'P') && (r - current.data.r ==2 && c == targetcol))
+         return false;
+      else if(!isPawn && (r == 5 && ch == 'p') && (current.data.r - r == 2 && c == targetcol))
+         return false;
+
+      /* if the pawn is not the first move */
+      else if(!isPawn && ch == 'P' && r - current.data.r == 1 && c == targetcol)
+         return false;
+      else if(!isPawn && ch == 'p' && current.data.r - r == 1 && c == targetcol)
+         return false;
+
 
       /* Check for destination square */
       
@@ -399,9 +441,9 @@ class LinkedList{
          return true;
       }else{                     // zi_ji_ren, bie_kai_qiang
          return false;
-      }
-   }
-}
+      }  // end if-else
+   }  // end pawnMove
+}  // end class LinkedList
 
 class ChessMoves{
    static LinkedList chess = new LinkedList();   // the most important thing in this prog.
@@ -741,6 +783,7 @@ class ChessMoves{
       out.close();
    }  // end main
 }  // end class
+
 
 
 
