@@ -1,0 +1,23 @@
+Finally enqueue works fine.
+
+Now work on the tricky one: print.
+
+----------------------------------
+
+Segmentation fault has been solved. But the program still prints out nothing. The problem should be inside the function printLinkedList().
+
+----------------------------------
+
+theQueue.first is always null. So the problem is also inside insert().
+
+----------------------------------
+
+Insertion and printing methods all fixed. Now the challenge is deletion. After that, check for memory leak.
+
+----------------------------------
+
+75% tasks solved. Now work on the delete method (when there is no more item to delete). After that, check for memory leak.
+
+----------------------------------
+
+I don't know what happened. But, holy shit, everything works!
