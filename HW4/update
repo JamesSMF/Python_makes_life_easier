@@ -3,4 +3,4 @@ rm *.class *.jar
 git add -A .
 git commit -m *
 git push origin HEAD:master
-javac NQueens.java
+make
