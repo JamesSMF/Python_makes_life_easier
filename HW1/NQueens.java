@@ -67,10 +67,11 @@ class NQueens{
    }
 
    static void doPermutation(int newSize){
-      if(newSize == 0) return;    // size is too small
+      if(newSize == 1) return;    // size is too small
       for(int j=0; j<newSize; j++){
          doPermutation(newSize-1);
-         if(newSize == 1) storeAnswer();
+         if(newSize == 2)
+            storeAnswer();
          if(noSol == false) return;     // only print one possible sol out
          rotate(newSize);
       }
