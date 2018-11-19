@@ -1,57 +1,6 @@
 import java.util.Scanner;
 import java.io.*;
 
-class Link{
-   public int data;
-   public Link next;
-
-   public Link(int val){
-      data = val;
-      next = null;
-   }
-}
-
-class LinkedStack{
-   public Link first;
-   public Link last;
-   public int top;
-   public Link index;
-
-   public LinkedStack(){
-      first = null;
-      last = null;
-      top = -1;
-      index = first;
-   }
-
-   public boolean isEmpty() { return first == null; }
-   public void insert(int intData){
-      Link newLink = new Link(intData);
-      if(isEmpty()){
-         first = newLink;
-         index = first;
-      }
-      else last.next = newLink;
-      last = newLink;
-      top ++;
-   }
-
-   public int delete(){
-      int temp = first.data;
-      if(first.next == null) last = null;   // only one item
-      first = first.next;     // delete the first link
-      top --;
-      return temp;
-   }
-
-   public int peek(){
-      if(index == null) return -1;
-      int valueInLink = index.data;
-      index = index.next;
-      return valueInLink;
-   }
-}
-
 class Stack{
    public int top;
    public int bottom;
@@ -144,51 +93,88 @@ class NQueens{
       }  // end while   (proceed to the next line)
    }
 
-/*
- *    static long fac(int n){      // factorial of n
- *          Stack numberStack = new Stack(n);
- *                while(n >= 1) numberStack.push(n--);
- *                      int sum = 1;
- *                            while(!numberStack.isEmpty(1)){
- *                                     sum *= numberStack.popEnd();
- *                                           }
- *                                                 return sum;
- *                                                    }
- *                                                    */
+   static long fac(int n){      // factorial of n
+      Stack numberStack = new Stack(n);
+      while(n >= 1) numberStack.push(n--);
+      int sum = 1;
+      while(!numberStack.isEmpty(1)){
+         sum *= numberStack.popEnd();
+      }
+      return sum;
+   }
 
    static void doPermutation(int newSize){
       if(size <= 3) return;    // size 2 or 3 definitely has no solution
+      if(size == 13){      // if size is 13, the factorial is out of int's bound
+         int Caozuoshu = 0;             // total rotation times
+         for(int i=1; i<12; i++){
+            Caozuoshu += fac(12) / fac(i);
+         }
 
-/*      int Caozuoshu = 0;             // total rotation times
- *            for(int i=1; i<newSize; i++){
- *                     Caozuoshu += fac(newSize) / fac(i);
- *                           }
- *                           */
       /* Caozuoshu is the number of rotations needed for size = newSize */
-      LinkedStack generalStack = new LinkedStack();
+         Stack generalStack = new Stack(Caozuoshu+1);   // extra one slot for 13
+         int currentSize = 3;     // start with level 3
+         for(int k=0; k<3; k++){
+            generalStack.push(2);
+            generalStack.push(2);
+            generalStack.push(3);
+         }
+
+         for(int ShiSan = 0; ShiSan < 13; ShiSan++){
+            while(currentSize < 12){
+               generalStack.push(++currentSize);
+               int currentTop = generalStack.top + 1;
+               for(int outer=1; outer<currentSize; outer++){    // copy currentSize times
+                  for(int inner=0; inner < currentTop; inner++){   // copy generalStack.top items
+                     int currentSlot = generalStack.peekArbitrary(inner);
+                     generalStack.push(currentSlot);
+                  }
+               }  // end outer for
+            }  // end while
+
+            generalStack.push(13);
+
+         /* Push process ends here. Following are pop process. */
+
+            while(!generalStack.isEmpty()){
+               int rotationSize = generalStack.pop();
+               rotate(rotationSize);
+               storeAnswer();
+               if(noSol == false) return;     // only print one possible sol out
+            }  // end while (pop)
+         }   // end for (13)
+         return;
+      }  // end if (size == 13)
+
+      int Caozuoshu = 0;             // total rotation times
+      for(int i=1; i<newSize; i++){
+         Caozuoshu += fac(newSize) / fac(i);
+      }
+
+      /* Caozuoshu is the number of rotations needed for size = newSize */
+      Stack generalStack = new Stack(Caozuoshu);
       int currentSize = 3;     // start with level 3
       for(int k=0; k<3; k++){
-         generalStack.insert(2);
-         generalStack.insert(2);
-         generalStack.insert(3);
+         generalStack.push(2);
+         generalStack.push(2);
+         generalStack.push(3);
       }
 
       while(currentSize < newSize){
-         generalStack.insert(++currentSize);
+         generalStack.push(++currentSize);
          int currentTop = generalStack.top + 1;
          for(int outer=1; outer<currentSize; outer++){    // copy currentSize times
             for(int inner=0; inner < currentTop; inner++){   // copy generalStack.top items
-               int currentSlot = generalStack.peek();
-               generalStack.insert(currentSlot);
+               int currentSlot = generalStack.peekArbitrary(inner);
+               generalStack.push(currentSlot);
             }
-            generalStack.index = generalStack.first;     // set back to first and loop around
          }  // end outer for
       }  // end while
 
    /* Push process ends here. Following are pop process. */
 
       while(!generalStack.isEmpty()){
-         int rotationSize = generalStack.delete();
+         int rotationSize = generalStack.pop();
          rotate(rotationSize);
          storeAnswer();
          if(noSol == false) return;     // only print one possible sol out
@@ -230,22 +216,5 @@ class NQueens{
          }
       }
    }
-
-/*
- *    static void push(int j){      // push one int into the queue
- *          if(rear == 2999) rear = -1;
- *                theQueue[++rear] = j;
- *                      nElems++;
- *                         }
- *
- *                            static int pop(){     // truncanate an elem out
- *                                  int temp = theQueue[front++];
- *                                        if(front==3000) front = 0;
- *                                              nElems--;
- *                                                    return temp;
- *                                                       }
- *
- *                                                          static boolean isEmpty() { return nElems==0; }
- *                                                          */
 }
 
