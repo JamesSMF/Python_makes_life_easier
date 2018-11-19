@@ -27,7 +27,10 @@ class LinkedStack{
    public boolean isEmpty() { return first == null; }
    public void insert(int intData){
       Link newLink = new Link(intData);
-      if(isEmpty()) first = newLink;
+      if(isEmpty()){
+         first = newLink;
+         index = first;
+      }
       else last.next = newLink;
       last = newLink;
       top ++;
@@ -185,7 +188,7 @@ class NQueens{
    /* Push process ends here. Following are pop process. */
 
       while(!generalStack.isEmpty()){
-         int rotationSize = generalStack.pop();
+         int rotationSize = generalStack.delete();
          rotate(rotationSize);
          storeAnswer();
          if(noSol == false) return;     // only print one possible sol out
