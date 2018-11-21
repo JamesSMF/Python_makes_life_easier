@@ -6,10 +6,10 @@ HW3 = 0.0, weight = 1.2
 HW4 = 0.0, weight = 1.2
 HW5 = 0.0, weight = 1.2
 Lab1 = 10.0, weight = 0.4
-Lab2 = 9.0, weight = 0.4
+Lab2 = 10.0, weight = 0.4
 Lab3 = 10.0, weight = 0.4
 Lab4 = 0.0, weight = 0.4
 Lab5 = 0.0, weight = 0.4
 Midterm1 = 7.6, weight = 1.25
 Midterm2 = 0.0, weight = 1.0
-Total = 43.9
+Total = 44.3
