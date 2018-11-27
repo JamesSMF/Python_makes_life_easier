@@ -1,41 +1,33 @@
+/* --------------------------------------------------------------------------- */
+/* IntegerLinkedList.c                                                         */
+/* Header file for the IntegerLinkedList ADT                                   */
+/* --------------------------------------------------------------------------- */
+
+#ifndef _INTEGER_LINKEDLIST_H_INCLUDE_
+#define _INTEGER_LINKEDLIST_H_INCLUDE_
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 
-/* ------------------------------------------ */
-/* Link                                       */
-/* Generate a link with an int value and a    */
-/* pointer to the next link                   */
+/* Link                     */
+/* Exported reference type  */
+typedef struct LinkObj* Link;
 
-typedef struct Link{
-   int data;
-   struct Link* next;     // point to the next link
-} Link;
+/* constructor for node */
+Link* newLink(int dataitem);
 
-Link* newLink(int dataitem){          // constructor
-   Link* theLink = (Link*) malloc(sizeof(Link));    // request a piece of memory
-   theLink -> data = dataitem;     // initialize
-   theLink -> next = NULL;
-   return theLink;              // return the Link
-}
+/*  freeList()                        */
+/* destructor for the LinkedList type */
+void freeList(Link* first);
 
-void freeList(Link* first){     // destructor
-   Link* toBeFree;
+/* --------------------------------------------------------------------------- */
+/* prototypes of ADT operations deleted to save space                          */
+/* --------------------------------------------------------------------------- */
 
-   while(toBeFree != NULL){      // while there are still some links left
-      toBeFree = first -> next;   // After freeing, next would no longer exist. So temp stores next.
-      first = toBeFree;           // go to the next unfreed link
-      free(toBeFree);             // free the link
-   }
-}
+/* printLinkedList()                                                       */
+/* prints a text representation of the list to the file pointed to by out  */
+/* pre: none                                                               */
+void printLinkedList(FILE* out, Link* first);
 
-void printLinkedList(FILE* out, Link* first){
-   Link* cursor = first;
-   while(cursor != NULL && cursor -> data != '\0'){
-      fprintf(out, "%d ", cursor -> data);
-      cursor = cursor -> next;
-   }
-   fprintf(out, "\n");
-}
-
-
+#endif
