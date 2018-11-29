@@ -54,16 +54,20 @@ for line in fileinput.input():
 
 
 
-# finaldic = sorted(wordCount, key = len)
-i = 1
-for word in wordCount:
-   if len(word) == i:
-      finaldic = dict()
-      finaldic = sorted(wordCount, key = wordCount.get)
-      for items in finaldic:
-         out.write(items + " " + bytes(finaldic.get(items)))   # print
+finaldic = sorted(wordCount, key = len)
+for word in finaldic:
+   out.write(word + " " + bytes(wordCount[word]) + "\n")
+
+
+#i = 1
+#for word in wordCount:
+#   if len(word) == i:
+#      finaldic = dict()
+#      finaldic = sorted(wordCount, key = wordCount.get)
+#      for items in finaldic:
+#         out.write(items + " " + bytes(finaldic.get(items)))   # print
       # end for
-      i = i + 1
+#      i = i + 1
    # end if
 # end for
 
