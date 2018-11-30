@@ -312,14 +312,6 @@ class Bard{
    }
 
 
-   static String finalAnswer(int wordLen, int index){
-      int linePointer = index;    // a pointer to line number
-      int loopTime = 0;    // the time of loop
-      
-
-   }
-
-
    static int asciiCalculate(String word){
       int sum = 0;
       for(int i=0; i<word.length(); i++){
