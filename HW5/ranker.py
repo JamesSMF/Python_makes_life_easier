@@ -1,9 +1,9 @@
 import fileinput
 from collections import OrderedDict
 
-out = open("copy.txt", "a+")
+out = open("FinalDataBase.txt", "a+")
 
-for loop in range(1, 4):
+for loop in range(1, 2):
    wordCount = dict()   # maps from word to frequency
 
    for line in fileinput.input():
@@ -12,9 +12,9 @@ for loop in range(1, 4):
          word = dataPair[0]
          wordCount[word] = dataPair[1]
 
-# end for
+   # end for
 
-   finaldic = OrderedDict(sorted(wordCount.items(), key=lambda x: x[0]))
+   finaldic = OrderedDict(sorted(wordCount.items(), key=lambda x: x[0], reverse = True))
    for word in finaldic:
       out.write(word + " " + bytes(wordCount[word]) + "\n")
 
