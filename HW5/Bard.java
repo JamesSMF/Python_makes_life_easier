@@ -53,273 +53,435 @@
 import java.util.*;
 import java.io.*;
 
-class Word{
-/* ------------------------------------------------------------------------------- */
-/* for information protection, this is a private field. This avoids user to change */
-/* word or frequency directly.                                                     */
-   
-   private String word;     // the name of the word
-   private int length;      // the frequency of the word
-   private int finalFreq;   // the final frequency of the word
-
-/* -------------------------------- Constructor ---------------------------------- */
-
-   public Word(String w){
-      word = w;
-      length = calculateLen();
-      finalFreq = 0;
-   }
-
-
-   /* -------------------------------------- */
-   /* calculate the ascii value for the word */
-   /* asciiCalculate()                       */
-
-   public static int asciiCalculate(String word){
-      int sum = 0;
-      for(int i=0; i<word.length(); i++){
-         sum += word.charAt(i);
-      }
-      return sum;
-   }
-
-
-   /* -------------------------------- */
-   /* calculate the length of the word */
-   /* calculateLen()                   */
-
-   public int calculateLen(){
-      int len = 0;
-      for(int i=0; i<word.length(); i++) len++;
-      return len;
-   }
-
-
-   /* ----------------------------- */
-   /* get the frequency of the word */
-   /* getFreq()                     */
-
-   public int getFreq(){
-      return finalFreq;
-   }
-   
-   public int getLen(){
-      return length;
-   }
-
-
-   /* ------------------------ */
-   /* get the name of the word */
-   /* getWord()                */
-
-   public String getWord(){
-      return word;
-   }
-
-
-   /* ----------------------------------- */
-   /* set the final frequency of the word */
-   /* setFreq()                           */
-
-   public void setFreq(int freq){
-      finalFreq = freq;
-   }
-
-   public void setWord(String str){
-      word = str;
-   }
-
-   public boolean equals(Object x){
-      boolean eq = false;
-      Word theWord;
-
-      if(x instanceof Word){
-         theWord = (Word) x;
-         eq = (this.word.equals(theWord.word));
-      }
-      return eq;
-   }
-
-   public int hashCode(){
-      int totalAscii = asciiCalculate(this.word);
-      int hash = totalAscii % 26;
-      return hash;
-   }
-}
-
 class Bard{
-   /* ---------------------------------------------------------------------------------- */
-   /* global variable: Hashtable table. This table serves as a dictionary to store len   */
-   /* of words and corresponding word objects in shakespeare's work.                     */
 
-   static Hashtable<Word, Integer> table = new Hashtable<>();
-
-   /* Hashtable<Length_Of_The_Word, Word_Object> table                                   */
+   static int[] theQueue = new int[50000];     // the queue is for the input
+   static int front = 0;    // the front index of the queue
+   static int rear = -1;     // the rear index of the queue
+   static int nElems = 0;   // the number of elems in the queue
    /* -----------------------------  main() starts here  ------------------------------- */
-
-   static Word[] wordArray;   // a new array to store words with length == wordLength
-   static int index;                      // index of the array above
 
    public static void main(String[] args)throws FileNotFoundException, IOException{
       Scanner sc = new Scanner(new FileReader(args[0]));   // the scanner for input file
       PrintWriter out = new PrintWriter(new FileWriter(args[1]));  // printer to write to the output file
 
-      while(sc.hasNextLine()){
-         Scanner shakespeare = new Scanner(new FileReader("FinalDataBase.txt"));
-         int wordLength;
-         int rank;
+      Scanner shakespeare = new Scanner(new FileReader("FinalDataBase.txt"));
 
-         wordLength = sc.nextInt();   // the first number in that line is the length of the word
-         rank = sc.nextInt();         // the second number is the rank of frequency
-         if(wordLength > 19 || wordLength < 1){     // there is no word with length > 19
+      while(sc.hasNextInt())
+         push(sc.nextInt());
+
+      while(!isEmpty()){
+         
+         int wordLength = pop();
+         int rank = pop();
+
+         if(wordLength < 1 || wordLength == 25 || wordLength == 26 || 
+           (wordLength > 27 && wordLength < 36) || wordLength > 36){
             out.println("-");
             continue;
          }
 
          int linePointer = 0;    // a pointer to line number
-         int loopTime = 0;
+         int loopTime = 0;       // loop counter
+         String[] WordIWant = new String[2];
 
-
-
-         if(wordLength == 19){            // index 0 to 10
-            while(shakespeare.hasNextLine()){
-               if(loopTime == rank) break;
-               loopTime++;
-               continue;
-            }
-
-            if(loopTime > 10){ 
+         if(wordLength == 36){            // index 0
+            if(rank == 0)
+               out.println("tragical-comical-historical-pastoral");
+            else
                out.println("-");
-               continue;    // to the next line of input file
-            }
 
-            String theWord = shakespeare.next();
-            out.println(theWord)
-         }else if(wordLength == 18){     // index 11 to 23
-            linePointer = 11;
-            for(int i=0; i<11; i++) shakespeare.nextLine();
-            while(shakespeare.hasNextLine()){
-               if(loopTime == rank) break;
-               loopTime++;
+            out.flush();
+            continue;       // to the next line of input
+         }else if(wordLength == 27){     // index 1 to 2
+            if(rank == 0)
+               out.println("honorificabilitudinitatibus");
+            else if(rank == 1)
+               out.println("six-or-seven-times-honour'd");
+            else
+               out.println("-");
+
+            out.flush();
+            continue;
+         }else if(wordLength == 24){
+            if(rank == 0)
+               out.println("king_henry_viii|epilogue");
+            else
+               out.println("-");
+
+            out.flush();
+            continue;       // to the next line of input
+         }else if(wordLength == 23){
+            if(rank == 0)
+               out.println("water-flies-diminutives");
+            else
+               out.println("-");
+
+            out.flush();
+            continue;       // to the next line of input
+         }else if(wordLength == 22){
+            if(rank == 0)
+               out.println("to-and-fro-conflicting");
+            else
+               out.println("-");
+
+            out.flush();
+            continue;       // to the next line of input
+         }else if(wordLength == 21){
+            if(rank == 0)
+               out.println("candle-wasters--bring");
+            else if(rank == 1)
+               out.println("castalion-king-urinal");
+            else if(rank == 2)
+               out.println("that-way-accomplish'd");
+            else
+               out.println("-");
+
+            out.flush();
+            continue;
+         }else if(wordLength == 20){
+            if(rank == 0)
+               out.println("death-counterfeiting");
+            else if(rank == 1)
+               out.println("obligation-'armigero");
+            else if(rank == 2)
+               out.println("one-trunk-inheriting");
+            else if(rank == 3)
+               out.println("wholesome-profitable");
+            else
+               out.println("-");
+
+            out.flush();
+            continue;
+         }else if(wordLength == 19){      // line 14 to 24
+            if(rank > 10){
+               out.println("-");
+               out.flush();
                continue;
             }
-         }
 
-      }  // end while (go to next line of input file)
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 13 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
 
-      
-
-
-
-
-      /* --------------------------------------------------------------------- */
-      /* This part parses all the words in shakespeare.txt into the hash table */   
-
-      while(shakespeare.hasNextLine()){
-         String line = shakespeare.nextLine().trim() + " ";    // input the whole line
-
-      /* ------------------------------------------- */
-
-         String[] token = line.split("\\s+");       // put into array splited by " "
-         Word[] parseToken = new Word[token.length];   // a Word array
-         for(int i=0; i<token.length; i++){        // loop through the string array
-            parseToken[i] = new Word(token[i]);
-
-            if(table.containsKey(parseToken[i])){ // if this word object has already existed
-               int currFreq = table.get(parseToken[i]);   // get the current frequency of the word
-               table.replace(parseToken[i], currFreq, ++currFreq);
-
-               /* replace the old frequency with the new one (after incrementation) */
-               /* increse the frequency by 1                                        */
-
-            }else{                                       // if it is a new word
-               table.put(parseToken[i], new Integer(1)); // put a new word with frequency = 1
-            } // end if-else   
-         }  // end for
-
-      /* To this point, all the words on the current line are stored into the hash table */
-      }  // end while(shakespeare.hasNextLine())
-
-   /* To this point, all the words in shakespeare's masterpiece are stored into the hash table */
-   /* --------------------------------------------------------------------------------------- */
-
-      Scanner sc = new Scanner(new FileReader(args[0]));   // the scanner for input file
-      PrintWriter out = new PrintWriter(new FileWriter(args[1]));  // printer to write to the output file
-
-      while(sc.hasNextLine()){ // while the input file does not hit the end
-         int wordLength;
-         int rank;
-         wordArray = new Word[1024];
-         index = 0;
-
-         try{
-            wordLength = sc.nextInt();   // the first number in that line is the length of the word
-            rank = sc.nextInt();         // the second number is the rank of frequency
-         }catch(NoSuchElementException e1){
-            break;
-         }
-
-         Enumeration<Word> enumKey = table.keys();        // declare an iterator used to find the word
-         while (enumKey.hasMoreElements()){    // loop through the entire hash table
-            Word key = enumKey.nextElement();   // go to the next element in the hash table
-            key.setFreq(table.get(key));    // get the freq of the word and store it also in the word obj
-            if(key.getLen() == wordLength){        // if the word is of the correct length
-               wordArray[index++] = key;      // store it into the array
-               System.out.println(wordArray[index].getWord() + " " + wordArray[index].getFreq());
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 18){     // line 25 to 35
+            if(rank > 10){
+               out.println("-");
+               out.flush();
+               continue;
             }
-         }  // end while
 
-      /* To this point, all the words with correct length has been stored into the array */
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 24 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
 
-         quickSort(0, index-1);    // apply quick sort to the array
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 17){            // line 36 to 74
+            if(rank > 38){
+               out.println("-");
+               out.flush();
+               continue;
+            }
 
-      /* now the array is sorted by the frequency (but still not alphabetical) */
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 35 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
 
-/*
- *
- *          int freqRank = 0;         // the rank of the frequency
- *                   boolean hasAnswer = false;
- *                            Word currentWord = wordArray[0];
- *                                     int last = -100;
- *                                              for(int i=index-2; i>=0; i--){
- *                                                          if(wordArray[i].getFreq() != wordArray[i+1].getFreq()){
- *                                                                         if(last < 0){
- *                                                                                           insertionSort(i+1, index-1);
- *                                                                                                          }else{
- *                                                                                                                            System.out.println(wordArray[i+1].getWord() + " " + wordArray[last].getWord());
- *                                                                                                                                              insertionSort(i+1, last);
- *                                                                                                                                                             }
- *                                                                                                                                                                            last = i;
- *                                                                                                                                                                                        }  // end outer if
- *                                                                                                                                                                                                 }  // end for
- *
- *                                                                                                                                                                                                 */
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 16){           // line 75 to 142
+            if(rank > 67){
+               out.println("-");
+               out.flush();
+               continue;
+            }
 
-         for(int i=0; i<index; i++){
-            out.println(wordArray[i].getWord() + " " + wordArray[i].getFreq());
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 74 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 15){           // line 143 to 301
+            if(rank > 158){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 142 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 14){           // line 302 to 594
+            if(rank > 292){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 301 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 13){          // line 595 to 1162
+            if(rank > 567){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 594 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 12){         // line 1163 to 2174
+            if(rank > 1011){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 1162 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 11){         // line 2175 to 3834
+            if(rank > 1659){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 2174 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 10){         // line 3835 to 6264
+            if(rank > 2429){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 3834 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 9){        // line 6425 to 10165
+            if(rank > 3740){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 6424 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 8){         // line 10166 to 15026
+            if(rank > 4860){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 10165 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 7){         // line 15027 to 20223
+            if(rank > 5196){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 15026 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 6){         // line 20224 to 25070
+            if(rank > 4846){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 20223 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 5){         // line 25071 to 28505
+            if(rank > 3434){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 25070 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 4){        // line 28506 to 30543
+            if(rank > 2037){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 28505 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 3){       // line 30544 to 31265
+            if(rank > 721){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 30543 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 2){       // line 31266 to 31468
+            if(rank > 202){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 31265 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
+            out.flush();
+         }else if(wordLength == 1){      // line 31469 to 31504
+            if(rank > 35){
+               out.println("-");
+               out.flush();
+               continue;
+            }
+
+            FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+            for(int i = 0; i < 31468 + rank; i++)
+               br.readLine();
+            String lineIWant = br.readLine();
+            WordIWant = lineIWant.split(" ");
+
+            out.println(WordIWant[0]);
             out.flush();
          }
-      }  // end while (go to the next line of input)
+      }  // end while (go to next line of input file)
 
-   /* ---------------------------------------------- */
-   /* close the Scanner and PrintWriter after using. */
-
-      shakespeare.close();
       sc.close();
+      shakespeare.close();
       out.close();
+   } // end main
 
-   /* ---------------------------------------------- */
+   static void push(int j){      // push one int into the queue
+      if(rear == 49999) rear = -1;
+      theQueue[++rear] = j;
+      nElems++;
    }
 
-
-   static int asciiCalculate(String word){
-      int sum = 0;
-      for(int i=0; i<word.length(); i++){
-         sum += word.charAt(i);
-      }
-      return sum;
+   static int pop(){     // truncanate an elem out
+      int temp = theQueue[front++];
+      if(front==50000) front = 0;
+      nElems--;
+      return temp;
    }
-}
+
+   static boolean isEmpty() { return nElems==0; }
+}  // end class
+
+
 
 
 
