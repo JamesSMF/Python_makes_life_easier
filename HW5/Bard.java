@@ -4,18 +4,18 @@
 /* Bard.java                                                              */
 /* This program does vocabulary analysis of William Shakespears's work    */
 /* ---------------------------------------------------------------------- */
-/* This program parses Shakespeare's work into a hash table. The hash     */
-/* table has the structure <the_word_Object, frequency_of_the_word>. The  */
-/* input file should have two ints on each line. The first one is the     */
-/* length of the word and the second one is the rank of the frequency.    */
+/* This program does a simple word analysis of shakespeare's "Sonnet".    */
+/* It reads the database and finds the appropriate word to print out.     */
+/* The input file should have two ints on each line. The first is the     */
+/* lenghth of the word and the second is the frequency rank.              */
+/* ---------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
+/* ------------------------- Helper Programs ---------------------------- */
+/* ---------------------------------------------------------------------- */
+/* converter.py         sorter.py         ranker.py         Reverter.java */
 /* ---------------------------------------------------------------------- */
 /* ----------------------------- Class ---------------------------------- */
 /* -------------------------- Descriptions ------------------------------ */
-/* ---------------------------------------------------------------------- */
-/* In the class Word, there are three variables in its field. The name of */
-/* the word, the length of the word, and the frequency of the word. The   */
-/* length is important because we will use this to search for the word    */
-/* afterwards, and it is the real key value.                              */
 /* ---------------------------------------------------------------------- */
 /* The class Bard contains the main function. It first parses the work as */
 /* a whole into the table. Then it turns to the input file and solve one  */
@@ -66,15 +66,16 @@ class Bard{
       PrintWriter out = new PrintWriter(new FileWriter(args[1]));  // printer to write to the output file
 
       Scanner shakespeare = new Scanner(new FileReader("FinalDataBase.txt"));
+      /* read data from the FinalDataBase.txt. */
 
-      while(sc.hasNextInt())
-         push(sc.nextInt());
+      while(sc.hasNextInt())  // while input file has next int
+         push(sc.nextInt());  // store this int into the queue
 
-      while(!isEmpty()){
-         
-         int wordLength = pop();
-         int rank = pop();
+      while(!isEmpty()){              // while the queue is not empty
+         int wordLength = pop();      // pop the first number as the wordlength
+         int rank = pop();            // pop the second one as rank
 
+         /* There is no word of following lengths */
          if(wordLength < 1 || wordLength == 25 || wordLength == 26 || 
            (wordLength > 27 && wordLength < 36) || wordLength > 36){
             out.println("-");
@@ -82,10 +83,10 @@ class Bard{
          }
 
          int linePointer = 0;    // a pointer to line number
-         int loopTime = 0;       // loop counter
-         String[] WordIWant = new String[2];
+         int loopTime = 0;       // loop counter for each length
+         String[] WordIWant = new String[2];   // store the word on the current line in the data base
 
-         if(wordLength == 36){            // index 0
+         if(wordLength == 36){
             if(rank == 0)
                out.println("tragical-comical-historical-pastoral");
             else
@@ -93,7 +94,7 @@ class Bard{
 
             out.flush();
             continue;       // to the next line of input
-         }else if(wordLength == 27){     // index 1 to 2
+         }else if(wordLength == 27){
             if(rank == 0)
                out.println("honorificabilitudinitatibus");
             else if(rank == 1)
@@ -154,7 +155,7 @@ class Bard{
             out.flush();
             continue;
          }else if(wordLength == 19){      // line 14 to 24
-            if(rank > 10){
+            if(rank > 10){     // there are only 10 words with length 19
                out.println("-");
                out.flush();
                continue;
@@ -162,12 +163,12 @@ class Bard{
 
             FileInputStream fs = new FileInputStream("FinalDataBase.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-            for(int i = 0; i < 13 + rank; i++)
+            for(int i = 0; i < 13 + rank; i++)   // pass all lines before that line
                br.readLine();
-            String lineIWant = br.readLine();
-            WordIWant = lineIWant.split(" ");
+            String lineIWant = br.readLine();    // read the correct line
+            WordIWant = lineIWant.split(" ");    // store the word and freq
 
-            out.println(WordIWant[0]);
+            out.println(WordIWant[0]);          // print out the word
             out.flush();
          }else if(wordLength == 18){     // line 25 to 35
             if(rank > 10){
