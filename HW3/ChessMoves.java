@@ -92,6 +92,7 @@ class LinkedList{
 
    public void delete(){        // override
       first = null;
+      gua_le = null;
    }
 
    public char find(int col, int row){
@@ -783,6 +784,7 @@ class ChessMoves{
       out.close();
    }  // end main
 }  // end class
+
 
 
 
