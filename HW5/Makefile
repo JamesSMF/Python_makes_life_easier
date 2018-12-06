@@ -1,9 +1,9 @@
-NQueens: Bard.class
+Bard: Bard.class
 	echo Main-class: Bard > Manifest
 	jar cvfm Bard.jar Manifest Bard.class
 	rm Manifest
 
-NQueens.class: Bard.java
+Bard.class: Bard.java
 	javac -Xlint Bard.java
 
 clean:
