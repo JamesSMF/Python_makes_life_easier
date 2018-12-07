@@ -31,5 +31,6 @@ theStack = Stack()
 for char in  theString:
    theStack.push(char)
 
-theStack.printStack();
+while not theStack.isEmpty():
+   print(bytes(theStack.pop()), end='');
 print('', end = '\n');
