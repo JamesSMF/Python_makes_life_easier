@@ -1,6 +1,5 @@
 class Stack(object):
-   theList = [1]
-   del theList[0]
+   theList = []
    elem = 0
 
    def push(self, num):

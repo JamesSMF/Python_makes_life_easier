@@ -1,8 +1,7 @@
 from __future__ import print_function
 
 class Stack(object):
-   theList = [1]
-   del theList[0]   # Now it is an empty list
+   theList = []
    elem = 0         # has 0 element at first
 
    def push(self, num):             # push one item into the stack

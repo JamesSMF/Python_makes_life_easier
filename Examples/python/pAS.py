@@ -8,8 +8,7 @@ def pAS(A, i, B):
 	C = B
 	pAS(A, i-1, C)
 
-B = [1]
-del B[0]     # B is a empty list now
+B = []
 A = [1, 2, 3, 4]
 i = len(A)-1
 pAS(A, i, B)
