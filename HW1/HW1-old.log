@@ -12,18 +12,13 @@ Score is now 6.0
 Passed HW1-tests/eight-first.txt
 Score is now 7.0
 =============================================
-Up to 11X11, first column tests pass
-Passed HW1-tests/ten-eleven-first.txt
-Score is now 8.0
-=============================================
-Up to 8X8, all tests pass
-Passed HW1-tests/six-eight-all.txt
-Score is now 9.0
-=============================================
-Up to 10X10, all tests pass
-Passed HW1-tests/ten-all.txt
-Score is now 10.0
-=============================================
-Solution has passed all tests. The ordeal is over, you can take a breath now.
+Solution has failed on an input. This input is given in your solution folder.
+An example output is also given in your directory.Messages from verifier script follows. This should give some description of why your solution is incorrect.
+====================================
+For input: 11 1 10
+ your output file has no output.
+FAIL
+
+===========================================
 Final score
-10
+7
