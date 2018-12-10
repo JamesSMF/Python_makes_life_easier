@@ -1,0 +1,69 @@
+# James Li
+# gli38
+# README
+
+############
+
+f1: Makefile
+f2: README
+
+c1: make
+e1: NQueens.jar
+p1: java -jar NQueens.jar
+t1: test-input.txt
+o1: out.txt
+i1: test-output.txt
+
+############
+
+This program finishes handling datas in more-input.txt within 110 seconds.
+
+###########
+
+Note: I got the idea of permutation from one of my assignments in CS12A by Prof. Tantalo.
+
+HOWEVER, this recursive permutation method was coded by myself.
+(Prof. Tantalo did not teach us to use a recursive method for permutation.)
+
+
+Prof. Tantalo's version (pseudo-code):
+
+scan the array from right-to-left
+    if the current element is less than its right-hand neighbor
+        call the current element the pivot
+        stop scanning
+if the left end was reached without finding a pivot
+    reverse the array (permutation was lexicographically last, so start over)
+    return
+scan the array from right-to-left again
+    if the current element is larger than the pivot
+        call the current element the successor
+        stop scanning
+swap the pivot and the successor
+reverse the portion of the array to the right of where the pivot was found 
+return
+
+
+
+What my code does:
+for instance: 1234
+
+print: 1234
+(rotate 3 and 4)
+print: 1243
+(rotate back but does not print)
+1234
+(rotate 234)
+print: 1342
+(rotate 4 and 2)
+print: 1424
+(rotate back but does not print)
+1342
+(rotate 342)
+print: 1423
+...
+
+(Only when the rotate size hits 2 does the program prints out the result)
+
+Rotate: Take the first element out, shift all others left by 1 slot, and put the first element at the right end.
+if I rotate "123" the output will be "231".

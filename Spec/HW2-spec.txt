@@ -1,0 +1,11 @@
+# Spec file for HW2 of CMPS12B-01, Fall 2017
+#
+#################
+f1: Makefile
+f2: README
+c1: make
+e1: ChessBoard.jar
+p1: java -jar ChessBoard.jar
+t1: test-input.txt
+o1: out.txt
+i1: test-output.txt

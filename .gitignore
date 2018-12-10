@@ -1,0 +1,30 @@
+# Java ignores
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# C ignores
+a.out
+*.o
+*.a
+*.so
+
+# Editor ignores
+*.bak
+*.swp
+*.swo
+*~
+
+# Other
+*.exe
+*.tgz
+*.tar
+*.pkg
+*.dmg
+*.img
+*.iso
+*.dll

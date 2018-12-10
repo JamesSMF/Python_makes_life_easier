@@ -1,0 +1,29 @@
+Checker passed. Start with 0.0 points.
+=================================
+4X4, first column tests pass
+Passed HW1-tests/four-first.txt
+Score is now 5.0
+=============================================
+Up to 6X6, first column tests pass
+Passed HW1-tests/five-six-first.txt
+Score is now 6.0
+=============================================
+8X8, first column tests pass
+Passed HW1-tests/eight-first.txt
+Score is now 7.0
+=============================================
+Up to 11X11, first column tests pass
+Passed HW1-tests/ten-eleven-first.txt
+Score is now 8.0
+=============================================
+Up to 8X8, all tests pass
+Passed HW1-tests/six-eight-all.txt
+Score is now 9.0
+=============================================
+Up to 10X10, all tests pass
+Passed HW1-tests/ten-all.txt
+Score is now 10.0
+=============================================
+Solution has passed all tests. The ordeal is over, you can take a breath now.
+Final score
+10

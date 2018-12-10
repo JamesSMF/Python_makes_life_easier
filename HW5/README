@@ -1,0 +1,30 @@
+// James Li
+// gli38
+// CMPS12B
+// HW5
+
+   Necessary Files:
+Bard.java
+
+   Facilitate Files:
+converter.py
+sorter.py
+ranker.py
+Reverter.java
+
+   Other Files:
+All kinds of input/output files
+Incompelete versions of data bases
+
+
+// --------------------------- //
+
+all files (including python files) are written by myself.
+
+/*
+   FileInputStream fs = new FileInputStream("FinalDataBase.txt");
+   BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+*/
+
+These two lines were looked up on stack overflow.
+Beside these two lines, are all completely completed by myself.

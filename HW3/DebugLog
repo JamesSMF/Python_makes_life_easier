@@ -1,0 +1,60 @@
+The basic procedure for move functions are:
+1. check if the chess can reach the specific square
+2. check blocks on its way
+3. check if there is any chess at the destination square
+   if theSameColor:
+      CannotGoThere
+   else:
+      the chess on that square is dead
+4. move the chess to that square
+
+--------------------------------------------
+
+I should override the method insert() to accept both coordinate and Link.
+
+--------------------------------------------
+
+The bishopMove function always return true. The problem is not inside the function, but lies in the input array.
+Problem solved. The problem was I did not use charAt().
+
+--------------------------------------------
+
+Bishop is good for now (might fail on some test cases, but generally good). Now work on revising other functions. The general struture can be borrowed from bishopMove().
+
+--------------------------------------------
+
+Fuck NullPointerException.
+Now I'm trying to count link numbers at certain points to test if insertFirst() and delete() work fine.
+
+Problem fixed. I should have broken the loop after inserting.
+
+--------------------------------------------
+
+The new conundrum is queenMove(). Even if I input the char 'R', the underlying algorithm still takes 'Q' as its input.
+
+Problem fixed. Changed the comparison of chars to the comparison of actual rows and cols.
+
+--------------------------------------------
+
+knightMove() and pawnMove() might be a little bit challenging. But they are after all similar shit.
+
+--------------------------------------------
+
+Test for simple-input.txt all passed. Now work on king's safety check.
+1. After each move, find the current position of the king
+2. If any opposite color chess can attack this motherfucKING, print out "illegal".
+
+--------------------------------------------
+
+Now I am pretty sure that the problem is within rookAttack().
+
+--------------------------------------------
+
+Fixed rookAttack() and added a line to reset gua_le at the end of every loop round.
+Now the program works for simple-input.txt and basic-input.txt.
+
+Still got StringIndexOutOfBoundException when running on more-input.txt.
+
+--------------------------------------------
+
+The function for pawn should be revised. Pawn can move forward and attack diagonally. So add some check in moving.

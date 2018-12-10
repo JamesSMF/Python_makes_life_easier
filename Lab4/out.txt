@@ -1,0 +1,12 @@
+line 1 contains:
+12 alphabetic characters: IhatetwelveB
+25 numeric characters: 1232342342342113241231324
+28 punctuation characters: @#*&@^#@#%@()(){}:"><<<*&^(*
+3 whitespace characters:   
+
+line 2 contains:
+8 alphabetic characters: Whocares
+16 numeric characters: 9878992232231212
+19 punctuation characters: !@!!!@$@)(*&^*&^*&^
+6 whitespace characters:      
+

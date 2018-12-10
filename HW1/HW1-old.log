@@ -1,0 +1,24 @@
+Checker passed. Start with 0.0 points.
+=================================
+4X4, first column tests pass
+Passed HW1-tests/four-first.txt
+Score is now 5.0
+=============================================
+Up to 6X6, first column tests pass
+Passed HW1-tests/five-six-first.txt
+Score is now 6.0
+=============================================
+8X8, first column tests pass
+Passed HW1-tests/eight-first.txt
+Score is now 7.0
+=============================================
+Solution has failed on an input. This input is given in your solution folder.
+An example output is also given in your directory.Messages from verifier script follows. This should give some description of why your solution is incorrect.
+====================================
+For input: 11 1 10
+ your output file has no output.
+FAIL
+
+===========================================
+Final score
+7
