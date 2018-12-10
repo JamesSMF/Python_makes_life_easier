@@ -1,8 +1,0 @@
-r y
--
-K n
-Invalid
-B y
--
-K n
-q y
