@@ -1,5 +1,33 @@
 from collections import OrderedDict
 from datetime import datetime
+from itertools import imap
+
+# This fuction prints out date and time in a clear formate.
+# This function takes a string input, and returns a string.
+def dateFormat(dateStr):
+	dateList = []
+	for i in range(4):
+		dateList.append(dateStr[i])
+	dateList.append('-')
+	for i in range(4, 6):
+		dateList.append(dateStr[i])
+	dateList.append('-')
+	for i in range(6, 8):
+		dateList.append(dateStr[i])
+	dateList.append('  ')
+	for i in range(8, 10):
+		dateList.append(dateStr[i])
+	dateList.append(' : ')
+	for i in range(10, 12):
+		dateList.append(dateStr[i])
+
+	returnStr = "".join(dateList)
+	return returnStr
+# end def
+
+def longestName(theDic):
+	return max(imap(len, theDic))
+
 
 inputFile = open("Calendar/DataBase.db", "r")
 assignment = dict()    # map from assignment names to due dates
@@ -13,9 +41,13 @@ assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[1])))  #
 todayDate = int(datetime.today().strftime('%Y%m%d'))
 
 for key in assignment:
-    if int(assignment[key]) < todayDate:
+	currDate = []
+	for i in range(8):
+		currDate.append(assignment[key][i])
+	stringDate = "".join(currDate)
+	if int(stringDate) < todayDate:
 		del assignment[key]
-		print(key + " is deleted because it passed due date")
+		print(key + " is deleted because it has passed the due date")
 	# end if
 # end for
 
@@ -33,20 +65,22 @@ while True:
 	print("Enter \"c\" to check the due date of a specific assignment")
 	print("Enter \"t\" to get a list of things to do tomorrow")
 	print("Enter \"o\" to get a list of things to do today")
-	print("Enter \"r\" to get 10 deadline-in-the-ass assignments")
+	print("Enter \"l\" to get 10 deadline-in-the-ass assignments")
 	ch = raw_input("Press \"q\" to exit\n")
+	print("")
 
 	if ch == 'q' or ch == 'Q':
 		with open("Calendar/DataBase.db", "w") as f:   # rewrite DataBase.db
 			for key in assignment:
 				f.write(key + " " + bytes(assignment[key]) + "\n")
-		# edn for
-	# end if
+		# end for
 		break
 	elif ch == 'i' or ch == 'I':
 		name = raw_input("   1. Enter assignment name\n")
 		date = raw_input("   2. Enter the date (format: year + month + day, e.g. 20170318)\n")
-		assignment[name] = date
+		time = raw_input("   3. Enter the time (format: hour:minute, e.g. 15:30")
+		time.replace(":","")
+		assignment[name] = date + time        # concatenate date and time
 		assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[1])))
 	elif ch == 'd' or ch == 'D':
 		tobeDeleted = raw_input("   1. Enter assignment name\n")
@@ -55,44 +89,63 @@ while True:
 			print(tobeDeleted + " is deleted")
 		else:
 			print(tobeDeleted + " not found")
-			continue
+		# end if-else
 	elif ch == 'c' or ch == 'C':
 		name = raw_input("   1. Enter assignment name\n")
 		if name in assignment:
-			print(bytes(assignment[name]))
+			print(bytes(dateFormat(assignment[name])))
 			print(" ")
 		else:
 			print(name + " not found")
 	elif ch == 't' or ch == 'T':
+		longest = longestName(assignment)
 		for key in assignment:
-			if int(assignment[key]) - todayDate == 1:
-				print(key + " " + bytes(assignment[key]))
+			keyLen = len(key)
+			diff = longest - keyLen + 2
+			currDate = []
+			for i in range(8):
+				currDate.append(assignment[key][i])
+			stringDate = "".join(currDate)
+			if int(stringDate) - todayDate == 1:
+				print(key + diff*" " + bytes(dateFormat(assignment[key])))
+		print("")
 	elif ch == 'o' or ch == 'O':
+		longest = longestName(assignment)
 		for key in assignment:
-			if int(assignment[key]) - todayDate == 0:
-				print(key + " " + bytes(assignment[key]))
-	elif ch == 'r' or ch == 'R':
+			keyLen = len(key)
+			diff = longest - keyLen + 2
+			currDate = []
+			for i in range(8):
+				currDate.append(assignment[key][i])
+			stringDate = "".join(currDate)
+			if int(stringDate) - todayDate == 0:
+				print(key + diff*" " + bytes(dateFormat(assignment[key])))
+		print("")
+	elif ch == 'l' or ch == 'L':
 		if len(assignment) == 0:
 			print("Your to-do list is empty, man.")
 			continue
-		elif len(assignment) <= 10:      # if there are less than 10 items in the dict
-			for key in assignment:
-				difference = int(assignment[key]) - todayDate
-				if difference == 1:
-					print(key + " " + bytes(assignment[key]) + " (tomorrow)")
-				elif difference == 0:
-					print(key + " " + bytes(assignment[key]) + " (today)")
-				else:
-				    print(key + " " + bytes(assignment[key]) + " (in " + bytes(difference) + " days)")
-			# end for
-		else:                    # if there are too many items in the dict, print first 10
+		else:
+			longest = longestName(assignment)
 			count = 0
 			for key in assignment:
+				keyLen = len(key)
+				diff = longest - keyLen + 2
 				count = count + 1
 				if count == 11:
 					break
 				# edn if
-				print (key + " " + bytes(assignment[key]))
+				currDate = []
+				for i in range(8):
+					currDate.append(assignment[key][i])
+				stringDate = "".join(currDate)
+				difference = int(stringDate) - todayDate
+				if difference == 1:
+					print(key + diff * " " + bytes(dateFormat(assignment[key])) + " (tomorrow)")
+				elif difference == 0:
+					print(key + diff * " " + bytes(dateFormat(assignment[key])) + " (today)")
+				else:
+					print(key + diff * " " + bytes(dateFormat(assignment[key])) + " (in " + bytes(difference) + " days)")
 			# end for
 		# end if-else
 		print("")
