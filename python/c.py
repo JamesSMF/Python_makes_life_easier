@@ -5,19 +5,19 @@ from itertools import imap
 # This fuction prints out date and time in a clear formate.
 # This function takes a string input, and returns a string.
 def dateFormat(dateStr):
-	dateList = []
-	for i in range(4):
+	dateList = []          # declare an empty list
+	for i in range(4):     # stores year
 		dateList.append(dateStr[i])
 	dateList.append('-')
-	for i in range(4, 6):
+	for i in range(4, 6):  # stores month
 		dateList.append(dateStr[i])
 	dateList.append('-')
-	for i in range(6, 8):
+	for i in range(6, 8):  # stores day
 		dateList.append(dateStr[i])
 	dateList.append('  ')
-	for i in range(8, 10):
+	for i in range(8, 10): # stores hour
 		dateList.append(dateStr[i])
-	dateList.append(' : ')
+	dateList.append(' : ') # stores minute
 	for i in range(10, 12):
 		dateList.append(dateStr[i])
 
@@ -25,6 +25,8 @@ def dateFormat(dateStr):
 	return returnStr
 # end def
 
+# This function returns the length of the longest key in the dict()
+# It takes a dict input and returns an int
 def longestName(theDic):
 	return max(imap(len, theDic))
 
@@ -33,20 +35,21 @@ inputFile = open("Calendar/DataBase.db", "r")
 assignment = dict()    # map from assignment names to due dates
 
 for line in inputFile:
-	newString = line.split()          # the first entry is name and the second being date
-	assignment[newString[0]] = newString[1]    # map a name to date
+	newString = line.split()          # the first entry is name and the second being date and time
+	assignment[newString[0]] = newString[1]    # map a name to date and time
 # end for
 
-assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[1])))  # sort the dictionary by due date
-todayDate = int(datetime.today().strftime('%Y%m%d'))
+# sort the dictionary by date and time
+assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[1])))
+todayDate = int(datetime.today().strftime('%Y%m%d'))  # get today's date
 
 for key in assignment:
-	currDate = []
-	for i in range(8):
+	currDate = []          # declare an empty list
+	for i in range(8):     # only store date into the list (get rid of time)
 		currDate.append(assignment[key][i])
-	stringDate = "".join(currDate)
-	if int(stringDate) < todayDate:
-		del assignment[key]
+	stringDate = "".join(currDate)       # convert the list into a string
+	if int(stringDate) < todayDate:      # if the date is less than today's date
+		del assignment[key]              # the assignment has passed due date
 		print(key + " is deleted because it has passed the due date")
 	# end if
 # end for
@@ -79,37 +82,38 @@ while True:
 		name = raw_input("   1. Enter assignment name\n")
 		date = raw_input("   2. Enter the date (format: year + month + day, e.g. 20170318)\n")
 		time = raw_input("   3. Enter the time (format: hour:minute, e.g. 15:30")
-		time.replace(":","")
+		time.replace(":","")      # for the convenience of reading from data base, truncate ":"
 		assignment[name] = date + time        # concatenate date and time
+		# sort again, so that the newly inserted shit is at the right place
 		assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[1])))
 	elif ch == 'd' or ch == 'D':
 		tobeDeleted = raw_input("   1. Enter assignment name\n")
-		if tobeDeleted in assignment:
-			del assignment[tobeDeleted]
+		if tobeDeleted in assignment:        # check if the assignment is in the dict
+			del assignment[tobeDeleted]      # delete it
 			print(tobeDeleted + " is deleted")
-		else:
+		else:                                # if the assignment name does not exist
 			print(tobeDeleted + " not found")
 		# end if-else
 	elif ch == 'c' or ch == 'C':
 		name = raw_input("   1. Enter assignment name\n")
-		if name in assignment:
-			print(bytes(dateFormat(assignment[name])))
+		if name in assignment:            # check if the assignment is in the dict
+			print(bytes(dateFormat(assignment[name])))    # print the date and time
 			print(" ")
-		else:
+		else:                             # not found
 			print(name + " not found")
 	elif ch == 't' or ch == 'T':
-		longest = longestName(assignment)
+		longest = longestName(assignment)  # get the longest word in the dict
 		for key in assignment:
-			keyLen = len(key)
-			diff = longest - keyLen + 2
-			currDate = []
-			for i in range(8):
+			keyLen = len(key)              # get the length of the current word
+			diff = longest - keyLen + 2    # the number of required spaces between name and date
+			currDate = []         # declare an empty list
+			for i in range(8):    # only store date into it
 				currDate.append(assignment[key][i])
-			stringDate = "".join(currDate)
-			if int(stringDate) - todayDate == 1:
+			stringDate = "".join(currDate)   # convert the list into string
+			if int(stringDate) - todayDate == 1:     # get all assignments due tomorrow
 				print(key + diff*" " + bytes(dateFormat(assignment[key])))
 		print("")
-	elif ch == 'o' or ch == 'O':
+	elif ch == 'o' or ch == 'O':     # similar to the last one
 		longest = longestName(assignment)
 		for key in assignment:
 			keyLen = len(key)
@@ -122,17 +126,17 @@ while True:
 				print(key + diff*" " + bytes(dateFormat(assignment[key])))
 		print("")
 	elif ch == 'l' or ch == 'L':
-		if len(assignment) == 0:
+		if len(assignment) == 0:      # there is nothing in the dict
 			print("Your to-do list is empty, man.")
 			continue
 		else:
-			longest = longestName(assignment)
-			count = 0
+			longest = longestName(assignment)   # get the length of the longest key
+			count = 0                  # a counter used to limit ten print-outs
 			for key in assignment:
-				keyLen = len(key)
+				keyLen = len(key)       # get the length of current key
 				diff = longest - keyLen + 2
 				count = count + 1
-				if count == 11:
+				if count == 11:      # make sure at most ten shits are printed out
 					break
 				# edn if
 				currDate = []
