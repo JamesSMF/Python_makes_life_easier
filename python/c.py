@@ -81,8 +81,8 @@ while True:
 	elif ch == 'i' or ch == 'I':
 		name = raw_input("   1. Enter assignment name\n")
 		date = raw_input("   2. Enter the date (format: year + month + day, e.g. 20170318)\n")
-		time = raw_input("   3. Enter the time (format: hour:minute, e.g. 15:30")
-		time.replace(":","")      # for the convenience of reading from data base, truncate ":"
+		time = raw_input("   3. Enter the time (format: hour:minute, e.g. 15:30\n")
+		time = time.replace(":", "")      # for the convenience of reading from data base, truncate ":"
 		assignment[name] = date + time        # concatenate date and time
 		# sort again, so that the newly inserted shit is at the right place
 		assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[1])))
@@ -155,6 +155,8 @@ while True:
 		print("")
 	# end if-else
 # end while
+
+inputFile.close()
 
 
 
