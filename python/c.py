@@ -69,6 +69,7 @@ while True:
 	print("Enter \"t\" to get a list of things to do tomorrow")
 	print("Enter \"o\" to get a list of things to do today")
 	print("Enter \"l\" to get 10 deadline-in-the-ass assignments")
+	print("Enter \"r\" to revise the date of a certain assignment")
 	ch = raw_input("Press \"q\" to exit\n")
 	print("")
 
@@ -98,9 +99,19 @@ while True:
 		name = raw_input("   1. Enter assignment name\n")
 		if name in assignment:            # check if the assignment is in the dict
 			print(bytes(dateFormat(assignment[name])))    # print the date and time
-			print(" ")
 		else:                             # not found
 			print(name + " not found")
+		print(" ")
+	elif ch == 'r' or ch == 'R':
+		name = raw_input("   1. Enter assignment name\n")
+		if name in assignment:            # check if the assignment is in the dict
+			revisedDate = raw_input("   2. Enter the new date\n")    # get new date
+			revisedTime = raw_input("   3. Enter the rnew time\n")   # get new time
+			revisedTime = revisedTime.replace(":","")                # truncate ":"
+			assignment[name] = revisedDate + revisedTime             # concatenate and store
+		else:                             # not found
+			print(name + " not found")
+		print(" ")
 	elif ch == 't' or ch == 'T':
 		longest = longestName(assignment)  # get the longest word in the dict
 		for key in assignment:
