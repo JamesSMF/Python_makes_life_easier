@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from datetime import datetime
 from itertools import imap
+import re
 
 # This fuction prints out date and time in a clear formate.
 # This function takes a string input, and returns a string.
@@ -82,8 +83,9 @@ while True:
 	elif ch == 'i' or ch == 'I':
 		name = raw_input("   1. Enter assignment name\n")
 		date = raw_input("   2. Enter the date (format: year + month + day, e.g. 20170318)\n")
-		time = raw_input("   3. Enter the time (format: hour:minute, e.g. 15:30\n")
-		time = time.replace(":", "")      # for the convenience of reading from data base, truncate ":"
+		date = re.sub("[^0-9]", "", date)     # keep only numeric chars
+		time = raw_input("   3. Enter the time (format: hour + minute, e.g. 15:30\n")
+		time = re.sub("[^0-9]", "", time)     # for the convenience of reading from data base, keep only numeric chars
 		assignment[name] = date + time        # concatenate date and time
 		# sort again, so that the newly inserted shit is at the right place
 		assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[1])))
@@ -106,8 +108,9 @@ while True:
 		name = raw_input("   1. Enter assignment name\n")
 		if name in assignment:            # check if the assignment is in the dict
 			revisedDate = raw_input("   2. Enter the new date\n")    # get new date
+			revisedDate = re.sub("[^0-9]", "", revisedDate)          # keep only numeric chars
 			revisedTime = raw_input("   3. Enter the rnew time\n")   # get new time
-			revisedTime = revisedTime.replace(":","")                # truncate ":"
+			revisedTime = re.sub("[^0-9]", "", revisedTime)          # keep only numeric chars
 			assignment[name] = revisedDate + revisedTime             # concatenate and store
 		else:                             # not found
 			print(name + " not found")
