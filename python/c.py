@@ -1,5 +1,6 @@
 from collections import OrderedDict
 from datetime import datetime
+from datetime import date
 from itertools import imap
 import re
 
@@ -82,11 +83,11 @@ while True:
 		break
 	elif ch == 'i' or ch == 'I':
 		name = raw_input("   1. Enter assignment name\n")
-		date = raw_input("   2. Enter the date (format: year + month + day, e.g. 20170318)\n")
-		date = re.sub("[^0-9]", "", date)     # keep only numeric chars
+		Date = raw_input("   2. Enter the date (format: year + month + day, e.g. 20170318)\n")
+		Date = re.sub("[^0-9]", "", Date)     # keep only numeric chars
 		time = raw_input("   3. Enter the time (format: hour + minute, e.g. 15:30\n")
 		time = re.sub("[^0-9]", "", time)     # for the convenience of reading from data base, keep only numeric chars
-		assignment[name] = date + time        # concatenate date and time
+		assignment[name] = Date + time        # concatenate date and time
 		# sort again, so that the newly inserted shit is at the right place
 		assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[1])))
 	elif ch == 'd' or ch == 'D':
@@ -153,11 +154,35 @@ while True:
 				if count == 11:      # make sure at most ten shits are printed out
 					break
 				# edn if
-				currDate = []
+
+				todayYear = list()
+				currYear = list()
+				todayMon = list()
+				currMon = list()
+				todayDay = list()
+				currDay = list()
 				for i in range(8):
-					currDate.append(assignment[key][i])
-				stringDate = "".join(currDate)
-				difference = int(stringDate) - todayDate
+					if i<4:
+						todayYear.append(str(todayDate)[i])
+						currYear.append(assignment[key][i])
+					elif i<6:
+						todayMon.append(str(todayDate)[i])
+						currMon.append(assignment[key][i])
+					else:
+						todayDay.append(str(todayDate)[i])
+						currDay.append(assignment[key][i])
+				# end for
+
+				fuckCurrYear = "".join(currYear)
+				fuckTodayYear = "".join(todayYear)
+				fuckCurrMon = "".join(currMon)
+				fuckTodayMon = "".join(todayMon)
+				fuckCurrDay = "".join(currDay)
+				fuckTodayDay = "".join(todayDay)
+
+				delta = date(int(fuckCurrYear), int(fuckCurrMon), int(fuckCurrDay)) - date(int(fuckTodayYear), int(fuckTodayMon), int(fuckTodayDay))
+				difference = int(delta.days)
+
 				if difference == 1:
 					print(key + diff * " " + bytes(dateFormat(assignment[key])) + " (tomorrow)")
 				elif difference == 0:
