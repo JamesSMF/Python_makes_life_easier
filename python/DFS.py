@@ -7,23 +7,23 @@ graph ={
    "F" : ["D"]
 }
 
-# This method does broad-first search of a graph
+# This method does depth-first search of a graph
 # The first input entry is the graph (as a dict() form)
 # The second input entry is the starting node
-def BFS(graph, node):
-   queue = []             # using a queue to implement the traversal
-   queue.append(node)     # put the starting node into the queue
+def DFS(graph, node):
+   stack = []             # using a stack to implement the traversal
+   stack.append(node)     # put the starting node into the stack
    seen = set()           # all the nodes that have been traversed
    seen.add(node)         # add starting node to seen
-   result = []            # a queue to store the result
-   while len(queue) > 0:  # while the queue is not empty
-      vertex = queue.pop(0)           # pop the frontmost node out
+   result = []            # a stack to store the result
+   while len(stack) > 0:  # while the stack is not empty
+      vertex = stack.pop(-1)          # pop the last node out
       connectedNodes = graph[vertex]  # store all its connected nodes
       for w in connectedNodes:  # for any node which is connected to it
          if w not in seen:      # if that node has not yet appeared
-            queue.append(w)     # append that new node to the queue
+            stack.append(w)     # append that new node to the stack
             seen.add(w)         # and that node has appeared now
       result.append(vertex)     # store the vertex node into result
    return result                # return the result list
 
-print BFS(graph, "B")           # print out the result list
+print DFS(graph, "E")           # print out the result list
