@@ -15,7 +15,7 @@ def BFS(graph, node):
    queue.append(node)     # put the starting node into the queue
    seen = set()           # all the nodes that have been traversed
    seen.add(node)         # add starting node to seen
-   result = []            # a queue to store the result
+   result = []            # a list to store the result
    while len(queue) > 0:  # while the queue is not empty
       vertex = queue.pop(0)           # pop the frontmost node out
       connectedNodes = graph[vertex]  # store all its connected nodes
