@@ -15,7 +15,7 @@ def DFS(graph, node):
    stack.append(node)     # put the starting node into the stack
    seen = set()           # all the nodes that have been traversed
    seen.add(node)         # add starting node to seen
-   result = []            # a stack to store the result
+   result = []            # a list to store the result
    while len(stack) > 0:  # while the stack is not empty
       vertex = stack.pop(-1)          # pop the last node out
       connectedNodes = graph[vertex]  # store all its connected nodes
