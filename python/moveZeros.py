@@ -1,3 +1,8 @@
+# Description:
+# Move all zeros in a list to the end of the list.
+# e.g. original list: [1 0 2 4 6 0 9 7]
+# Modified list: [1 2 4 6 9 7 0 0]
+
 import re
 
 class Solution(object):
