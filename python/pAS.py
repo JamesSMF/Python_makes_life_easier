@@ -1,7 +1,7 @@
 def pAS(A, i, B):
 	if i<0:
-		print(B)
-		return
+	   print(B)
+	   return
 
 	C = [A[i]] + B
 	pAS(A, i-1, C)
