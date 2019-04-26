@@ -52,37 +52,37 @@ class Example4:
                 spacerFrame.pack(side=TOP, expand=YES, fill=BOTH)
                 frame.pack(expand=YES, fill=BOTH)
 
-def quit(self):
-    sys.exit()
+    def quit(self):
+        sys.exit()
 
-def updateColor(self):
-    self.colorLabel.configure(fg=self.radioVal.get())
-    self.colorEntry.configure(fg=self.radioVal.get())
+    def updateColor(self):
+        self.colorLabel.configure(fg=self.radioVal.get())
+        self.colorEntry.configure(fg=self.radioVal.get())
 
-def updateIndic(self):
-    for btn in self.radioBtns:
-        btn.configure(indicatoron=self.indicVal.get())
-
-
-
-def updateColorPrev(self):
-    if (self.colorprevVal.get()):
+    def updateIndic(self):
         for btn in self.radioBtns:
-            color = btn.cget("text")
-            btn.configure(fg=color)
-        else:
+            btn.configure(indicatoron=self.indicVal.get())
+
+
+
+    def updateColorPrev(self):
+        if (self.colorprevVal.get()):
             for btn in self.radioBtns:
-                btn.configure(fg="black")
+                color = btn.cget("text")
+                btn.configure(fg=color)
+            else:
+                for btn in self.radioBtns:
+                    btn.configure(fg="black")
 
 
-def showInfo(self):
-    toplevel = Toplevel(self.master, bg="white")
-    toplevel.transient(self.master)
-    toplevel.title("Program info")
-    Label(toplevel, text="A simple Tkinter demo", fg="navy", bg="white").pack(pady=20)
-    Label(toplevel, text="Written by Bruno Dufour", bg="white").pack()
-    Label(toplevel, text="http://www.iro.umontreal.ca/~dufour/", bg="white").pack()
-    Button(toplevel, text="Close", command=toplevel.withdraw).pack(pady=30)
+    def showInfo(self):
+        toplevel = Toplevel(self.master, bg="white")
+        toplevel.transient(self.master)
+        toplevel.title("Program info")
+        Label(toplevel, text="A simple Tkinter demo", fg="navy", bg="white").pack(pady=20)
+        Label(toplevel, text="Written by Bruno Dufour", bg="white").pack()
+        Label(toplevel, text="http://www.iro.umontreal.ca/~dufour/", bg="white").pack()
+        Button(toplevel, text="Close", command=toplevel.withdraw).pack(pady=30)
 
 
 root = Tk()
