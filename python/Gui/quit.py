@@ -1,4 +1,5 @@
-from Tkinter import *
+from tkinter import *
+from tkinter.ttk import *
 import sys
 
 def quit():
@@ -9,7 +10,7 @@ g.title('Gui')
 
 lbl = Label(g, text="press to quit.")
 lbl.pack()
-btn = Button(g, text="Quit", command=quit)
+btn = Button(g, text="Quit", style="TButton", command=quit)
 btn.pack()
 
 g.mainloop()
