@@ -1,18 +1,25 @@
 from tkinter import *
 from tkinter.ttk import *
-import webbrowser
+import re
+import os
+from collections import OrderedDict
+from datetime import datetime, date, time, timedelta
 
-# Analysis by James: webbrowser is indispensable for opening a website using python
-def openCS112IndQuiz():
-    indQuiz = str(indQuizOpenField.get())
-    site1 = "http://tiny.cc/cmps112-" + indQuiz + "-ind"
-    webbrowser.open(site1)
+# Given a date, it finds the next weekday (e.g. next Monday).
+# d: datetime      weekday: int         return: datetime
+def next_weekday(d, weekday):
+    days_ahead = weekday - d.weekday()
+    if days_ahead <= 0: # Target day already happened this     week
+        days_ahead += 7
+    return d + timedelta(days_ahead)
 
-def openCS112GrpQuiz():
-    grpQuiz = str(grpQuizOpenField.get())
-    site2 = "http://tiny.cc/cmps112-" + grpQuiz + "-grp"
-    webbrowser.open(site2)
+# This function returns the length of the longest value in the dict()
+# It takes a dict input and returns an int
+def longestName(theDic):
+    longest = max(theDic.values(), key=len)
+    return len(longest)
 
+assignment = dict()   # restructured: map from due dates to assignment
 
 
 #GUI CODE:
