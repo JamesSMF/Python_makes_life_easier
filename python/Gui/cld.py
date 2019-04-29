@@ -225,7 +225,7 @@ thanksLabel = Label(bigFrame, text="Thanks for using this app. Have a nice one :
 thanksLabel.grid()
 thanksLabel.place(relx=0.35, rely=0.07)
 
-listButton = Button(bigFrame, text = "list events", style="TButton", command = listEvents(0.05+boxCoord))
+listButton = Button(bigFrame, text = "update event list", style="TButton", command = listEvents(0.05+boxCoord))
 listButton.grid()
 listButton.place(relx = 0.6, rely = cmdBox)
 
