@@ -25,15 +25,116 @@ def longestName(theDic):
 def sortDict(assignment):
     assignment = OrderedDict(sorted(assignment.items(), key=lambda x: int(x[0])))
 
+# input: a string      output: a formated string
+def dateFormat(dateStr):
+    dateList=list()
+    for i in range(4):    # stores year
+        dateList.append(dateStr[i])
+    dateList.append('-')
+    for i in range(4, 6):  # stores month
+        dateList.append(dateStr[i])
+    dateList.append('-')
+    for i in range(6, 8):  # stores day
+        dateList.append(dateStr[i])
+    dateList.append('  ')
+    for i in range(8, 10): # stores hour
+        dateList.append(dateStr[i])
+    dateList.append(' : ')
+    for i in range(10, 12): # stores minute
+        dateList.append(dateStr[i])
+
+    return "".join(dateList)
+
+def saveProcess():
+    with open("DataBase.db", "w") as f:
+        for key in assignment:
+            f.write(key+' '+str(assignment[key])+'\n')
+        # end for
+    # end with
+
+def listEvents(prevLineNum):
+    # save the process first ---------------------
+    saveProcess()
+
+    if len(assignment) == 0:     # there is nothing in the dict()
+        noEventLabel = Label(bigFrame, text = "Your to-do list is empty.", font = ("avenir", 16))
+        noEventLabel.grid()
+        noEventLabel.place(relx = 0.25, rely = prevLineNum)
+        return
+    else:
+        longest = longestName(assignment)  # get the length of longest key
+        count = 0     # limit to 16 print-outs
+        for key in assignment:
+            keylen = len(assignment[key])
+            diff = longest - keylen + 2
+            count += 1
+            if count == 17:
+                break
+
+            todayYear=list()
+            currYear=list()
+            todayMon=list()
+            currMon=list()
+            todayDay=list()
+            currDay=list()
+            for i in range(8):
+                if i<4:
+                    todayYear.append(str(todayDate)[i])
+                    currYear.append(key[i])
+                elif i<6:
+                    todayMon.append(str(todayDate)[i])
+                    currMon.append(key[i])
+                else:
+                    todayDay.append(str(todayDate)[i])
+                    currDay.append(key[i])
+            # end for
+
+            fuckCurrYear = "".join(currYear)
+            fuckTodayYear = "".join(todayYear)
+            fuckCurrMon = "".join(currMon)
+            fuckTodayMon = "".join(todayMon)
+            fuckCurrDay = "".join(currDay)
+            fuckTodayDay = "".join(todayDay)
+
+            delta = date(int(fuckCurrYear), int(fuckCurrMon), int(fuckCurrDay)) - date(int(fuckTodayYear), int(fuckTodayMon), int(fuckTodayDay))
+            difference = int(delta.days)
+
+            # create a set of event names in weekly calendar
+            nextWeek = open("Weekly.db", "r")
+            listWeek = set()
+            for ddd in nextWeek:
+                listWeek.add(ddd.split()[2])
+            nextWeek.close()
+
+            weekdayCode = datetime.strptime(key, "%Y%m%d%H%M").weekday()
+            wdaydict = {0:'Mon ',1:'Tues',2:'Wed ',3:'Thur',4:'Fri ',5:'Sat ',6:'Sun '}
+            if difference == 1:
+                listTomorrowLabel = Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (tomorrow)"), font = ("menlo", 16))
+                listTomorrowLabel.grid()
+                listTomorrowLabel.place(relx = 0.1, rely = prevLineNum)
+            elif difference == 0:
+                listTodayLabel = Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (today)"), font = ("menlo", 16))
+                listTodayLabel.grid()
+                listTodayLabel.place(relx = 0.1, rely = prevLineNum)
+            else:
+                listRdayLabel = Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (in " + str(difference, ) + " days)"), font = ("menlo", 16))
+                listRdayLabel.grid()
+                listRdayLabel.place(relx = 0.1, rely = prevLineNum)
+            # end if-else
+            prevLineNum += 0.03
+        # end for
+    # end if(lenght==0)
+# end of list function
+
 
 ################### GUI CODE #######################
 
 root = Tk()
-root.geometry("960x710")
+root.geometry("970x710")
 # root.resizeable(0,0)
 
 # analysis by James: This initializes the app frame size.
-bigFrame = Frame(root, width = 960, height = 710, relief = "raise")
+bigFrame = Frame(root, width = 970, height = 710, relief = "raise")
 bigFrame.grid()
 bigFrame.place
 
@@ -102,18 +203,15 @@ if os.stat("DataBase.db").st_size != 0:
 requestLabel = Label(bigFrame, text = "This box is for direct command operations", font = ("times", 18))
 requestLabel.grid()
 cmdBox = loopIndice + 0.08
-requestLabel.place(relx = 0.35, rely = cmdBox)
+requestLabel.place(relx = 0.23, rely = cmdBox)
 
 cmdOpenField = Entry(bigFrame, width = 37)
 cmdOpenField.grid()
-cmdOpenField.place(relx = 0.33, rely = cmdBox+0.05)
+boxCoord = cmdBox+0.05
+cmdOpenField.place(relx = 0.22, rely = boxCoord)
 
 
 ################### BACKEND CODE ENDS HERE ####################
-
-indQuizOpenField = Entry(bigFrame, width = 15)
-indQuizOpenField.grid()
-indQuizOpenField.place(relx = 0.43, rely = 0.9)
 
 Welcome = Label(bigFrame, text = "Welcome to Todo App Developed by James Li", font = ("avenir", 16))
 Welcome.grid()
@@ -127,8 +225,8 @@ thanksLabel = Label(bigFrame, text="Thanks for using this app. Have a nice one :
 thanksLabel.grid()
 thanksLabel.place(relx=0.35, rely=0.07)
 
-indQuizButton = Button(bigFrame, text = "Open Ind Quiz", style="TButton", command = longestName(assignment))
-indQuizButton.grid()
-indQuizButton.place(relx = 0.42, rely = 0.6)
+listButton = Button(bigFrame, text = "list events", style="TButton", command = listEvents(0.05+boxCoord))
+listButton.grid()
+listButton.place(relx = 0.6, rely = cmdBox)
 
 root.mainloop()
