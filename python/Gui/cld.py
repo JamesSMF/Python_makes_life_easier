@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter as tk
 from tkinter.ttk import *
 import re
 import os
@@ -6,6 +7,11 @@ from collections import OrderedDict
 from datetime import datetime, date, time, timedelta
 
 ################### FUNCTIONS #####################
+
+# translate human readable rgb to tkinter syntax
+# inputs a tuple of three ints
+def _from_rgb(rgb):
+    return "#%02x%02x%02x" % rgb
 
 # Given a date, it finds the next weekday (e.g. next Monday).
 # d: datetime      weekday: int         return: datetime
@@ -109,15 +115,15 @@ def listEvents(prevLineNum):
             weekdayCode = datetime.strptime(key, "%Y%m%d%H%M").weekday()
             wdaydict = {0:'Mon ',1:'Tues',2:'Wed ',3:'Thur',4:'Fri ',5:'Sat ',6:'Sun '}
             if difference == 1:
-                listTomorrowLabel = Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (tomorrow)"), font = ("menlo", 16))
+                listTomorrowLabel = tk.Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (tomorrow)"), fg=_from_rgb((97,97,183)), bg=_from_rgb((231,231,231)), font = ("menlo", 16))
                 listTomorrowLabel.grid()
                 listTomorrowLabel.place(relx = 0.1, rely = prevLineNum)
             elif difference == 0:
-                listTodayLabel = Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (today)"), font = ("menlo", 16))
+                listTodayLabel = tk.Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (today)"), fg=_from_rgb((97,97,183)), bg=_from_rgb((231,231,231)), font = ("menlo", 16))
                 listTodayLabel.grid()
                 listTodayLabel.place(relx = 0.1, rely = prevLineNum)
             else:
-                listRdayLabel = Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (in " + str(difference, ) + " days)"), font = ("menlo", 16))
+                listRdayLabel = tk.Label(bigFrame, text = (assignment[key] + diff * " " + str(dateFormat(key), ) + ' ' + wdaydict[weekdayCode] + " (in " + str(difference, ) + " days)"), bg=_from_rgb((231,231,231)), font = ("menlo", 16))
                 listRdayLabel.grid()
                 listRdayLabel.place(relx = 0.1, rely = prevLineNum)
             # end if-else
@@ -125,6 +131,19 @@ def listEvents(prevLineNum):
         # end for
     # end if(lenght==0)
 # end of list function
+
+# This function takes an input of a text array
+# It maps a time to an event
+def mapFunc():
+    charArray[-1] = re.sub("[^0-9]", "", charArray[-1])
+    if len(charArray[-1])==1:
+        if int(charArray[-1][0]<6):
+            charArray[-1]=str(int(charArray[-1])+1200)
+        else:
+            charArray[-1] = str('0' + charArray[-1])
+
+    if len(charArray[-1])!=4:
+        errorLabel = tk.Label(bigFrame, text = "Please enter a valid time.", font=("Arial", 16))
 
 
 ################### GUI CODE #######################
@@ -213,19 +232,19 @@ cmdOpenField.place(relx = 0.22, rely = boxCoord)
 
 ################### BACKEND CODE ENDS HERE ####################
 
-Welcome = Label(bigFrame, text = "Welcome to Todo App Developed by James Li", font = ("avenir", 16))
+Welcome = tk.Label(bigFrame, text = "Welcome to Todo App Developed by James Li", font = ("avenir", 16), fg=_from_rgb((200,145,150)), bg=_from_rgb((231,231,231)))
 Welcome.grid()
 Welcome.place(relx = 0.33, rely = 0.01)
 
-todayLabel = Label(bigFrame, text=("Today is " + datetime.today().strftime('%Y-%m-%d') + "."), font=("avenir", 16))
+todayLabel = tk.Label(bigFrame, text=("Today is " + datetime.today().strftime('%Y-%m-%d') + "."), font=("avenir", 16), fg=_from_rgb((200,145,150)), bg=_from_rgb((231,231,231)))
 todayLabel.grid()
 todayLabel.place(relx=0.43, rely=0.04)
 
-thanksLabel = Label(bigFrame, text="Thanks for using this app. Have a nice one :)", font=("avenir", 16))
+thanksLabel = tk.Label(bigFrame, text="Thanks for using this app. Have a nice one :)", font=("avenir", 16), fg=_from_rgb((200,145,150)), bg=_from_rgb((231,231,231)))
 thanksLabel.grid()
 thanksLabel.place(relx=0.35, rely=0.07)
 
-listButton = Button(bigFrame, text = "update event list", style="TButton", command = listEvents(0.05+boxCoord))
+listButton = Button(bigFrame, text = "update event list", style="TButton", command = listEvents(0.2+boxCoord))
 listButton.grid()
 listButton.place(relx = 0.6, rely = cmdBox)
 

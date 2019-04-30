@@ -1,5 +1,5 @@
 import sys
-from Tkinter import *
+from tkinter import *
 
 class Example4:
     def __init__(self, master):
@@ -84,8 +84,10 @@ class Example4:
         Label(toplevel, text="http://www.iro.umontreal.ca/~dufour/", bg="white").pack()
         Button(toplevel, text="Close", command=toplevel.withdraw).pack(pady=30)
 
+def main():
+    root = Tk()
+    ex4 = Example4(root)
+    root.title("A simple widget demo")
+    root.mainloop()
 
-root = Tk()
-ex4 = Example4(root)
-root.title("A simple widget demo")
-root.mainloop()
+main()
