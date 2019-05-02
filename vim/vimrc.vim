@@ -51,12 +51,13 @@ nmap <leader>w :w!<cr>
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
+
+" set enc=utf-8
 
 " Avoid garbled characters in Chinese language windows OS
 let $LANG='en' 
@@ -75,8 +76,11 @@ else
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
-"Always show current position
+" Always show current position
 set ruler
+
+" Now you can use mouse in vim
+set mouse=r
 
 " Height of the command bar
 set cmdheight=2
@@ -91,7 +95,7 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
@@ -131,15 +135,15 @@ set foldcolumn=1
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable 
+syntax enable
 
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
+	 set t_Co=256
 endif
 
 try
-    colorscheme desert
+	 colorscheme desert
 catch
 endtry
 
@@ -152,9 +156,6 @@ if has("gui_running")
     set t_Co=256
     set guitablabel=%M\ %t
 endif
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
@@ -173,7 +174,7 @@ set noswapfile
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
-set expandtab
+autocmd FileType php,c,java,python set expandtab
 
 " Be smart when using tabs ;)
 set smarttab
@@ -188,8 +189,9 @@ set tw=500
 
 set ai "Auto indent
 set si "Smart indent
+set cindent "C-style Indent
 set wrap "Wrap lines
-set cindent
+
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -198,6 +200,8 @@ set cindent
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+set noshowmode " No need for status line
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -298,8 +302,33 @@ if has("autocmd")
     autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 
-nnoremap ZZ <Esc>ZZ \| ZZ<CR>
 nnoremap ggd <Esc>gg \| :.,$d<CR>
+map sp :set paste<CR>i
+map snp :set nopaste<CR>i
+
+" This shit is amazing. Try pressing {, and it will surprise you.
+autocmd FileType php,c,java inoremap { {<CR>}<Esc><Up>o<BS><Space><Space><Space>
+
+" Split screen
+map :sp :sp<CR><C-w><C-w>
+
+" Close nerd tree
+map <leader>n :NERDTree<CR>
+
+" Add semicolon
+map ;; $i<Right>;<Esc>
+
+" Add a \"\n" char
+map cn i\n<Esc>
+
+" Auto ZZ
+imap ZZ <Esc>ZZ
+
+" Good for indentation
+map <space><space><space> i<space><space><space><esc>hh
+map <BS><BS><BS> i<BS><BS><BS>
+map <space><space><space><space> i<space><space><space><space><esc>hhh
+map <BS><BS><BS><BS> i<BS><BS><BS><BS>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -309,7 +338,7 @@ map <leader>ss :setlocal spell!<cr>
 
 " Shortcuts using <leader>
 map <leader>sn ]s
-map <leader>sp [s
+map <leader>spell [s
 map <leader>sa zg
 map <leader>s? z=
 
@@ -385,9 +414,32 @@ endfunction
 
 set number
 
+""""""""""""""""""""""""""""""
+" plugins and modifications
+""""""""""""""""""""""""""""""
 call plug#begin()
     Plug 'scrooloose/nerdtree'
+    Plug 'ervandew/supertab'
+    Plug 'raimondi/delimitmate'
+	 Plug 'scrooloose/nerdcommenter'
+	 Plug 'itchyny/lightline.vim'
+	 Plug 'airblade/vim-gitgutter'
 call plug#end()
 
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd w
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * wincmd w
+
+autocmd VimEnter * GitGutterEnable
+let g:gitgutter_grep=''
+
+""""""""""""""""""""""""""""""
+" Edit comment styles
+""""""""""""""""""""""""""""""
+
+let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
+map c ,cc
+map cu ,cu
+
+
