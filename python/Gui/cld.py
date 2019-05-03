@@ -51,6 +51,7 @@ def dateFormat(dateStr):
 
     return "".join(dateList)
 
+# This function saves the process to DataBase.db
 def saveProcess():
     with open("DataBase.db", "w") as f:
         for key in assignment:
@@ -58,6 +59,16 @@ def saveProcess():
         # end for
     # end with
 
+# This function is used for return message
+# which is right below the input box
+def return_message(message):
+    tempLabel = tk.Label(bigFrame, text = message, font = ("avenir", 16), fg=_from_rgb((100,105,80)), bg=_from_rgb((231,231,231)))
+    tempLabel.grid()
+    tempLabel.place(relx = 0.33, rely = 0.5)
+
+
+
+# This functions updates the list
 def listEvents(prevLineNum):
     # save the process first ---------------------
     saveProcess()
@@ -145,6 +156,58 @@ def mapFunc():
     if len(charArray[-1])!=4:
         errorLabel = tk.Label(bigFrame, text = "Please enter a valid time.", font=("Arial", 16))
 
+    if charArray[-1]=='today' or charArray[-1]=='tonight':
+        Date = datetime.today().strftime("%Y%m%d")
+        Date = Date+str(charArray[-1])
+    elif charArray[-2]=='tomorrow':
+        Date = str(date.today() + timedelta(days=1))
+        Date = Date + str(charArray[-1])
+    elif charArray[-2]=="Sun" or charArray[2]=="Sunday":
+        # String nextDate;
+        nextDate = next_weekday(datetime.today(), 6).strftime('%Y%m%d')
+        Date = nextDate + str(charArray[-1])
+    elif charArray[-2]=="Mon" or charArray[2]=="Monday":
+        nextDate = next_weekday(datetime.today(), 0).strftime("%Y%m%d")
+        Date = nextDate + str(charArray[-1])
+    elif charArray[-2]=="Tues" or charArray[2]=="Tuesday":
+        nextDate = next_weekday(datetime.today(), 1).strftime('%Y%m%d')
+        Date = nextDate + str(charArray[-1])
+    elif charArray[-2]=="Wed" or charArray[2]=="Wednesday":
+        nextDate = next_weekday(datetime.today(), 2).strftime('%Y%m%d')
+        Date = nextDate + str(charArray[-1])
+    elif charArray[-2]=="Thurs" or charArray[2]=="Thursday":
+        nextDate = next_weekday(datetime.today(), 3).strftime('%Y%m%d')
+        Date = nextDate + str(charArray[-1])
+    elif charArray[-2]=="Fri" or charArray[2]=="Friday":
+        nextDate = next_weekday(datetime.today(), 4).strftime('%Y%m%d')
+        Date = nextDate + str(charArray[-1])
+    elif charArray[-2]=="Sat" or charArray=='Saturday':
+        nextDate = next_weekday(datetime.today(), 5).strftime('%Y%m%d')
+        Date = nextDate + str(charArray[-1])
+    else:
+        if(len(charArray[-1])==12):
+            Date=charArray[-1]
+        else:
+            Date = "".join(charArray[-1:])
+    # end if-else
+
+    Date = re.sub("[^0-9]", "", Date)
+    if len(Date)==4:
+        Date = datetime.today().strftime("%Y%m%d") + Date
+    if len(Date)!=12:
+        print("Please enter a valid date.\n")
+
+    # time conflict check
+    if os.stat("DataBase.db").st_size != 0:
+        flag = True
+        for datE in assignment:
+            targetTime = datetime.strptime(datE,"%Y%m%d%H%M") # datetime type
+            compTime = datetime.strptime(Date,"%Y%m%d%H%M")   # datetime type
+            diffTime = compTime - targetTime     # calculate the time difference
+            if diffTime<timedelta(minutes=0):    # absolute value
+                diffTime = - diffTime
+
+
 
 ################### GUI CODE #######################
 
@@ -206,9 +269,10 @@ if os.stat("Weekly.db").st_size != 0:
             del assignment[key]            # the assignment has passed due date
 
         #### Print out message of deletion of past events ###
-            pastLabel = Label(bigFrame, text = (copy + " is automatically deleted because it is in the past now."), background="red", font = ("osaka", 18))
+
+            pastLabel = Label(bigFrame, text = (copy + " is automatically deleted because it is in the past now."), background="red", font = ("osaka", 15))
             pastLabel.grid()
-            loopIndice += 0.04
+            loopIndice += 0.03
             pastLabel.place(relx = 0.17, rely = loopIndice)
 
         #####################################################
@@ -234,7 +298,7 @@ cmdOpenField.place(relx = 0.22, rely = boxCoord)
 
 Welcome = tk.Label(bigFrame, text = "Welcome to Todo App Developed by James Li", font = ("avenir", 16), fg=_from_rgb((200,145,150)), bg=_from_rgb((231,231,231)))
 Welcome.grid()
-Welcome.place(relx = 0.33, rely = 0.01)
+Welcome.place(relx = 0.33, rely = 0)
 
 todayLabel = tk.Label(bigFrame, text=("Today is " + datetime.today().strftime('%Y-%m-%d') + "."), font=("avenir", 16), fg=_from_rgb((200,145,150)), bg=_from_rgb((231,231,231)))
 todayLabel.grid()
