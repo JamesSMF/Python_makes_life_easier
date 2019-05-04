@@ -5,3 +5,6 @@ A repo for all kinds of programs which I don't know where should I deposit.
 
 <b>Main programming languages will be python, java, and C </b>
 <hr>Python is great, but not enough for a good programmer.
+
+<br>
+## This repo will also deposite all kinds of leetcode problems
