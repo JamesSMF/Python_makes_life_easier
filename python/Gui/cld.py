@@ -61,7 +61,7 @@ def saveProcess():
 
 # This function is used for return message
 # which is right below the input box
-def return_message(message):
+def return_message(message, lineNum):
     tempLabel = tk.Label(bigFrame, text = message, font = ("avenir", 16), fg=_from_rgb((100,105,80)), bg=_from_rgb((231,231,231)))
     tempLabel.grid()
     tempLabel.place(relx = 0.33, rely = 0.5)
@@ -145,7 +145,7 @@ def listEvents(prevLineNum):
 
 # This function takes an input of a text array
 # It maps a time to an event
-def mapFunc():
+def mapFunc(lineNum, theTime, theEvent):
     charArray[-1] = re.sub("[^0-9]", "", charArray[-1])
     if len(charArray[-1])==1:
         if int(charArray[-1][0]<6):
@@ -206,6 +206,10 @@ def mapFunc():
             diffTime = compTime - targetTime     # calculate the time difference
             if diffTime<timedelta(minutes=0):    # absolute value
                 diffTime = - diffTime
+            if diffTime <= timedelta(minutes=60):
+                theMessage = "\n"+str(assignment[datE])+"is "+datE
+                return_message(theMessage, lineNum)
+
 
 
 
