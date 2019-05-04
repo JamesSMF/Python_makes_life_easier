@@ -346,6 +346,9 @@ map <leader>s? z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set encoding=utf-8
+set fileencoding=utf-8
+
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
@@ -424,6 +427,7 @@ call plug#begin()
 	 Plug 'scrooloose/nerdcommenter'
 	 Plug 'itchyny/lightline.vim'
 	 Plug 'airblade/vim-gitgutter'
+	 Plug 'Yggdroot/indentLine'
 call plug#end()
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -441,5 +445,9 @@ let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 map c ,cc
 map cu ,cu
+
+
+" modify indentLine
+let g:indentLine_char = '⎸'
 
 
