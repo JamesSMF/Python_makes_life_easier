@@ -1,3 +1,7 @@
+# 射人先射马，擒贼先擒王
+# 数船就数船头
+# 别扯DFS，loop套loop，不虚就是莽
+
 def countBattleships(board):
     """
     :type board: List[List[str]]
