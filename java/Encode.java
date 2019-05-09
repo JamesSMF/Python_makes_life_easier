@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.Math;
 
 class Encode{
    public static void main(String[] args) throws IOException{
@@ -15,17 +16,20 @@ class Encode{
       int decPart = Integer.parseInt(rep);
 
       // calculates for binary for each part
-      int[] bInt = decToBinary(intPart);
-      int[] bDec = decToBinary(decPart);
+      int[] bInt = decToBinary(intPart, 4);
+      int[] bDec = decPartBin(decPart, 4);
       int bias = bInt.length + 126;
-      int[] Bbias = decToBinary(bias);
+      int[] Bbias = decToBinary(bias, 8);
 
       // combine and get a binary array
       int[] combArray = combine(bInt, bDec);
-      printArray(combArray);
+      printArray(bInt);
+      // printArray(bDec);
       combArray = combine(Bbias, combArray);
+      // printArray(combArray);
       int [] temp = {fstBit};
       combArray = combine(temp, combArray);
+      // printArray(combArray);
 
       // convert the combined binary array to an array of hex
       char[] hex = new char[8];
@@ -83,18 +87,40 @@ class Encode{
       return Double.parseDouble(s);
    }
 
-   static int[] decToBinary(int n){ 
-      int[] binaryNum = new int[32]; 
+
+   static int[] decToBinary(int n, int len){
+      int[] binaryNum = new int[len];
    
-      int i = 0; 
       while (n > 0){ 
          // storing remainder in binary array 
-         binaryNum[i] = n % 2; 
-         n = n / 2; 
-         i++; 
+         if(len==0) break;
+         binaryNum[--len] = n % 2; 
+         n = n / 2;
       }
       
       return binaryNum;  
+   }
+
+   static int[] decPartBin(int n, int len){
+      int[] binaryNum = new int[len];
+
+      int whatever = 10;
+      while()
+
+      double target = 0.5 * Math.pow(10,len);
+      // System.out.println(target);
+      int count = 0;
+      while(n>0){
+         while(n < target){
+            target /= 2;
+            binaryNum[count++] = 0;
+         }
+
+         n -= target;
+         binaryNum[count++] = 1;
+      }
+
+      return binaryNum;
    }
 
    static int[] combine(int[] a, int[] b){
@@ -118,3 +144,4 @@ class Encode{
    }
 
 }
+
