@@ -39,15 +39,19 @@ def main():
 
     Sum = 0
     mult = 0           # this is a variable for the multiplication result on each row
-    organic = list()   # sum of organic shits
     checkValid = False
     regionFlg = False
     orgFlg = False
     region = dict()
+    organic = dict()   # sum of organic shits
     for i in range(len(sys.argv)):    # iterate through argv list
+        #  if sys.argv[i]=='-h' or sys.argv[i]=="--help":
+            #  print("usage: Read CSV input about avocados and print total amount sold")
+            #  print("       [-h] --input INPUT [--group_by_region] [--organic]")
+            #  sys.exit()
         if sys.argv[i]=="-i" or sys.argv[i]=="--input":     # if has -i flag
             checkValid = True                               # it is valid
-        if re.search(".csv",sys.argv[i]) and checkValid==True:    # look for the input file
+        elif re.search(".csv",sys.argv[i]) and checkValid==True:    # look for the input file
             with open(sys.argv[i], "r") as inFile:                # open the file
                 cnt = 0                          # count of lines
                 for line in inFile:              # read one line at a time
@@ -68,7 +72,7 @@ def main():
                         ############## Organic Check ##############
 
                         if lineList[-3]=="organic":
-                            if organic[lineList[-1]] not in organic:
+                            if lineList[-1] not in organic:
                                 organic[lineList[-1]] = mult
                             else:
                                 organic[lineList[-1]] += mult
@@ -81,23 +85,25 @@ def main():
             inFile.close()
             checkValid = False            # set this shit back to False to avoid confusion
 
-        if sys.argv[i]=="--group_by_region":
+        elif sys.argv[i]=="--group_by_region" or sys.argv[i]=='-r':
             regionFlg = True
 
-        if sys.argv[i]=='--organic':
+        elif sys.argv[i]=='--organic' or sys.argv[i]=='-o':
             orgFlg = True
 
-
+    # end of traversing arguments
 
     if regionFlg==True and orgFlg==True:
         for k,v in organic.items():
             print(str(k) + str(v))
+        print("Total Sales: " + str(sum(organic.values())))
+        sys.exit()
     elif regionFlg==True:
         for k,v in region.items():
             print(str(k)+str(v))
     elif orgFlg==True:
         print("Total Sales: " + str(sum(organic.values())))
-        exit
+        sys.exit()
 
     print("Total Sales: " + str(Sum))
 
