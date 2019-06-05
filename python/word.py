@@ -24,22 +24,22 @@ synonym VARCHAR(40));"""
 crsr.execute(sql_command)
 
 while True:
-    sql_command = raw_input("enter sql commands or q to exit: ")
-    if sql_command == 'q':
-        # To save the changes in the files. Never skip this.
-        # If we skip this, nothing will be saved in the database.
-        connection.commit()
+   sql_command = raw_input("enter sql commands or q to exit: ")
+   if sql_command == 'q':
+      # To save the changes in the files. Never skip this.
+      # If we skip this, nothing will be saved in the database.
+      connection.commit()
 
-        # close the connection
-        connection.close()
-        break
-    elif re.search("SELECT", sql_command) or re.search("select", sql_command) or re.search("Select", sql_command):
-        crsr.execute(sql_command)
-        ans = crsr.fetchall()
-        for i in ans:
-            print i
-    else:
-        crsr.execute(sql_command)
+      # close the connection
+      connection.close()
+      break
+   elif re.search("SELECT", sql_command) or re.search("select", sql_command) or re.search("Select", sql_command):
+      crsr.execute(sql_command)
+      ans = crsr.fetchall()
+      for i in ans:
+         print i
+   else:
+      crsr.execute(sql_command)
 
 
 
