@@ -71,9 +71,9 @@ set wildmenu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
-    set wildignore+=.git\*,.hg\*,.svn\*
+   set wildignore+=.git\*,.hg\*,.svn\*
 else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+   set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
 " Always show current position
@@ -123,7 +123,7 @@ set tm=500
 
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
+   autocmd GUIEnter * set vb t_vb=
 endif
 
 
@@ -139,11 +139,11 @@ syntax enable
 
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM == 'gnome-terminal'
-	 set t_Co=256
+   set t_Co=256
 endif
 
 try
-	 colorscheme desert
+   colorscheme desert
 catch
 endtry
 
@@ -151,15 +151,17 @@ set background=dark
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
+   set guioptions-=T
+   set guioptions-=e
+   set t_Co=256
+   set guitablabel=%M\ %t
 endif
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" No need for status line
+set noshowmode
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -174,7 +176,7 @@ set noswapfile
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
-autocmd FileType php,c,java,python set expandtab
+set expandtab
 
 " Be smart when using tabs ;)
 set smarttab
@@ -182,6 +184,8 @@ set smarttab
 " 1 tab == 3 spaces
 set shiftwidth=3
 set tabstop=3
+
+au FileType python setl shiftwidth=3 tabstop=3
 
 " Linebreak on 500 characters
 set lbr
@@ -200,9 +204,6 @@ set wrap "Wrap lines
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
-set noshowmode " No need for status line
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
@@ -291,15 +292,15 @@ endif
 
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
+   let save_cursor = getpos(".")
+   let old_query = getreg('/')
+   silent! %s/\s\+$//e
+   call setpos('.', save_cursor)
+   call setreg('/', old_query)
 endfun
 
 if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+   autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 
 nnoremap ggd <Esc>gg \| :.,$d<CR>
@@ -307,7 +308,7 @@ map sp :set paste<CR>i
 map snp :set nopaste<CR>i
 
 " This shit is amazing. Try pressing {, and it will surprise you.
-autocmd FileType php,c,java inoremap { {<CR>}<Esc><Up>o<BS><Space><Space><Space>
+autocmd FileType php,c,java,html,asm inoremap { {<CR>}<Esc><Up>o<BS><Space><Space><Space>
 
 " Split screen
 map :sp :sp<CR><C-w><C-w>
@@ -325,10 +326,13 @@ map cn i\n<Esc>
 imap ZZ <Esc>ZZ
 
 " Good for indentation
-map <space><space><space> i<space><space><space><esc>hh
-map <BS><BS><BS> i<BS><BS><BS>
-map <space><space><space><space> i<space><space><space><space><esc>hhh
-map <BS><BS><BS><BS> i<BS><BS><BS><BS>
+map <space><space><space> i<space><space><space><Esc>hhh
+map <space><space><space><space> i<space><space><space><space><Esc>hhh
+
+" Good for moving around
+map df <C-d>
+map yu <C-u>
+map `! `^
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
@@ -367,52 +371,52 @@ map <leader>pp :setlocal paste!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Returns true if paste mode is enabled
 function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    endif
-    return ''
+   if &paste
+      return 'PASTE MODE  '
+   endif
+   return ''
 endfunction
 
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
-    let l:currentBufNum = bufnr("%")
-    let l:alternateBufNum = bufnr("#")
+   let l:currentBufNum = bufnr("%")
+   let l:alternateBufNum = bufnr("#")
 
-    if buflisted(l:alternateBufNum)
-        buffer #
-    else
-        bnext
-    endif
+   if buflisted(l:alternateBufNum)
+      buffer #
+   else
+      bnext
+   endif
 
-    if bufnr("%") == l:currentBufNum
-        new
-    endif
+   if bufnr("%") == l:currentBufNum
+      new
+   endif
 
-    if buflisted(l:currentBufNum)
-        execute("bdelete! ".l:currentBufNum)
-    endif
+   if buflisted(l:currentBufNum)
+      execute("bdelete! ".l:currentBufNum)
+   endif
 endfunction
 
 function! CmdLine(str)
-    call feedkeys(":" . a:str)
+   call feedkeys(":" . a:str)
 endfunction 
 
 function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
+   let l:saved_reg = @"
+   execute "normal! vgvy"
 
-    let l:pattern = escape(@", "\\/.*'$^~[]")
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
+   let l:pattern = escape(@", "\\/.*'$^~[]")
+   let l:pattern = substitute(l:pattern, "\n$", "", "")
 
-    if a:direction == 'gv'
-        call CmdLine("Ack '" . l:pattern . "' " )
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    endif
+   if a:direction == 'gv'
+      call CmdLine("Ack '" . l:pattern . "' " )
+   elseif a:direction == 'replace'
+      call CmdLine("%s" . '/'. l:pattern . '/')
+   endif
 
-    let @/ = l:pattern
-    let @" = l:saved_reg
+   let @/ = l:pattern
+   let @" = l:saved_reg
 endfunction
 
 set number
@@ -421,13 +425,13 @@ set number
 " plugins and modifications
 """"""""""""""""""""""""""""""
 call plug#begin()
-    Plug 'scrooloose/nerdtree'
-    Plug 'ervandew/supertab'
-    Plug 'raimondi/delimitmate'
-	 Plug 'scrooloose/nerdcommenter'
-	 Plug 'itchyny/lightline.vim'
-	 Plug 'airblade/vim-gitgutter'
-	 Plug 'Yggdroot/indentLine'
+   Plug 'scrooloose/nerdtree'
+   Plug 'ervandew/supertab'
+   Plug 'raimondi/delimitmate'
+   Plug 'scrooloose/nerdcommenter'
+   Plug 'itchyny/lightline.vim'
+   Plug 'airblade/vim-gitgutter'
+   Plug 'Yggdroot/indentLine'
 call plug#end()
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -446,8 +450,8 @@ let g:NERDTrimTrailingWhitespace = 1
 map c ,cc
 map cu ,cu
 
+let g:NERDCustomDelimiters = { 'asm': { 'left': '#'} }
 
 " modify indentLine
 let g:indentLine_char = '⎸'
-
 
