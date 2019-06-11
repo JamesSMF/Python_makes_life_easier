@@ -2,10 +2,22 @@ import java.io.*;
 
 public class Encode{
    // Get 32-bit IEEE 754 format of the decimal value  
-   private static String GetBinary32( float value ) throws IOException{  
+   private static String GetHex32( float value ) throws IOException{  
       int intBits = Float.floatToIntBits(value); 
-      String binary = Integer.toBinaryString(intBits);
-      return binary;
+      System.out.print("Choose output type: (hex, binary, oct, dec)");
+      String outputOption = getString();
+      String hexS = String.valueOf(intBits);
+      switch(outputOption){
+         case "hex":
+            hexS = Integer.toHexString(intBits);
+            break;
+         case "oct":
+            hexS = Integer.toOctalString(intBits);
+            break;
+         default:
+            break;
+      }
+      return hexS;
    }
 
    private static String getString() throws IOException{
@@ -21,10 +33,8 @@ public class Encode{
       System.out.print("Please enter the number to Encode: ");
       String input = getString();
       float f = Float.valueOf(input.trim()).floatValue();
-      String str = GetBinary32(f);
-      int decimal = Integer.parseInt(str,2);
-      String hexStr = Integer.toString(decimal,16);
+      String str = GetHex32(f);
       System.out.print( "Encoding result of " + input + ": ");  
-      System.out.println(hexStr);
+      System.out.println(str);
    }
 }
