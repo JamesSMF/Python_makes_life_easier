@@ -4,21 +4,13 @@ divisors x = [d | d <- [2..x-1], x `mod` d == 0]
 
 -- check if x and y have coprime
 coprime :: Int -> Int -> Bool
-coprime x y = disjoint (quicksort $ divisors x) (quicksort $ divisors y)
+coprime x y = disjoint (divisors x) (divisors y)
 
--- quick sort
-quicksort :: [Int] -> [Int]
-quicksort  []     =  []
-quicksort  (x:xs) =  quicksort [y | y <- xs, y<x ] ++              -- recursion on left half
-                     [x]                           ++              -- put the pivot here
-                     quicksort [y | y <- xs, y>=x]                 -- recursion on right half
-
--- check if (xs AND ys) is empty (xs and ys should be sorted)
+-- check if xs and ys have common elements
 disjoint :: [Int] -> [Int] -> Bool
-disjoint xs ys = if      length xs == 0 || length ys == 0 then True    -- comparison finishes: return True
-                 else if xs!!0 == ys!!0 then False                     -- same divisor: return False
-                 else if xs!!0 < ys!!0 then disjoint xs $ tail ys      -- recursion on ys' part
-                 else disjoint ys $ tail xs                            -- recursion on xs' part
+disjoint xs ys = if      length xs == 0 then True
+                 else if elem (xs!!0) ys then False
+                 else    disjoint ys $ tail xs
 
 -- output all Pythagorean triads less than n
 triads :: Int -> [(Int,Int,Int)]
