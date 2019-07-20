@@ -7,7 +7,7 @@ sort xs = merge (sort ys) (sort zs)
 
 -- divide
 half :: (Ord a) => [a] -> ([a], [a])
-half xs = (take n xs, drop n xs)
+half xs = splitAt n xs
           where n = length xs `div` 2
 
 -- conquer
