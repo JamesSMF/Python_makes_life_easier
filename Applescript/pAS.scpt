@@ -1,14 +1,14 @@
 on pAS(A, i, B)
-	if i < 1 then
-		log B
-		return
-	end if
-	
-	set addedItem to item i of A
-	set C to addedItem & B
-	pAS(A, i - 1, C)
-	set C to B
-	pAS(A, i - 1, C)
+   if i < 1 then
+      log B
+      return
+   end if
+   
+   set addedItem to item i of A
+   set C to addedItem & B
+   pAS(A, i - 1, C)
+   set C to B
+   pAS(A, i - 1, C)
 end pAS
 
 set B to {}

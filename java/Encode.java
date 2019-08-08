@@ -3,7 +3,7 @@ import java.io.*;
 public class Encode{
    // Get 32-bit IEEE 754 format of the decimal value  
    private static String GetHex32( float value ) throws IOException{  
-      int intBits = Float.floatToIntBits(value); 
+      int intBits = Float.floatToIntBits(value);     // convert to IEEE 756 shit notation
       System.out.print("Choose output type: (hex, binary, oct, dec)");
       String outputOption = getString();
       String hexS = String.valueOf(intBits);
