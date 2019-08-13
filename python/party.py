@@ -1,9 +1,8 @@
 import random
-import sys
 
 while(True):
     rubbish = raw_input()
     if rubbish == "q":
-        sys.exit()
+       break
     else:
-        print random.randint(1,14)
+        print random.randint(1,13)
