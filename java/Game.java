@@ -116,35 +116,45 @@ class Game{
       }
       int absValue = Math.abs(digHead - digTail);
 
-      if(absValue>2 || arrayLen < 3){     // if abs diff is large or array len is less than 3
-         if(arrayLen==1)
+      if(absValue>2 || arrayLen <= 3){     // if abs diff is large or array len is less than or equal to 3
+         if(arrayLen==1){
             comp_tempArray[cDex++] = digHead;
-         else{
+            System.out.println("\nYour rival chose " + theArray[0]);
+         }else{
             if(digHead < digTail){
                comp_tempArray[cDex++] = digTail;
+               System.out.println("\nYour rival chose " + theArray[arrayLen-1]);
             }else{
                comp_tempArray[cDex++] = digHead;
+               System.out.println("\nYour rival chose " + theArray[0]);
                shift(theArray);
             }
          }
       }else if(digHead<5 && digTail<5){  // if abs diff is small and both number is less than 5
          if(digSecHead < digSecTail){
             comp_tempArray[cDex++] = digHead;
+            System.out.println("\nYour rival chose " + theArray[0]);
             shift(theArray);
-         }else
+         }else{
             comp_tempArray[cDex++] = digTail;
+            System.out.println("\nYour rival chose " + theArray[arrayLen-1]);
+         }
       }else{
-         if(digHead < digSecHead && digTail > digSecTail)
+         if(digHead < digSecHead && digTail > digSecTail){
             comp_tempArray[cDex++] = digTail;
-         else if(digHead > digSecHead && digTail < digSecTail){
+            System.out.println("\nYour rival chose " + theArray[arrayLen-1]);
+         }else if(digHead > digSecHead && digTail < digSecTail){
             comp_tempArray[cDex++] = digHead;
+            System.out.println("\nYour rival chose " + theArray[0]);
             shift(theArray);
          }else{                             // Random choice (to make the game easier)
             int ranNum = (int)(Math.random() * 2);
-            if(ranNum==0)
+            if(ranNum==0){
                comp_tempArray[cDex++] = digTail;
-            else{
+               System.out.println("\nYour rival chose " + theArray[arrayLen-1]);
+            }else{
                comp_tempArray[cDex++] = digHead;
+               System.out.println("\nYour rival chose " + theArray[0]);
                shift(theArray);
             }
          }
