@@ -4,6 +4,11 @@ quicksort (x:xs)  =  quicksort [y | y <- xs, y<x ]
                   ++ [x]
                   ++ quicksort [y | y <- xs, y>=x]
 
+-- why >= rather than > ?
+-- That is because there could be duplicates in the list. If omit the equal sign, all duplicates will
+-- be removed in the result.
+
+
 -- another version
 {-
 

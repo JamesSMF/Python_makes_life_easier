@@ -15,4 +15,3 @@ disjoint xs ys = if      length xs == 0 then True
 -- output all Pythagorean triads less than n
 triads :: Int -> [(Int,Int,Int)]
 triads n = [(x,y,z) | x <- [1..n], y <- [x+1..n], z <- [y+1..n], coprime x y, x*x + y*y == z*z]
-
