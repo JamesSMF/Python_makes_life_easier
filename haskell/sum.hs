@@ -19,5 +19,10 @@ sumList4 xs
   | length xs == 1 = xs!!0
   | otherwise      = xs!!0 + sumList4 (tail xs)
 
-sumList5    :: (Num a) => [Int] -> Int
+sumList5    :: (Num a) => [a] -> a
 sumList5 xs = foldl(\x y -> x + y) 0 (xs)
+
+-- Alternatively you can omit xs
+sumList6 :: (Num a) => [a] -> a
+sumList6 = foldl(\x y -> x + y) 0
+-- This will return a function that takes one parameter
