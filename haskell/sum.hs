@@ -19,5 +19,5 @@ sumList4 xs
   | length xs == 1 = xs!!0
   | otherwise      = xs!!0 + sumList4 (tail xs)
 
-sumList5    :: [Int] -> Int
+sumList5    :: (Num a) => [Int] -> Int
 sumList5 xs = foldl(\x y -> x + y) 0 (xs)
