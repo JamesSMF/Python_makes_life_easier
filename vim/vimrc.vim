@@ -334,7 +334,7 @@ map tu <C-b>
 map `! `^
 
 " If you just want to insert a space
-map r<space> i<space><esc>
+map t<space> i<space><esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
