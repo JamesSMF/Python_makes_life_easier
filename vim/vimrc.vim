@@ -142,13 +142,6 @@ if $COLORTERM == 'gnome-terminal'
    set t_Co=256
 endif
 
-try
-   colorscheme desert
-catch
-endtry
-
-set background=dark
-
 " Set extra options when running in GUI mode
 if has("gui_running")
    set guioptions-=T
@@ -156,6 +149,10 @@ if has("gui_running")
    set t_Co=256
    set guitablabel=%M\ %t
 endif
+
+set background=dark
+
+colorscheme slate
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
@@ -308,7 +305,7 @@ map sp :set paste<CR>i
 map snp :set nopaste<CR>i
 
 " This shit is amazing. Try pressing {, and it will surprise you.
-autocmd FileType php,c,java,html,asm inoremap { {<CR>}<Esc><Up>o<BS><Space><Space><Space>
+autocmd FileType php,c,cpp,java,html,asm inoremap {<CR> {<CR>}<Esc><Up>o<BS><Space><Space><Space>
 
 " Split screen
 map :sp :sp<CR><C-w><C-w>
@@ -317,7 +314,7 @@ map :sp :sp<CR><C-w><C-w>
 map <leader>n :NERDTree<CR>
 
 " Add semicolon
-map ;; $i<Right>;<Esc>
+map ;; A;<Esc>
 
 " Add a \"\n" char
 map cn i\n<Esc>
@@ -332,7 +329,12 @@ map <space><space><space><space> i<space><space><space><space><Esc>hhh
 " Good for moving around
 map df <C-d>
 map yu <C-u>
+map sf <C-f>
+map tu <C-b>
 map `! `^
+
+" If you just want to insert a space
+map r<space> i<space><esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
