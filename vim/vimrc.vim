@@ -2,6 +2,9 @@
 " Maintainer: 
 "       Amir Salihefendic -@amix3k
 "
+" Modifier:
+"       James Li          -@gli38
+"
 " Awesome_version:
 "       Get this config, nice color schemes and lots of plugins!
 "
