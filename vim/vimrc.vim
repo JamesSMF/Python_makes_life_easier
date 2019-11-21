@@ -434,6 +434,9 @@ call plug#begin()
    Plug 'itchyny/lightline.vim'
    Plug 'airblade/vim-gitgutter'
    Plug 'Yggdroot/indentLine'
+   Plug 'metakirby5/codi.vim'     " Interactive mode
+                                  " :Codi <language>
+   Plug 'godlygeek/tabular'       " alignment
 call plug#end()
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -457,3 +460,15 @@ let g:NERDCustomDelimiters = { 'asm': { 'left': '#'} }
 " modify indentLine
 let g:indentLine_char = '⎸'
 
+" Codi
+au FileType python :Codi python
+au FileType cpp :Codi cling
+au FileType hs :Codi haskell
+au FileType js :Codi node
+
+" tabular
+let mapleader=','
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
