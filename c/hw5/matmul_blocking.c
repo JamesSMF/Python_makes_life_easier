@@ -67,6 +67,7 @@ void blocking_mult(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]
       for(;gj<number_block; gj+=block_size){
          for(;i<SIZE; ++i){
             for(j=gj; j<gj+block_size; ++j){
+               sum = C[i][j];
                for (k=gk; k<gk+block_size; ++k)
                   sum += A[i][k] * B[k][j];
                C[i][j] = sum;
