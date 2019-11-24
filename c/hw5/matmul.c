@@ -13,8 +13,8 @@ volatile __uint64_t C[SIZE][SIZE];
 void init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
    int r, c;
 
-   for (c = 0; c < SIZE; ++c) {
-      for (r = 0; r < SIZE; ++r) {
+   for (c = 0; c < SIZE; c++) {
+      for (r = 0; r < SIZE; r++) {
          A[r][c] = rand();
          B[r][c] = rand();
       }
@@ -24,8 +24,8 @@ void init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
 int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE]){
    int r, c;
 
-   for (c = 0; c < SIZE; ++c) {
-      for (r = 0; r < SIZE; ++r) {
+   for (c = 0; c < SIZE; c++) {
+      for (r = 0; r < SIZE; r++) {
          if (C[r][c] != D [r][c]) {
             printf("error!\n");
             return -1;
@@ -34,20 +34,6 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE]){
       }
    }
    return 0;
-}
-
-__uint64_t swap(__uint64_t a, __uint64_t b){
-   return a;
-}
-
-void transpose(volatile __uint64_t A[][SIZE]){
-   int r, c;
-
-   for (c = 0; c < SIZE; ++c) {
-      for (r = 0; r < SIZE; ++r) {
-         A[r][c] = swap(A[c][r], A[r][c]=A[c][r]);
-      }
-   }
 }
 
 void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
