@@ -76,8 +76,8 @@ int main(int argc, char **argv){
    init(A, B);
    memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
    
-   t = clock();
    transpose(B);
+   t = clock();
    modified_matmul(A, B);
    t = clock() - t;
    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
