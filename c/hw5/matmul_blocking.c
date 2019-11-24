@@ -84,6 +84,7 @@ int main(int argc, char **argv){
 
    init(A, B);
    memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
+   memset((__uint64_t**)D, 0, sizeof(__uint64_t) * SIZE * SIZE);
    
    t = clock();
 
