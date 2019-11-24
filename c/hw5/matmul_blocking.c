@@ -9,6 +9,7 @@
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
 volatile __uint64_t C[SIZE][SIZE];
+volatile __uint64_t D[SIZE][SIZE];
 
 void init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
    int r, c;
@@ -28,6 +29,7 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE]){
       for (r = 0; r < SIZE; ++r) {
          if (C[r][c] != D [r][c]) {
             printf("error!\n");
+            printf("crash on entry %d, %d\n", r, c);
             return -1;
          }
          
@@ -48,11 +50,15 @@ void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
    }
 }
 
+
+// TODO: the result is not correct.
+
 void blocking_mult(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]
       ,volatile __uint64_t C[][SIZE], int block_size){
    int gk=0, gj=0, k, j, i=0;
    __uint64_t sum=0;
    int number_block = SIZE / block_size;
+   /* int number_block = block_size * (SIZE / block_size); */
 
    // gk, gj traverses through the matrix according to blocks
    // k, j traverses each block and calculate those motherfucking shitty god damn values
@@ -82,9 +88,12 @@ int main(int argc, char **argv){
    t = clock();
 
    // change the size for block (namely the last arg) to test different cases.
-   blocking_mult(A, B, C, 1024);
+   blocking_mult(A, B, D, 1024);
    t = clock() - t;
    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+
+   matmul(A,B);
+   verify(C,D);
    
    printf("Matmul took %f seconds to execute \n", time_taken);
 }
