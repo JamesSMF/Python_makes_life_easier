@@ -7,16 +7,8 @@
 #       make clean             -- clean up executable files
 #------------------------------------------------------------------------------
 
-all: matmul matmul_transpose matmul_blocking
-
 matmul : matmul.c
-	gcc -O3 -o matmul matmul.c
-
-matmul_blocking : matmul_blocking.c
-	gcc -O3 -o matmul_blocking matmul_blocking.c
-
-matmul_transpose : matmul_transpose.c
-	gcc -O3 -o matmul_transpose matmul_transpose.c
+	gcc -o matmul matmul.c
 
 clean :
-	rm -f matmul matmul_transpose matmul_blocking a.out
+	rm -f matmul a.out
