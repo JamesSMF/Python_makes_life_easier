@@ -6,7 +6,7 @@
 
 ## How do you compile the file?
 There are two options:
-   + you can run `gcc <file.c>` directly
+   + you can run `gcc -O3 <file.c>` directly
    + you can also run `make` and go fetch a coffee. Our Makefile makes life easier.
 
 ## How do you run the program?
