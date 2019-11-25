@@ -19,4 +19,4 @@ matmul_transpose : matmul_transpose.c
 	gcc -o matmul_transpose matmul_transpose.c
 
 clean :
-	rm -f matmul matmul_transpose matmul_blocking
+	rm -f matmul matmul_transpose matmul_blocking a.out
