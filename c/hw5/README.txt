@@ -10,9 +10,11 @@ There are two options:
    + you can also run `make` and go fetch a coffee. Our Makefile makes life easier.
 
 ## How do you run the program?
-+ question 1: please run `./matmul`
-+ question 2: please run `./matmul_transpose`
-+ question 3: please run `./matmul_blocking`
+If you manually compiles programs using gcc: run `./a.out`
+Otherwise:
+   + question 1: please run `./matmul`
+   + question 2: please run `./matmul_transpose`
+   + question 3: please run `./matmul_blocking`
 
 ## How do you clean up executable files?
 Again, two options:
