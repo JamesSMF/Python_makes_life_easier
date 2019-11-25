@@ -6,15 +6,12 @@
 
 ## How do you compile the file?
 There are two options:
-   + you can run `gcc <file.c>` directly
+   + you can run `gcc -O3 matmul.c` directly
    + you can also run `make` and go fetch a coffee. Our Makefile makes life easier.
 
 ## How do you run the program?
 If you manually compiles programs using gcc: run `./a.out`
-Otherwise:
-   + question 1: please run `./matmul`
-   + question 2: please run `./matmul_transpose`
-   + question 3: please run `./matmul_blocking`
+Otherwise: run `./matmul`
 
 ## How do you clean up executable files?
 Again, two options:
