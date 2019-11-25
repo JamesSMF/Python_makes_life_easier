@@ -9,6 +9,7 @@
 volatile __uint64_t A[SIZE][SIZE];
 volatile __uint64_t B[SIZE][SIZE];
 volatile __uint64_t C[SIZE][SIZE];
+volatile __uint64_t D[SIZE][SIZE];
 
 void init(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
    int r, c;
@@ -37,6 +38,18 @@ int verify(volatile __uint64_t C[][SIZE], volatile __uint64_t D[][SIZE]){
    return 0;
 }
 
+void matmul(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]){
+   int rowA, colB, idx;
+
+   for (rowA = 0; rowA < SIZE; rowA++) {
+      for (colB = 0; colB < SIZE; colB++) {
+         for (idx = 0; idx < SIZE; idx++) {
+            C[rowA][colB] += A[rowA][idx] * B[idx][colB];
+         }
+      }
+   }
+}
+
 void blocking_mult(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]
       , int block_size){
    int gi, gk, gj, k, j, i;
@@ -51,7 +64,7 @@ void blocking_mult(volatile __uint64_t A[][SIZE], volatile __uint64_t B[][SIZE]
             for(i=0 ; i<block_size; ++i)
                for(j=0 ; j<block_size; ++j)
                   for(k=0; k<block_size; ++k)
-                     C[gi+i][gj+j] += A[gi+i][gk+k] * B[gk+k][gj+j];
+                     D[gi+i][gj+j] += A[gi+i][gk+k] * B[gk+k][gj+j];
 
    // I'm fucked up after writing this seemingly O(n^6) shitty algorithm.
 }
@@ -62,13 +75,17 @@ int main(int argc, char **argv){
 
    init(A, B);
    memset((__uint64_t**)C, 0, sizeof(__uint64_t) * SIZE * SIZE);
+   memset((__uint64_t**)D, 0, sizeof(__uint64_t) * SIZE * SIZE);
    
    t = clock();
 
    // change the size for block (namely the last arg) to test different cases.
-   blocking_mult(A, B, 1024);
+   blocking_mult(A, B, 16);
    t = clock() - t;
    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+
+   matmul(A,B);
+   verify(C,D);
    
    printf("Matmul took %f seconds to execute \n", time_taken);
 }
