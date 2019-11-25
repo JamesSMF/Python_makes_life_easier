@@ -80,7 +80,7 @@ int main(int argc, char **argv){
    t = clock();
 
    // change the size for block (namely the last arg) to test different cases.
-   blocking_mult(A, B, 16);
+   blocking_mult(A, B, 1024);
    t = clock() - t;
    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 
