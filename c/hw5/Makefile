@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 
 matmul : matmul.c
-	gcc -o matmul matmul.c
+	gcc -O3 -o matmul matmul.c
 
 clean :
 	rm -f matmul a.out
