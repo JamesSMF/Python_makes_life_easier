@@ -124,4 +124,10 @@ int main(int argc, char **argv){
    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 
    printf("Matmul_transpose took %f seconds to execute \n", time_taken);
+
+   printf("Verifying the correctness of results...");
+   int a = verify(C,D);
+   if(a==0) printf("Matmul_blocking pass.\n");
+   a = verify(C,E);
+   if(a==0) printf("Matmul_transpose pass.\n");
 }
