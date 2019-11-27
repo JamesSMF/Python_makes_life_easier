@@ -11,3 +11,5 @@ class specialSwap{
       System.out.println("x = " + x + " , y = " + y);
    }
 }
+
+// Note: this program only works for int
