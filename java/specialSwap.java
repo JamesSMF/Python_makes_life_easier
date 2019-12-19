@@ -13,3 +13,4 @@ class specialSwap{
 }
 
 // Note: this program only works for int
+// Note: if x==y, this is not gonna work.
