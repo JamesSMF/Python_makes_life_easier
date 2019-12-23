@@ -1,0 +1,3 @@
+([('21',
+   '/Users/liguangyao/github/python/python3/stand_alone/dist/21',
+   'EXECUTABLE')],)
