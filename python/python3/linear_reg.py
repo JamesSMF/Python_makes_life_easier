@@ -4,7 +4,7 @@ This is a program modeling linear regression.
 Basic steps:
    1. Generate x data set, and add some noise to make data scattered.
    2. Modeling: use Sequential() to build a linear model with both input and
-      output dimension being 1.
+      output dimension being 1. Use SGD to optimize.
    3. Training models: Train the model on batches to update gradient. You will
       see the loss (i.e. the cost) of training gets smaller, which means the
       prediction becomes more accurate with larger number of data.
