@@ -18,6 +18,9 @@ from tensorflow.keras.layers import Reshape
 # Scientific computing
 import numpy as np
 
+# Regularizers
+from tensorflow.keras.regularizers import l2
+
 # Plotting
 import matplotlib.pyplot as plt
 
