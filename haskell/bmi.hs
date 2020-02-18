@@ -4,3 +4,6 @@ bmiTell weight height
    | weight / height ^ 2 <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"  
    | weight / height ^ 2 <= 30.0 = "You're fat! Lose some weight, fatty!"  
    | otherwise                 = "You're a whale, congratulations!"  
+
+bmiCal :: (RealFloat a ) => a -> a -> a
+bmiCal we hi = we / hi ^ 2
