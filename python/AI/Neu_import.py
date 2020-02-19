@@ -25,12 +25,12 @@ from tensorflow.keras.regularizers import l2
 import matplotlib.pyplot as plt
 
 def plot_graphs(history, string):
-    '''
-    Plot training acc/loss and validation acc/loss
-    '''
-    plt.plot(history.history[string])
-    plt.plot(history.history['val_'+string])
-    plt.xlabel("Epochs")
-    plt.ylabel(string)
-    plt.legend([string, 'val_'+string])
-    plt.show()
+   '''
+   Plot training acc/loss and validation acc/loss
+   '''
+   plt.plot(history.history[string])
+   plt.plot(history.history['val_'+string])
+   plt.xlabel("Epochs")
+   plt.ylabel(string)
+   plt.legend([string, 'val_'+string])
+   plt.show()
