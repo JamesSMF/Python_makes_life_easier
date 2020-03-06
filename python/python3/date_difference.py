@@ -16,4 +16,4 @@ end_date = re.sub("[^0-9]", "", end_date)
 # produce funny results
 assert(len(start_date) == 8 and len(end_date) == 8)
 
-print(abs(days_between(start_date, end_date)))
+print(days_between(start_date, end_date))
