@@ -25,9 +25,3 @@ def countBattleships(board):
             elif i==len(board)-1 and k==len(board[0])-1:
                count += 1
    return count
-
-def main():
-   inputList = [['X','.','.','X'],['X','.','.','X'],['.','.','.','X']]
-   print(countBattleships(inputList))
-
-main()
