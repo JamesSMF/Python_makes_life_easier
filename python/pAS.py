@@ -9,6 +9,6 @@ def pAS(A, i, B):
 	pAS(A, i-1, C)
 
 B = []
-A = [1, 2, 3, 4]
+A = [1, 2, 3, 4, 5, 6]
 i = len(A)-1
 pAS(A, i, B)

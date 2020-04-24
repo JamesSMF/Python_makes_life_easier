@@ -181,14 +181,15 @@ def lose(uBet, cBet):
 def draw():
    print("平局。打得不错！")
 
-# initial conditions
-# global variables
-cards = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0}
-display = {1:"A", 2:"2", 3:"3", 4:"4", 5:"5", 6:"6", 7:"7", 8:"8", 9:"9", 10:"10", 11:"J", 12:"Q", 13:"K"}
-user_hand = list()
-comp_hand = list()
-user_point = 500
-comp_point = 500
+if(__name__=='__main__'):
+   # initial conditions
+   # global variables
+   cards = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0}
+   display = {1:"A", 2:"2", 3:"3", 4:"4", 5:"5", 6:"6", 7:"7", 8:"8", 9:"9", 10:"10", 11:"J", 12:"Q", 13:"K"}
+   user_hand = list()
+   comp_hand = list()
+   user_point = 500
+   comp_point = 500
 
-main()
+   main()
 

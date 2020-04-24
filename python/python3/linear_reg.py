@@ -58,4 +58,4 @@ y_std = x_data*0.1 + 0.2
 plt.scatter(x_data, y_data)
 plt.plot(x_data, y_pred, 'r-', lw=1)     # Predicted data model
 plt.plot(x_data, y_std, 'g-', lw=1)      # Actual data model
-plt.show
+plt.show()

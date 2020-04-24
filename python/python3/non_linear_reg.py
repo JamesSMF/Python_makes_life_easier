@@ -53,6 +53,6 @@ y_std = np.square(x_data)
 plt.scatter(x_data, y_data)
 plt.plot(x_data, y_pred, 'r-', lw=1.5)     # Predicted data model
 plt.plot(x_data, y_std, 'g-', lw=1)        # Actual curve
-plt.show
+plt.show()
 
 
